@@ -1,0 +1,18 @@
+{
+  "string": {
+    "BitrixTokenUrl": "URL Token Bitrix24",
+    "Bitrix": "",
+    "BitrixDesc": "Tích hợp Bitrix24",
+    "Settings": "Cấu hình",
+    "NotAllowed": "Không được phép nếu không có quyền quản trị",
+    "BitrixEntityType": "Ánh xạ thực thể",
+    "FieldMapping": "Ánh xạ trường",
+    "AddField": "Thêm ánh xạ",
+    "Attribute": "Thuộc tính",
+    "MapField": "Ánh xạ...",
+    "BitrixImport": "Đồng bộ với Bitrix",
+    "AddMapping": "Thêm ánh xạ thực thể",
+    "ConfigLabel": "Bitrix24",
+    "ConfigDescription": "Tiện ích tích hợp Bitrix24"
+  }
+}

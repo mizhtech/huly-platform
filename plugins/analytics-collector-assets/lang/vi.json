@@ -1,0 +1,22 @@
+{
+  "string": {
+    "OnboardingChannelDescription": "Người dùng: {user}; Workspace: {workspace}",
+    "Error": "Lỗi: ",
+    "InProject": " trong dự án ",
+    "NavigateToSpecial": "{app}: mở {special}",
+    "OpenSpecial": "mở {special} ",
+    "Set": "Đặt ",
+    "To": " thành ",
+    "Open": "mở ",
+    "Workbench": "Workbench: ",
+    "OnboardingChannel": "Kênh hướng dẫn",
+    "OnboardingChannels": "Kênh hướng dẫn",
+    "WorkspaceId": "ID workspace",
+    "WorkspaceName": "Tên workspace",
+    "WorkspaceUrl": "URL workspace",
+    "Account": "Tài khoản",
+    "UserName": "Tên người dùng",
+    "DisableAIReplies": "Tắt phản hồi AI",
+    "ShowAIReplies": "Hiện phản hồi AI"
+  }
+}

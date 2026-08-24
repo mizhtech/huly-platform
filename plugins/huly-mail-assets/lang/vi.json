@@ -1,0 +1,20 @@
+{
+  "string": {
+    "IntegrationLabel": "Huly Mail",
+    "IntegrationDescription": "Kết nối hộp thư Huly để gửi, nhận và quản lý email",
+    "Connect": "Kết nối",
+    "ConnectHulyMail": "Kết nối hộp thư Huly",
+    "Cancel": "Hủy",
+    "Email": "Email",
+    "Status": "Trạng thái",
+    "FailedToConnect": "Dịch vụ Huly Mail không khả dụng",
+    "TotalMessages": "Tổng tin nhắn:",
+    "Configure": "Cấu hình Huly Mail",
+    "ChannelSpace": "Không gian cho kênh tin nhắn",
+    "PersonSpaceInfo": "Mail chỉ hiển thị với bạn",
+    "SharedSpaceInfo": "Mail hiển thị với mọi thành viên trong không gian",
+    "Mailbox": "Hộp thư",
+    "MailboxesNotConfigured": "Không tìm thấy hộp thư",
+    "ConfigureMailBoxes": "Hãy thêm hộp thư trong phần `Mailboxes` để bắt đầu"
+  }
+}

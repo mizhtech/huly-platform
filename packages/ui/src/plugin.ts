@@ -83,6 +83,7 @@ export const uis = plugin(uiId, {
     German: '' as IntlString,
     Japanese: '' as IntlString,
     Korean: '' as IntlString,
+    Vietnamese: '' as IntlString,
     Turkish: '' as IntlString,
     Polish: '' as IntlString,
     PortugueseBrazil: '' as IntlString,

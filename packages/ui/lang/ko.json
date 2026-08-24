@@ -60,6 +60,7 @@
         "German": "Deutsch",
         "Japanese": "日本語",
         "Korean": "한국어",
+        "Vietnamese": "베트남어",
         "Turkish": "Türkçe",
         "MinutesBefore": "{minutes, plural, =1 {1분 전} other {#분 전}}",
         "HoursBefore": "{hours, plural, =1 {1시간 전} other {#시간 전}}",

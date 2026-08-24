@@ -1,0 +1,21 @@
+{
+  "string": {
+    "Categories": "Danh mục",
+    "Category": "Danh mục",
+    "CategoryCreateLabel": "Danh mục",
+    "CreateCategory": "Tạo danh mục",
+    "CreateSubcategory": "Tạo danh mục con",
+    "Inventory": "Kho hàng",
+    "ProductCreateLabel": "Sản phẩm",
+    "CreateProduct": "Tạo sản phẩm",
+    "Products": "Sản phẩm",
+    "Product": "Sản phẩm",
+    "Variant": "Biến thể",
+    "SKU": "SKU",
+    "Variants": "Biến thể",
+    "NoVariantsForProduct": "Sản phẩm này chưa có biến thể.",
+    "CreateVariant": "Tạo biến thể",
+    "ConfigLabel": "Kho hàng",
+    "ConfigDescription": "Tiện ích quản lý kho hàng"
+  }
+}

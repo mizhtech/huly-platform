@@ -1,0 +1,13 @@
+{
+  "string": {
+    "IntegrationLabel": "Trợ lý AI",
+    "IntegrationDescription": "Trợ lý AI cá nhân giúp tổ chức, tự động hóa và tối ưu công việc hằng ngày trên nền tảng",
+    "ConfigLabel": "Trợ lý AI",
+    "ConfigDescription": "Trợ lý cá nhân sử dụng AI",
+    "Connect": "Kết nối",
+    "Cancel": "Hủy",
+    "Status": "Trạng thái",
+    "FailedToConnect": "Dịch vụ Trợ lý AI không khả dụng",
+    "Configure": "Cấu hình Trợ lý AI"
+  }
+}

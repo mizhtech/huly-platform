@@ -60,6 +60,7 @@
         "German": "Deutsch",
         "Japanese": "日本語",
         "Korean": "Корейский",
+        "Vietnamese": "Вьетнамский",
         "Turkish": "Türkçe",
         "MinutesBefore": "{minutes, plural, =1 {за минуту} one {за # минуту} few {за # минуты} other {за # минут}}",
         "HoursBefore": "{hours, plural, =1 {за час} one {за # час} few {за # часа} other {за # часов}}",

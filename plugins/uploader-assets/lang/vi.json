@@ -1,0 +1,9 @@
+{
+  "string": {
+    "Cancel": "Hủy",
+    "Retry": "Thử lại",
+    "UploadFiles": "Tải tệp",
+    "UploadFolders": "Tải thư mục",
+    "UploadingTo": "Đang tải {files, plural, =1 {# tệp} other {# tệp}} lên"
+  }
+}

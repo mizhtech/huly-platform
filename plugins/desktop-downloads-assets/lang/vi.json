@@ -1,0 +1,10 @@
+{
+  "string": {
+    "Downloads": "Tải xuống",
+    "Completed": "Hoàn thành",
+    "Cancelled": "Đã hủy",
+    "Interrupted": "Bị gián đoạn",
+    "Paused": "Đã tạm dừng",
+    "Progressing": "Đang tải"
+  }
+}

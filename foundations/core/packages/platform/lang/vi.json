@@ -1,0 +1,30 @@
+{
+  "status": {
+    "LoadingPlugin": "Đang tải plugin {plugin}...",
+    "UnknownError": "Lỗi không xác định: {message}",
+    "InvalidId": "ID không hợp lệ: {id}",
+    "BadRequest": "Yêu cầu không hợp lệ",
+    "Forbidden": "Bị từ chối",
+    "Conflict": "Xung đột",
+    "ExpiredLink": "Liên kết mời đã hết hạn",
+    "Unauthorized": "Chưa được xác thực",
+    "UnknownMethod": "Phương thức không xác định: {method}",
+    "InternalServerError": "Lỗi máy chủ",
+    "MaintenanceWarning": "Bảo trì sau",
+    "MaintenanceWarningTime": "{time, plural, =1 {chưa đến một phút} other {# phút}}",
+    "AccountNotFound": "Không tìm thấy tài khoản hoặc thông tin đăng nhập không đúng",
+    "AccountNotConfirmed": "Tài khoản chưa được xác nhận",
+    "WorkspaceNotFound": "Không tìm thấy workspace",
+    "AccountAlreadyExists": "Tài khoản đã tồn tại",
+    "WorkspaceRateLimit": "Máy chủ đang bận, vui lòng thử lại sau",
+    "AccountAlreadyConfirmed": "Tài khoản đã được xác nhận",
+    "WorkspaceAlreadyExists": "Workspace đã tồn tại",
+    "InvalidOtp": "Mã không hợp lệ",
+    "PasswordLoginLocked": "Đăng nhập bằng mật khẩu đã bị khóa do thử sai quá nhiều. Hãy đăng nhập bằng OTP để mở khóa tài khoản.",
+    "InviteNotFound": "Không tìm thấy lời mời cho email: {email}.",
+    "WorkspaceLimitReached": "Bạn đã đạt giới hạn workspace. Vui lòng liên hệ chúng tôi...",
+    "ReadOnlyAccount": "Tài khoản khách chỉ xem",
+    "SystemAccount": "Tài khoản hệ thống",
+    "SocialIdAlreadyExists": "ID mạng xã hội đã tồn tại"
+  }
+}

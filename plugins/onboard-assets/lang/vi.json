@@ -1,0 +1,19 @@
+{
+  "status": {
+    "RequiredField": "Trường {field} là bắt buộc",
+    "FieldsDoNotMatch": "{field} không khớp {field2}",
+    "ConnectingToServer": "Đang kết nối máy chủ..."
+  },
+  "string": {
+    "CreateWorkspace": "Tạo không gian làm việc",
+    "LastName": "Họ",
+    "FirstName": "Tên",
+    "Workspace": "Tên không gian làm việc",
+    "FillInProfile": "Hoàn thiện hồ sơ",
+    "SetUpPassword": "Thiết lập mật khẩu",
+    "Next": "Tiếp",
+    "Skip": "Bỏ qua",
+    "SignUpCompleted": "Đăng ký hoàn tất",
+    "StartUsingHuly": "Bắt đầu dùng Huly"
+  }
+}

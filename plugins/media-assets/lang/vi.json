@@ -1,0 +1,19 @@
+{
+  "string": {
+    "Camera": "Camera",
+    "Microphone": "Micro",
+    "Speaker": "Loa",
+    "DefaultCam": "Camera mặc định",
+    "DefaultMic": "Micro mặc định",
+    "DefaultSpeaker": "Loa mặc định",
+    "TurnOnCam": "Bật camera",
+    "TurnOffCam": "Tắt camera",
+    "TurnOnMic": "Bật micro",
+    "TurnOffMic": "Tắt micro",
+    "NoCam": "Không có camera",
+    "NoMic": "Không có micro",
+    "NoSpeaker": "Không có loa",
+    "On": "Bật",
+    "Off": "Tắt"
+  }
+}

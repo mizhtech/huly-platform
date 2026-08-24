@@ -1,0 +1,25 @@
+{
+  "string": {
+    "Requests": "Yêu cầu",
+    "Request": "Yêu cầu",
+    "Approve": "Phê duyệt",
+    "Approved": "Đã phê duyệt",
+    "CreatedRequest": "Đã tạo ",
+    "For": "Cho",
+    "Change": "Thay đổi",
+    "Add": "Thêm",
+    "Remove": "Gỡ",
+    "Status": "Trạng thái",
+    "Requested": "Đã yêu cầu",
+    "Completed": "Hoàn thành",
+    "Reject": "Từ chối",
+    "Rejected": "Đã từ chối",
+    "Comment": "Bình luận",
+    "PleaseTypeMessage": "Vui lòng nhập bình luận để tiếp tục...",
+    "NoRequests": "Không có yêu cầu",
+    "Cancel": "Hủy",
+    "Cancelled": "Đã hủy",
+    "NewRequest": "Yêu cầu mới",
+    "CancelRequest": "Hủy yêu cầu"
+  }
+}

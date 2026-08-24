@@ -1,0 +1,12 @@
+{
+  "string": {
+    "Rating": "Đánh giá",
+    "RatingWidget": "Tiện ích đánh giá",
+    "RatingWidgetEmpty": "Chưa có tài liệu được đánh dấu sao. Hãy đánh dấu sao một tài liệu để hiển thị tại đây.",
+    "Level": "Mức",
+    "MonthOps": "{month}: {ops} thao tác",
+    "MonthNoOps": "{month}, Không có thao tác",
+    "AddStar": "Thêm sao",
+    "AddStarAria": "Thêm phản ứng sao"
+  }
+}
