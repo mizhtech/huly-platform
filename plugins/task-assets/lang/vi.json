@@ -54,7 +54,7 @@
     "ActiveStates": "Trạng thái hoạt động",
     "DoneStatesWon": "Hoàn thành / Thành công",
     "DoneStatesLost": "Hoàn thành / Thất bại",
-    "StateBacklog": "Backlog",
+    "StateBacklog": "Chờ xử lý",
     "StateUnstarted": "Chưa bắt đầu",
     "StateActive": "Đang hoạt động",
     "AllStates": "Tất cả trạng thái",

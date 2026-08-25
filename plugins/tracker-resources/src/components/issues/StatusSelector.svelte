@@ -22,6 +22,7 @@
     ButtonKind,
     ButtonSize,
     IconSize,
+    Label,
     SelectPopup,
     SelectPopupValueType,
     TooltipAlignment,
@@ -33,6 +34,7 @@
   import tracker from '../../plugin'
   import IssueStatusIcon from './IssueStatusIcon.svelte'
   import StatusPresenter from './StatusPresenter.svelte'
+  import { getIssueStatusLabel } from '../../utils/statusLabels'
 
   export let value: Ref<IssueStatus> | undefined
   export let type: Ref<ProjectType> | undefined
@@ -99,7 +101,7 @@
   let statusesInfo: SelectPopupValueType[]
 
   $: selectedStatus = getSelectedStatus(statuses, value)
-  $: selectedStatusLabel = selectedStatus?.name
+  $: selectedStatusLabel = selectedStatus != null ? getIssueStatusLabel(selectedStatus) : undefined
   $: statusesInfo =
     statuses?.map((s) => {
       return {
@@ -149,7 +151,7 @@
           class:ml-1-5={selectedStatus && smallgap}
           class:ml-2={selectedStatus && !smallgap}
         >
-          {selectedStatusLabel}
+          <Label label={selectedStatusLabel} />
         </span>
       {/if}
     </svelte:fragment>

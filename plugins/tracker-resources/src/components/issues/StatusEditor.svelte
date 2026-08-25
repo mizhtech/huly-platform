@@ -23,6 +23,7 @@
     ButtonKind,
     ButtonSize,
     IconSize,
+    Label,
     SelectPopup,
     TooltipAlignment,
     eventToHTMLElement,
@@ -35,6 +36,7 @@
   import tracker from '../../plugin'
   import IssueStatusIcon from './IssueStatusIcon.svelte'
   import StatusPresenter from './StatusPresenter.svelte'
+  import { getIssueStatusLabel } from '../../utils/statusLabels'
 
   type ValueType = Issue | (AttachedData<Issue> & { space: Ref<Project> }) | IssueDraft
 
@@ -118,7 +120,7 @@
   }
 
   $: selectedStatus = getSelectedStatus(statuses, value, defaultIssueStatus)
-  $: selectedStatusLabel = shouldShowLabel ? selectedStatus?.name : undefined
+  $: selectedStatusLabel = shouldShowLabel && selectedStatus != null ? getIssueStatusLabel(selectedStatus) : undefined
   $: statusesInfo = statuses?.map((s) => {
     return {
       id: s._id,
@@ -153,7 +155,7 @@
           class="{kind === 'list' ? 'ml-1 text-md' : 'ml-2 text-base'} overflow-label disabled content-color"
           class:max-w-20={short}
         >
-          {selectedStatusLabel}
+          <Label label={selectedStatusLabel} />
         </span>
       {/if}
     </div>
@@ -181,7 +183,7 @@
             class:ml-1-5={selectedStatus && smallgap}
             class:ml-2={selectedStatus && !smallgap}
           >
-            {selectedStatusLabel}
+            <Label label={selectedStatusLabel} />
           </span>
         {/if}
       </svelte:fragment>

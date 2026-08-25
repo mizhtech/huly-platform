@@ -14,10 +14,11 @@
 -->
 <script lang="ts">
   import { Ref } from '@hcengineering/core'
-  import { ColorDefinition } from '@hcengineering/ui'
+  import { ColorDefinition, Label } from '@hcengineering/ui'
   import { IssueStatus, Project } from '@hcengineering/tracker'
   import IssueStatusIcon from './IssueStatusIcon.svelte'
   import { ProjectType, TaskType } from '@hcengineering/task'
+  import { getIssueStatusLabel } from '../../utils/statusLabels'
 
   export let value: IssueStatus | undefined
   export let space: Ref<Project> | undefined = undefined
@@ -51,7 +52,7 @@
       class="hulyTableAttr-content__row-label font-medium-12 uppercase grow overflow-label"
       style:color={accentedColor?.color ?? 'var(--global-primary-TextColor)'}
     >
-      {value.name}
+      <Label label={getIssueStatusLabel(value)} />
     </span>
   {:else}
     <div class="flex-presenter" style:color={'inherit'}>
@@ -65,7 +66,7 @@
         class:colorInherit
         class:fs-bold={accent}
       >
-        {value.name}
+        <Label label={getIssueStatusLabel(value)} />
       </span>
     </div>
   {/if}
