@@ -17,7 +17,7 @@
   import { getClient } from '@hcengineering/presentation'
   import { ButtonIcon, getCurrentLocation, IconAdd, location, Menu, navigate, showPopup } from '@hcengineering/ui'
 
-  import { MasterTag } from '@hcengineering/card'
+  import { CardSpace, MasterTag } from '@hcengineering/card'
   import card from '../../plugin'
   import CreateSpace from './CreateSpace.svelte'
   import CreateCardPopup from '../CreateCardPopup.svelte'
@@ -27,8 +27,11 @@
 
   let pressed: boolean = false
 
-  $: _class = $location.path[4] as Ref<MasterTag>
-  $: space = $location.path[3]
+  const specialRoutes = new Set(['my-cards', 'all', 'browser', 'type'])
+
+  $: routeSpace = $location.path[3]
+  $: _class = ($location.path[4] as Ref<MasterTag> | undefined) ?? card.types.Document
+  $: space = specialRoutes.has(routeSpace) ? undefined : (routeSpace as Ref<CardSpace>)
 
   async function navigateToCard (cardId: string): Promise<void> {
     const loc = getCurrentLocation()
