@@ -1,0 +1,42 @@
+# External MinIO override for the minified development stack.
+# Use after docker-compose.yaml and docker-compose.min.yaml.
+services:
+  minio:
+    profiles: ["internal-minio"]
+
+  workspace_cockroach:
+    links: !override
+      - cockroach
+    environment:
+      BACKUP_STORAGE: "minio|${EXTERNAL_MINIO_ENDPOINT}?accessKey=${EXTERNAL_MINIO_ACCESS_KEY}&secretKey=${EXTERNAL_MINIO_SECRET_KEY}"
+
+  collaborator:
+    links: !override
+      - transactor_cockroach
+
+  transactor_cockroach:
+    links: !override
+      - cockroach
+      - account
+
+  export:
+    links: !override []
+
+  datalake:
+    depends_on: !override
+      cockroach:
+        condition: service_started
+      account:
+        condition: service_started
+    environment:
+      BUCKETS: "blobs,eu|${EXTERNAL_MINIO_URL}?accessKey=${EXTERNAL_MINIO_ACCESS_KEY}&secretKey=${EXTERNAL_MINIO_SECRET_KEY}"
+
+  hulylake:
+    depends_on: !override
+      cockroach:
+        condition: service_started
+    environment:
+      AWS_ENDPOINT_URL: "${EXTERNAL_MINIO_URL}"
+      AWS_REGION: "${EXTERNAL_MINIO_REGION}"
+      AWS_ACCESS_KEY_ID: "${EXTERNAL_MINIO_ACCESS_KEY}"
+      AWS_SECRET_ACCESS_KEY: "${EXTERNAL_MINIO_SECRET_KEY}"
