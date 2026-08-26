@@ -66,7 +66,8 @@
     <TreeElement
       _id={department._id}
       icon={hr.icon.Department}
-      title={department.name}
+      label={department._id === hr.ids.Head ? hr.string.Organization : undefined}
+      title={department._id === hr.ids.Head ? undefined : department.name}
       selected={selected === department._id}
       isFold
       empty={desc.length === 0}

@@ -1,5 +1,6 @@
 {
   "string": {
+    "Organization": "Tổ chức",
     "Department": "Phòng ban",
     "ParentDepartmentLabel": "Phòng ban cha",
     "Structure": "Cơ cấu",

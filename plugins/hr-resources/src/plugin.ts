@@ -20,6 +20,7 @@ export default mergeIds(hrId, hr, {
   string: {
     HRApplication: '' as IntlString,
     Department: '' as IntlString,
+    Organization: '' as IntlString,
     Departments: '' as IntlString,
     ParentDepartmentLabel: '' as IntlString,
     Structure: '' as IntlString,

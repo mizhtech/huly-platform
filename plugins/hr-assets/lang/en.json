@@ -1,5 +1,6 @@
 {
   "string": {
+    "Organization": "Organization",
     "Department": "Department",
     "ParentDepartmentLabel": "Parent department",
     "Structure":"Structure",
