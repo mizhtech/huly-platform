@@ -485,7 +485,7 @@ abstract class PostgresAdapterBase implements DbAdapter {
             sqlChunks.push(secJoin)
           }
           if (options?.sort !== undefined) {
-            sqlChunks.push(this.buildOrder(_class, domain, options.sort, joins))
+            sqlChunks.push(this.buildOrder(vars, _class, domain, options.sort, joins))
           }
           if (options?.limit !== undefined) {
             sqlChunks.push(`LIMIT ${escape(options.limit)}`)
@@ -1040,6 +1040,7 @@ abstract class PostgresAdapterBase implements DbAdapter {
   }
 
   private buildOrder<T extends Doc>(
+    vars: ValuesVariables,
     _class: Ref<Class<T>>,
     baseDomain: string,
     sort: SortingQuery<T>,
@@ -1055,13 +1056,13 @@ abstract class PostgresAdapterBase implements DbAdapter {
       if (typeof val === 'number') {
         const key = escape(_key)
         if (attr !== undefined && NumericTypes.includes(attr.type._class)) {
-          res.push(`(${this.getKey(_class, baseDomain, key, joins)})::numeric ${val === 1 ? 'ASC' : 'DESC'}`)
+          res.push(`(${this.getKey(vars, _class, baseDomain, key, joins)})::numeric ${val === 1 ? 'ASC' : 'DESC'}`)
         } else if (attr !== undefined && attr.type._class === core.class.TypeIdentifier) {
           res.push(
-            `regexp_replace(COALESCE(${this.getKey(_class, baseDomain, key, joins)}, ''), '-?\\d+$', '') ${val === 1 ? 'ASC' : 'DESC'}`
+            `regexp_replace(COALESCE(${this.getKey(vars, _class, baseDomain, key, joins)}, ''), '-?\\d+$', '') ${val === 1 ? 'ASC' : 'DESC'}`
           )
           res.push(
-            `COALESCE(NULLIF(regexp_replace(${this.getKey(_class, baseDomain, key, joins)}, '.*?(\\d+)$', '\\1'), ''), '0')::INT ${val === 1 ? 'ASC' : 'DESC'}`
+            `COALESCE(NULLIF(regexp_replace(${this.getKey(vars, _class, baseDomain, key, joins)}, '.*?(\\d+)$', '\\1'), ''), '0')::INT ${val === 1 ? 'ASC' : 'DESC'}`
           )
         } else if (attr?.type._class === core.class.EnumOf && this.getEnumVals(attr) !== undefined) {
           const enumValues = this.getEnumVals(attr)
@@ -1069,11 +1070,11 @@ abstract class PostgresAdapterBase implements DbAdapter {
             const orderCase = enumValues.enumValues.map((v, i) => `WHEN '${simpleEscape(v)}' THEN ${i + 1}`).join(' ')
 
             res.push(
-              `CASE ${this.getKey(_class, baseDomain, key, joins)} ${orderCase} ELSE 999 END ${val === 1 ? 'ASC' : 'DESC'}`
+              `CASE ${this.getKey(vars, _class, baseDomain, key, joins)} ${orderCase} ELSE 999 END ${val === 1 ? 'ASC' : 'DESC'}`
             )
           }
         } else {
-          res.push(`${this.getKey(_class, baseDomain, key, joins)} ${val === 1 ? 'ASC' : 'DESC'}`)
+          res.push(`${this.getKey(vars, _class, baseDomain, key, joins)} ${val === 1 ? 'ASC' : 'DESC'}`)
         }
       } else {
         // todo handle custom sorting
@@ -1111,7 +1112,7 @@ abstract class PostgresAdapterBase implements DbAdapter {
       if (value === undefined) continue
       const key = escape(_key)
       const valueType = this.getValueType(_class, key)
-      const tkey = this.getKey(_class, baseDomain, key, joins, valueType === 'dataArray')
+      const tkey = this.getKey(vars, _class, baseDomain, key, joins, valueType === 'dataArray')
       const translated = this.translateQueryValue(vars, tkey, value, valueType)
       if (translated !== undefined) {
         res.push(translated)
@@ -1192,6 +1193,7 @@ abstract class PostgresAdapterBase implements DbAdapter {
   }
 
   private getKey<T extends Doc>(
+    vars: ValuesVariables,
     _class: Ref<Class<T>>,
     baseDomain: string,
     key: string,
@@ -1199,12 +1201,18 @@ abstract class PostgresAdapterBase implements DbAdapter {
     isDataArray: boolean = false
   ): string {
     if (key.startsWith('$lookup')) {
-      return this.transformLookupKey(baseDomain, key, joins, isDataArray)
+      return this.transformLookupKey(vars, baseDomain, key, joins, isDataArray)
     }
     return `${baseDomain}.${this.transformKey(baseDomain, _class, key, isDataArray)}`
   }
 
-  private transformLookupKey (domain: string, key: string, joins: JoinProps[], isDataArray: boolean = false): string {
+  private transformLookupKey (
+    vars: ValuesVariables,
+    domain: string,
+    key: string,
+    joins: JoinProps[],
+    isDataArray: boolean = false
+  ): string {
     const arr = key.split('.').filter((p) => p !== '$lookup')
     const tKey = arr.pop() ?? ''
     const path = arr.join('.')
@@ -1213,7 +1221,20 @@ abstract class PostgresAdapterBase implements DbAdapter {
       throw new Error(`Can't fined join for path: ${path}`)
     }
     if (join.isReverse) {
-      return `${join.toAlias}->'${tKey}'`
+      const wsId = vars.add(this.workspaceId, '::uuid')
+      const valueKey = isDataField(join.table, tKey)
+        ? `${join.toAlias}."data"#>>'{${tKey}}'`
+        : `${join.toAlias}."${tKey}"`
+      let classesQuery = ''
+      if (join.classes !== undefined) {
+        if (join.classes.length === 1) {
+          classesQuery = ` AND ${join.toAlias}._class = ${vars.add(join.classes[0], '::text')}`
+        } else {
+          classesQuery = ` AND ${join.toAlias}._class = ANY (${vars.addArray(join.classes, '::text[]')})`
+        }
+      }
+      const from = `${join.fromAlias}${join.fromAlias !== '' ? '.' : ''}${join.fromField}`
+      return `(SELECT MAX(${valueKey}) FROM ${join.table} AS ${join.toAlias} WHERE ${join.toAlias}."${join.toField}" = ${from} AND ${join.toAlias}."workspaceId" = ${wsId}${classesQuery})`
     }
     if (isDataField(domain, tKey)) {
       if (isDataArray) {
