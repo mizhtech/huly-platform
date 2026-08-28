@@ -199,7 +199,7 @@
           </div>
         {/each}
 
-        {#if workspaces.length === 0 && account?.token != null}
+        {#if workspaces.length === 0 && account?.token != null && (isReadOnlyGuest || isAdminUser())}
           <div class="form-row send">
             <Button
               label={isReadOnlyGuest ? login.string.SignUp : login.string.CreateWorkspace}
@@ -215,7 +215,7 @@
     </Scroller>
     <div class="grow-separator" />
     <div class="footer">
-      {#if workspaces.length > 0 && !isReadOnlyGuest}
+      {#if workspaces.length > 0 && !isReadOnlyGuest && isAdminUser()}
         <div>
           <span><Label label={login.string.WantAnotherWorkspace} /></span>
           <NavLink

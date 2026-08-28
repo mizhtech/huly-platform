@@ -568,6 +568,10 @@ export async function createWorkspace (
 
   const { account, extra } = decodeTokenVerbose(ctx, token)
 
+  if (extra?.admin !== 'true') {
+    throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
+  }
+
   checkRateLimit(account, workspaceName)
 
   ctx.info('Creating workspace record', { workspaceName, account, region })

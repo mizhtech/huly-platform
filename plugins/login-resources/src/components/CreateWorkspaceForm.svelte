@@ -17,6 +17,7 @@
   import { type RegionInfo } from '@hcengineering/account-client'
   import { OK, Severity, Status, getEmbeddedLabel } from '@hcengineering/platform'
   import { LoginInfo } from '@hcengineering/login'
+  import { isAdminUser } from '@hcengineering/presentation'
   import { ButtonMenu, Label, MiniToggle, getCurrentLocation, navigate } from '@hcengineering/ui'
   import { workbenchId } from '@hcengineering/workbench'
   import { onMount } from 'svelte'
@@ -45,6 +46,11 @@
 
   onMount(async () => {
     loginInfo = await getAccount()
+    if (!isAdminUser()) {
+      goTo('selectWorkspace')
+      return
+    }
+
     // Show only regions with specified name
     regions = (await getRegionInfo())?.filter((it) => it.name.length > 0) ?? []
     selectedRegion = regions[0]?.region

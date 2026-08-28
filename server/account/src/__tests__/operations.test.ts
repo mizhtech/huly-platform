@@ -53,7 +53,8 @@ import {
   createAccessLink,
   getSubscriptions,
   leaveWorkspace,
-  checkJoin
+  checkJoin,
+  createWorkspace
 } from '../operations'
 import { accountPlugin } from '../plugin'
 
@@ -136,6 +137,24 @@ describe('account operations', () => {
       account: mockAccount.uuid,
       workspace: mockWorkspace.uuid,
       extra: {}
+    })
+  })
+
+  describe('createWorkspace', () => {
+    test('should reject non-admin accounts', async () => {
+      ;(decodeTokenVerbose as jest.Mock).mockReturnValue({
+        account: mockAccount.uuid,
+        workspace: undefined,
+        extra: {}
+      })
+
+      await expect(
+        createWorkspace(mockCtx, mockDb, mockBranding, mockToken, { workspaceName: 'Test Workspace' })
+      ).rejects.toMatchObject({
+        status: expect.objectContaining({ code: platform.status.Forbidden })
+      })
+
+      expect(mockDb.account.findOne).not.toHaveBeenCalled()
     })
   })
 
