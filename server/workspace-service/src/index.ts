@@ -27,7 +27,7 @@ import { setMetadata } from '@hcengineering/platform'
 import serverClientPlugin from '@hcengineering/server-client'
 import { QueueTopic, type PlatformQueue, type QueueWorkspaceMessage } from '@hcengineering/server-core'
 import serverNotification from '@hcengineering/server-notification'
-import { createStorageFromConfig, storageConfigFromEnv } from '@hcengineering/server-storage'
+import { createStorageFromConfig, serializeStorageEnv, storageConfigFromEnv } from '@hcengineering/server-storage'
 import serverToken from '@hcengineering/server-token'
 import toolPlugin from '@hcengineering/server-tool'
 import { WorkspaceWorker, type WorkspaceOperation } from './service'
@@ -55,8 +55,23 @@ export function serveWorkspaceAccount (
     process.exit(1)
   }
 
-  if (wsOperation === 'all+backup' && process.env.BACKUP_STORAGE === undefined) {
-    console.log('BACKUP_STORAGE is required for all operation')
+  const backupStorageEnv =
+    process.env.BACKUP_STORAGE ??
+    (process.env.BACKUP_STORAGE_ENDPOINT !== undefined &&
+    process.env.BACKUP_STORAGE_ACCESS_KEY !== undefined &&
+    process.env.BACKUP_STORAGE_SECRET_KEY !== undefined
+      ? serializeStorageEnv({
+          kind: process.env.BACKUP_STORAGE_KIND ?? 'minio',
+          endpoint: process.env.BACKUP_STORAGE_ENDPOINT,
+          params: {
+            accessKey: process.env.BACKUP_STORAGE_ACCESS_KEY,
+            secretKey: process.env.BACKUP_STORAGE_SECRET_KEY
+          }
+        })
+      : undefined)
+
+  if (wsOperation === 'all+backup' && backupStorageEnv === undefined) {
+    console.log('BACKUP_STORAGE or BACKUP_STORAGE_ENDPOINT/ACCESS_KEY/SECRET_KEY is required for all operation')
     process.exit(1)
   }
 
@@ -72,7 +87,7 @@ export function serveWorkspaceAccount (
   const backup =
     wsOperation === 'all+backup'
       ? {
-          backupStorage: createStorageFromConfig(storageConfigFromEnv(process.env.BACKUP_STORAGE ?? '').storages[0]),
+          backupStorage: createStorageFromConfig(storageConfigFromEnv(backupStorageEnv ?? '').storages[0]),
           bucketName: process.env.BACKUP_BUCKET ?? 'backup'
         }
       : undefined

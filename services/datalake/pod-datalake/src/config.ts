@@ -48,6 +48,44 @@ export interface Config {
 
 const parseNumber = (str: string | undefined): number | undefined => (str !== undefined ? Number(str) : undefined)
 
+function serializeBucketConfig (
+  bucket: string,
+  location: string,
+  endpoint: string,
+  accessKey: string,
+  secretKey: string,
+  region?: string
+): string {
+  const uri = new URL(endpoint)
+  uri.searchParams.set('accessKey', accessKey)
+  uri.searchParams.set('secretKey', secretKey)
+  if (region !== undefined) {
+    uri.searchParams.set('region', region)
+  }
+  return `${bucket},${location}|${uri.toString()}`
+}
+
+function bucketConfigFromEnv (): string | undefined {
+  if (process.env.BUCKETS !== undefined) {
+    return process.env.BUCKETS
+  }
+  if (
+    process.env.BUCKET_ENDPOINT === undefined ||
+    process.env.BUCKET_ACCESS_KEY === undefined ||
+    process.env.BUCKET_SECRET_KEY === undefined
+  ) {
+    return undefined
+  }
+  return serializeBucketConfig(
+    process.env.BUCKET_NAME ?? 'blobs',
+    process.env.BUCKET_LOCATION ?? 'eu',
+    process.env.BUCKET_ENDPOINT,
+    process.env.BUCKET_ACCESS_KEY,
+    process.env.BUCKET_SECRET_KEY,
+    process.env.BUCKET_REGION
+  )
+}
+
 function parseBucketsConfig (str: string | undefined): BucketConfig[] {
   if (str === undefined) {
     return []
@@ -92,7 +130,7 @@ const config: Config = (() => {
     Secret: process.env.SECRET,
     AccountsUrl: process.env.ACCOUNTS_URL,
     DbUrl: process.env.DB_URL,
-    Buckets: parseBucketsConfig(process.env.BUCKETS),
+    Buckets: parseBucketsConfig(bucketConfigFromEnv()),
     Secure: process.env.SECURE === 'true',
     Readonly: process.env.READONLY === 'true',
     Cache: {

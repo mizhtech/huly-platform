@@ -24,6 +24,34 @@ import { ReadonlyStorageAdapter } from './readonly'
 
 */
 
+
+export interface StorageEnvConfig {
+  kind: string
+  name?: string
+  endpoint: string
+  params?: Record<string, string | undefined>
+}
+
+export function serializeStorageEnv (config: StorageEnvConfig): string {
+  let endpoint = config.endpoint
+  let hasProtocol = true
+  if (!endpoint.includes('://')) {
+    endpoint = 'empty://' + endpoint
+    hasProtocol = false
+  }
+
+  const uri = new URL(endpoint)
+  for (const [key, value] of Object.entries(config.params ?? {})) {
+    if (value !== undefined) {
+      uri.searchParams.set(key, value)
+    }
+  }
+
+  const serializedUrl = hasProtocol ? uri.toString() : uri.toString().replace(/^empty:\/\//, '')
+  const kindName = config.name !== undefined ? `${config.kind},${config.name}` : config.kind
+  return `${kindName}|${serializedUrl}`
+}
+
 export function storageConfigFromEnv (configEnv?: string): StorageConfiguration {
   const storageConfig: StorageConfiguration = { default: '', storages: [] }
 

@@ -8,7 +8,10 @@ services:
     links: !override
       - cockroach
     environment:
-      BACKUP_STORAGE: "minio|${EXTERNAL_MINIO_ENDPOINT}?accessKey=${EXTERNAL_MINIO_ACCESS_KEY}&secretKey=${EXTERNAL_MINIO_SECRET_KEY}"
+      BACKUP_STORAGE_KIND: "minio"
+      BACKUP_STORAGE_ENDPOINT: "${EXTERNAL_MINIO_ENDPOINT}"
+      BACKUP_STORAGE_ACCESS_KEY: "${EXTERNAL_MINIO_ACCESS_KEY}"
+      BACKUP_STORAGE_SECRET_KEY: "${EXTERNAL_MINIO_SECRET_KEY}"
 
   collaborator:
     links: !override
@@ -29,7 +32,11 @@ services:
       account:
         condition: service_started
     environment:
-      BUCKETS: "blobs,eu|${EXTERNAL_MINIO_URL}?accessKey=${EXTERNAL_MINIO_ACCESS_KEY}&secretKey=${EXTERNAL_MINIO_SECRET_KEY}"
+      BUCKET_NAME: "blobs"
+      BUCKET_LOCATION: "eu"
+      BUCKET_ENDPOINT: "${EXTERNAL_MINIO_URL}"
+      BUCKET_ACCESS_KEY: "${EXTERNAL_MINIO_ACCESS_KEY}"
+      BUCKET_SECRET_KEY: "${EXTERNAL_MINIO_SECRET_KEY}"
 
   hulylake:
     depends_on: !override
