@@ -15,6 +15,7 @@ import account, {
 } from '@hcengineering/account'
 import accountEn from '@hcengineering/account/lang/en.json'
 import accountRu from '@hcengineering/account/lang/ru.json'
+import accountVi from '@hcengineering/account/lang/vi.json'
 import { Analytics } from '@hcengineering/analytics'
 import { registerProviders } from '@hcengineering/auth-providers'
 import { metricsAggregate, type Branding, type BrandingMap, type MeasureContext } from '@hcengineering/core'
@@ -96,6 +97,8 @@ export function serveAccount (measureCtx: MeasureContext, brandings: BrandingMap
         return accountEn
       case 'ru':
         return accountRu
+      case 'vi':
+        return accountVi
       default:
         return accountEn
     }

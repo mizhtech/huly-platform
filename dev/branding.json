@@ -3,21 +3,21 @@
     "key": "huly-dev",
     "title": "Huly",
     "protocol": "http",
-    "language": "en",
+    "language": "vi",
     "lastNameFirst": "true"
   },
   "huly.local:8087": {
     "key": "huly",
     "title": "Huly",
     "protocol": "http",
-    "language": "en",
+    "language": "vi",
     "lastNameFirst": "true"
   },
   "host.docker.internal:8087": {
     "key": "huly-docker",
     "title": "Huly",
     "protocol": "http",
-    "language": "en",
+    "language": "vi",
     "lastNameFirst": "true"
   },
   "huly.local:8081": {
