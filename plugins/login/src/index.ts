@@ -81,6 +81,7 @@ export default plugin(loginId, {
     PasswordMinUpperChars: '' as IntlString<{ count: number }>,
     PasswordMinLowerChars: '' as IntlString<{ count: number }>,
     SelectWorkspace: '' as IntlString,
+    AddWorkspace: '' as IntlString,
     ChangePassword: '' as IntlString,
     SetPassword: '' as IntlString,
     SSOPasswordDescription: '' as IntlString,
