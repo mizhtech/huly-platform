@@ -102,6 +102,17 @@
     "EnterTwoFactorCode": "Enter two-factor authentication code",
     "TwoFactorCode": "Two-factor authentication code",
     "Verify": "Verify",
-    "CreateSampleProjects": "Create sample projects and demo content"
+    "CreateSampleProjects": "Create sample projects and demo content",
+    "WelcomeBack": "Welcome back 👋",
+    "LoginSubtitle": "Welcome back!",
+    "RememberLogin": "Remember me",
+    "Or": "or",
+    "CreateWorkspaceSubtitle": "Create your workspace",
+    "SelectWorkspaceSubtitle": "Choose a workspace to continue",
+    "Documentation": "Documentation",
+    "ContactSupport": "Contact support",
+    "Security": "Security",
+    "Reliability": "Reliability",
+    "Performance": "Performance"
   }
 }

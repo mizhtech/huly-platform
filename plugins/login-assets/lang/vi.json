@@ -102,6 +102,17 @@
     "EnterTwoFactorCode": "Nhập mã xác thực hai yếu tố",
     "TwoFactorCode": "Mã xác thực hai yếu tố",
     "Verify": "Xác minh",
-    "CreateSampleProjects": "Tạo dự án mẫu và dữ liệu demo"
+    "CreateSampleProjects": "Tạo dự án mẫu và dữ liệu demo",
+    "WelcomeBack": "Chào mừng trở lại 👋",
+    "LoginSubtitle": "Chào mừng bạn quay trở lại!",
+    "RememberLogin": "Ghi nhớ đăng nhập",
+    "Or": "hoặc",
+    "CreateWorkspaceSubtitle": "Tạo không gian làm việc của bạn",
+    "SelectWorkspaceSubtitle": "Chọn một không gian làm việc để tiếp tục",
+    "Documentation": "Tài liệu hướng dẫn",
+    "ContactSupport": "Liên hệ hỗ trợ",
+    "Security": "Bảo mật",
+    "Reliability": "Tin cậy",
+    "Performance": "Hiệu suất"
   }
 }

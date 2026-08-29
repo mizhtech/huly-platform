@@ -9,15 +9,15 @@ export class SelectWorkspacePage extends CommonPage {
     this.page = page
   }
 
-  title = (): Locator => this.page.locator('div.title', { hasText: 'Select workspace' })
-  buttonWorkspace = (): Locator => this.page.locator('div[class*="workspace"]')
-  buttonCreateWorkspace = (): Locator => this.page.locator('button > span', { hasText: 'Create workspace' })
+  title = (): Locator => this.page.getByRole('heading', { name: 'Select workspace' })
+  buttonWorkspace = (): Locator => this.page.locator('button.workspace-item')
+  buttonCreateWorkspace = (): Locator => this.page.getByRole('button', { name: 'Create workspace' })
   buttonWorkspaceName = (): Locator => this.page.locator('input[type="text"]').first()
-  buttonCreateNewWorkspace = (): Locator => this.page.locator('div.form-row.send button')
+  buttonCreateNewWorkspace = (): Locator => this.page.getByRole('button', { name: 'Create workspace' })
   workspaceButtonByName = (workspace: string): Locator => this.buttonWorkspace().filter({ hasText: workspace }).first()
-  createAnotherWorkspace = (): Locator => this.page.getByRole('link', { name: 'Create workspace' })
+  createAnotherWorkspace = (): Locator => this.page.getByRole('button', { name: 'Add workspace' })
   workspaceLogo = (): Locator => this.page.getByText('N', { exact: true })
-  workspaceList = (workspaceName: string): Locator => this.page.getByRole('button', { name: workspaceName })
+  workspaceList = (workspaceName: string): Locator => this.page.locator('button.workspace-item', { hasText: workspaceName })
   createSampleProjectsToggle = (): Locator =>
     this.page.locator('label', { hasText: 'Create sample projects and demo content' }).locator('input[type="checkbox"]')
 

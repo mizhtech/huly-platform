@@ -506,13 +506,28 @@ export async function getPerson (): Promise<[Status, Person | null]> {
   }
 }
 
+let rememberLoginAccount = true
+
+export function setRememberLoginAccount (remember: boolean): void {
+  rememberLoginAccount = remember
+  if (!remember) {
+    setMetadataLocalStorage(login.metadata.LoginAccount, undefined as any)
+    setMetadataLocalStorage(login.metadata.LastAccount, undefined as any)
+  }
+}
+
 export function setLoginInfo (loginInfo: WorkspaceLoginInfo): void {
   setMetadata(presentation.metadata.Token, loginInfo.token)
   setMetadata(presentation.metadata.WorkspaceUuid, loginInfo.workspace)
   setMetadata(presentation.metadata.WorkspaceDataId, loginInfo.workspaceDataId)
   setMetadataLocalStorage(login.metadata.LoginEndpoint, loginInfo.endpoint)
-  setMetadataLocalStorage(login.metadata.LoginAccount, loginInfo.account)
-  setMetadataLocalStorage(login.metadata.LastAccount, loginInfo.account)
+  if (rememberLoginAccount) {
+    setMetadataLocalStorage(login.metadata.LoginAccount, loginInfo.account)
+    setMetadataLocalStorage(login.metadata.LastAccount, loginInfo.account)
+  } else {
+    setMetadataLocalStorage(login.metadata.LoginAccount, undefined as any)
+    setMetadataLocalStorage(login.metadata.LastAccount, undefined as any)
+  }
 }
 
 export function navigateToWorkspace (

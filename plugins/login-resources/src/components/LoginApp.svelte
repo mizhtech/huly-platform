@@ -19,6 +19,7 @@
   import {
     Location,
     Popup,
+    Label,
     Scroller,
     deviceOptionsStore as deviceInfo,
     fetchMetadataLocalStorage,
@@ -153,7 +154,7 @@
         <LoginIcon /><span class="fs-title ml-2">{getMetadata(workbench.metadata.PlatformTitle)}</span>
       </div>
 
-      <div class="panel-base" class:panel={$deviceInfo.docWidth > 768} class:white={!$themeStore.dark}>
+      <div class="panel-base" class:panel={$deviceInfo.docWidth > 768} class:white={!$themeStore.dark} class:onboarding={page === 'login' || page === 'createWorkspace' || page === 'selectWorkspace'}>
         <Scroller padding={'1rem 0'}>
           <div class="form-content">
             {#if page === 'login'}
@@ -190,6 +191,14 @@
           </div>
         </Scroller>
       </div>
+
+      {#if $deviceInfo.docWidth > 768 && (page === 'login' || page === 'createWorkspace' || page === 'selectWorkspace')}
+        <div class="brand-footer">
+          <span><Label label={login.string.Security} /></span><i>•</i>
+          <span><Label label={login.string.Reliability} /></span><i>•</i>
+          <span><Label label={login.string.Performance} /></span>
+        </div>
+      {/if}
 
       <Popup />
     </div>
@@ -294,5 +303,23 @@
     justify-content: center;
     flex-grow: 1;
     height: max-content;
+  }
+
+  .brand-footer {
+    position: fixed;
+    left: 2.5rem;
+    bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+    color: rgba(255,255,255,.58);
+    font-size: .8rem;
+    z-index: 2;
+  }
+  .brand-footer i { font-style: normal; opacity: .55; }
+  .panel.onboarding {
+    width: min(48%, 46rem);
+    min-width: 38rem;
+    max-width: 46rem;
   }
 </style>

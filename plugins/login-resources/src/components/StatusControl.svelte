@@ -29,10 +29,11 @@
 
 <style lang="scss">
   .container {
-    padding: 0.75rem 1rem;
+    min-height: 3rem;
+    padding: 0.65rem 0.9rem;
     background-color: var(--theme-button-default);
     border: 1px solid var(--theme-button-border);
-    border-radius: 0.5rem;
+    border-radius: 0.75rem;
   }
 
   .error {

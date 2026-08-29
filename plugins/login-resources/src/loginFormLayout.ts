@@ -27,7 +27,7 @@ export function getLoginFormLayout (docWidth: number, docHeight: number): LoginF
   if (docHeight <= 820) {
     return { padding: '1rem 2rem', paddingInline: '2rem' }
   }
-  return { padding: '4rem 5rem', paddingInline: '5rem' }
+  return { padding: '3rem 4rem', paddingInline: '4rem' }
 }
 
 export function loginFormPadding (docWidth: number, docHeight: number): string {

@@ -16,7 +16,7 @@ export class LoginPage {
   invalidCredentialsMessage = (): Locator =>
     this.page.getByText('Account not found or the provided credentials are incorrect')
 
-  recoverLink = (): Locator => this.page.getByRole('link', { name: 'Recover' })
+  recoverLink = (): Locator => this.page.getByRole('link', { name: 'Forgot your password?' })
   passwordRecovery = (): Locator => this.page.getByText('Password recovery')
   recoveryLoginText = (): Locator => this.page.getByText('Know your password? Log In')
   recoverySignUpText = (): Locator => this.page.getByText('Do not have an account? Sign Up')
