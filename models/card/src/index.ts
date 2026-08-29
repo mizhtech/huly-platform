@@ -1044,6 +1044,25 @@ export function createModel (builder: Builder): void {
     core.space.Model,
     {
       application: card.app.Card,
+      role: AccountRole.User,
+      permissions: [
+        card.permission.ForbidCreateCard,
+        card.permission.ForbidUpdateCard,
+        card.permission.ForbidCardMixin,
+        card.permission.ForbidRemoveCard
+      ],
+      spaceClass: card.class.CardSpace,
+      enabled: true,
+      order: 20
+    },
+    card.ids.ModulePermissionGroupUser
+  )
+
+  builder.createDoc(
+    core.class.ModulePermissionGroup,
+    core.space.Model,
+    {
+      application: card.app.Card,
       role: AccountRole.ReadOnlyGuest,
       permissions: [],
       spaceClass: card.class.CardSpace,

@@ -29,7 +29,8 @@ export default mergeIds(settingId, setting, {
     Configure: '' as Ref<Doc>,
     SettingNotificationGroup: '' as Ref<NotificationGroup>,
     IntegrationDisabledNotification: '' as Ref<NotificationType>,
-    UpdateIntegrationActivityViewlet: '' as Ref<DocUpdateMessageViewlet>
+    UpdateIntegrationActivityViewlet: '' as Ref<DocUpdateMessageViewlet>,
+    ModulePermissionGroupUser: '' as Ref<Doc>
   },
   component: {
     EnumSetting: '' as AnyComponent,

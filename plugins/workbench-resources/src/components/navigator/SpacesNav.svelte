@@ -27,7 +27,7 @@
     navigate,
     showPopup
   } from '@hcengineering/ui'
-  import { TreeNode } from '@hcengineering/view-resources'
+  import { TreeNode, isRoleActionForbidden } from '@hcengineering/view-resources'
   import { SpacesNavModel } from '@hcengineering/workbench'
   import { createEventDispatcher } from 'svelte'
   import { InboxNotificationsClientImpl } from '@hcengineering/notification-resources'
@@ -104,6 +104,7 @@
     const result = hasSpaceBrowser ? [browseSpaces] : []
     if (
       hasAccountRole(getCurrentAccount(), AccountRole.User) &&
+      !isRoleActionForbidden(core.class.TxCreateDoc, model.spaceClass) &&
       model.addSpaceLabel !== undefined &&
       model.createComponent !== undefined
     ) {

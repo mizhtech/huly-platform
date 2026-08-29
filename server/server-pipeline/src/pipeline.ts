@@ -43,6 +43,7 @@ import {
   QueryJoinMiddleware,
   QueueMiddleware,
   RankMiddleware,
+  RolePermissionsMiddleware,
   SpacePermissionsMiddleware,
   SpaceSecurityMiddleware,
   VersioningMiddleware,
@@ -151,6 +152,7 @@ export function createServerPipeline (
       (ctx: MeasureContext, context: PipelineContext, next?: Middleware) =>
         SpaceSecurityMiddleware.create(opt.adapterSecurity ?? false, ctx, context, next),
       SpacePermissionsMiddleware.create,
+      RolePermissionsMiddleware.create,
       GuestPermissionsMiddleware.create,
       ConfigurationMiddleware.create,
       ContextNameMiddleware.create,

@@ -249,6 +249,9 @@
     "ShowQRCode": "Show QR code",
     "EnterVerificationCode": "Enter verification code",
     "OverrideAttribute": "Override attribute",
-    "Required": "Required"
+    "Required": "Required",
+    "ForbidCreateEnumPermission": "Forbid create enum",
+    "ForbidUpdateEnumPermission": "Forbid update enum",
+    "ForbidRemoveEnumPermission": "Forbid delete enum"
   }
 }

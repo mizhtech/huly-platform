@@ -118,7 +118,8 @@ export default mergeIds(contactId, contact, {
     PersonNotificationGroup: '' as Ref<NotificationGroup>,
     OrganizationChatMessageViewlet: '' as Ref<ChatMessageViewlet>,
     PersonChatMessageViewlet: '' as Ref<ChatMessageViewlet>,
-    EmployeeChatMessageViewlet: '' as Ref<ChatMessageViewlet>
+    EmployeeChatMessageViewlet: '' as Ref<ChatMessageViewlet>,
+    ModulePermissionGroupUser: '' as Ref<Doc>
   },
   action: {
     KickEmployee: '' as Ref<Action>,

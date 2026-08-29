@@ -687,6 +687,25 @@ export function createModel (builder: Builder): void {
     core.space.Model,
     {
       application: tracker.app.Tracker,
+      role: AccountRole.User,
+      permissions: [
+        tracker.permission.ForbidCreateProject,
+        tracker.permission.ForbidUpdateProject,
+        tracker.permission.ForbidProjectMixin,
+        tracker.permission.ForbidRemoveProject
+      ],
+      spaceClass: tracker.class.Project,
+      enabled: true,
+      order: 10
+    },
+    tracker.ids.ModulePermissionGroupUser
+  )
+
+  builder.createDoc(
+    core.class.ModulePermissionGroup,
+    core.space.Model,
+    {
+      application: tracker.app.Tracker,
       role: AccountRole.ReadOnlyGuest,
       permissions: [],
       spaceClass: tracker.class.Project,

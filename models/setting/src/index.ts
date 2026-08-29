@@ -49,6 +49,7 @@ import {
 } from '@hcengineering/setting'
 import templates from '@hcengineering/templates'
 import setting from './plugin'
+import { definePermissions } from './permissions'
 
 import workbench, { WidgetType } from '@hcengineering/model-workbench'
 import { type AnyComponent } from '@hcengineering/ui/src/types'
@@ -148,6 +149,14 @@ export class TSpaceTypeCreator extends TClass implements SpaceTypeCreator {
 }
 
 export function createModel (builder: Builder): void {
+  definePermissions(builder)
+  builder.createDoc(core.class.ModulePermissionGroup, core.space.Model, {
+    application: setting.ids.SettingApp,
+    role: AccountRole.User,
+    permissions: [setting.permission.ForbidCreateEnum, setting.permission.ForbidUpdateEnum, setting.permission.ForbidRemoveEnum],
+    enabled: true
+  }, setting.ids.ModulePermissionGroupUser)
+
   builder.createModel(
     TIntegration,
     TIntegrationType,

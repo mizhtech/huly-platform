@@ -93,6 +93,7 @@ import templates from '@hcengineering/templates'
 import { type AnyComponent } from '@hcengineering/ui/src/types'
 import { type Action } from '@hcengineering/view'
 import contact from './plugin'
+import { definePermissions } from './permissions'
 import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
 import preference, { TPreference } from '@hcengineering/model-preference'
 
@@ -327,6 +328,14 @@ export class TWorkspaceMemberStatus extends TDoc implements WorkspaceMemberStatu
 }
 
 export function createModel (builder: Builder): void {
+  definePermissions(builder)
+  builder.createDoc(core.class.ModulePermissionGroup, core.space.Model, {
+    application: contact.app.Contacts,
+    role: AccountRole.User,
+    permissions: [contact.permission.ForbidCreateContact],
+    enabled: true
+  }, contact.ids.ModulePermissionGroupUser)
+
   builder.createModel(
     TAvatarProvider,
     TChannelProvider,

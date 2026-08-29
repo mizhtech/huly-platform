@@ -87,6 +87,7 @@
     "TwoColumns": "Hai cột",
     "Grid": "Lưới",
     "RichtextProperties": "Thuộc tính Rich text",
-    "ShowAllVersions": "Hiện tất cả phiên bản"
+    "ShowAllVersions": "Hiện tất cả phiên bản",
+    "ForbidCardMixinPermission": "Cấm thay đổi cấu hình thẻ"
   }
 }

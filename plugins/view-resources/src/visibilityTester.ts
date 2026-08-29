@@ -26,6 +26,7 @@ import core, {
 import { getClient } from '@hcengineering/presentation'
 import { get } from 'svelte/store'
 import { spaceSpace } from './utils'
+import { isRoleActionForbidden } from './rolePermissions'
 
 function isTypedSpace (space: Space): space is TypedSpace {
   return getClient().getHierarchy().isDerived(space._class, core.class.TypedSpace)
@@ -43,6 +44,11 @@ export async function canDeleteObject (doc?: Doc | Doc[]): Promise<boolean> {
 
   const client = getClient()
   const targets = Array.isArray(doc) ? doc : [doc]
+
+  if (targets.some((target) => isRoleActionForbidden(core.class.TxRemoveDoc, target._class))) {
+    return false
+  }
+
   // Note: allow deleting objects in NOT typed spaces for now
   const targetSpaces = toIdMap(
     (await client.findAll(core.class.Space, { _id: { $in: targets.map((t) => t.space) } })).filter(isTypedSpace)
@@ -63,6 +69,8 @@ export async function canEditSpace (doc?: Doc | Doc[]): Promise<boolean> {
   }
 
   const space = doc as Space
+
+  if (isRoleActionForbidden(core.class.TxUpdateDoc, space._class) || isRoleActionForbidden(core.class.TxMixin, space._class)) return false
 
   if (isSpaceOwner(space)) {
     return true
@@ -90,6 +98,8 @@ export async function canArchiveSpace (doc?: Doc | Doc[]): Promise<boolean> {
 
   const space = doc as Space
 
+  if (isRoleActionForbidden(core.class.TxUpdateDoc, space._class) || isRoleActionForbidden(core.class.TxMixin, space._class)) return false
+
   if (isSpaceOwner(space)) {
     return true
   }
@@ -115,6 +125,8 @@ export async function canDeleteSpace (doc?: Doc | Doc[]): Promise<boolean> {
   }
 
   const space = doc as Space
+
+  if (isRoleActionForbidden(core.class.TxRemoveDoc, space._class)) return false
 
   if (isSpaceOwner(space)) {
     return true

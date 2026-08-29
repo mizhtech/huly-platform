@@ -79,6 +79,7 @@ export default mergeIds(cardId, card, {
     ForbidUpdateCard: '' as Ref<Permission>,
     ForbidAddTag: '' as Ref<Permission>,
     ForbidRemoveTag: '' as Ref<Permission>,
+    ForbidCardMixin: '' as Ref<Permission>,
     LockSection: '' as Ref<Permission>,
     UnlockSection: '' as Ref<Permission>
   },
@@ -170,6 +171,7 @@ export default mergeIds(cardId, card, {
     ForbidRemoveCard: '' as IntlString,
     ForbidUpdateCard: '' as IntlString,
     ForbidCreateCardPermission: '' as IntlString,
+    ForbidCardMixinPermission: '' as IntlString,
     ForbidAddTagPermission: '' as IntlString,
     ForbidRemoveTag: '' as IntlString,
     CardUpdated: '' as IntlString,

@@ -83,6 +83,7 @@ export default mergeIds(trackerId, tracker, {
     GuestIssueClassPermission: '' as Ref<Doc>,
     ModulePermissionGroup: '' as Ref<Doc>,
     ModulePermissionGroupReadOnlyGuest: '' as Ref<Doc>,
+    ModulePermissionGroupUser: '' as Ref<Doc>,
     IssueUpdatedActivityViewlet: '' as Ref<DocUpdateMessageViewlet>,
     IssueCreatedActivityViewlet: '' as Ref<DocUpdateMessageViewlet>,
     IssueRemovedActivityViewlet: '' as Ref<DocUpdateMessageViewlet>,

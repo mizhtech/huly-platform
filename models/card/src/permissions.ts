@@ -145,6 +145,19 @@ export function definePermissions (builder: Builder): void {
     core.class.Permission,
     core.space.Model,
     {
+      label: card.string.ForbidCardMixinPermission,
+      txClass: core.class.TxMixin,
+      objectClass: card.class.Card,
+      scope: 'space',
+      forbid: true
+    },
+    card.permission.ForbidCardMixin
+  )
+
+  builder.createDoc(
+    core.class.Permission,
+    core.space.Model,
+    {
       label: card.string.ForbidRemoveCard,
       txClass: core.class.TxRemoveDoc,
       objectClass: card.class.Card,

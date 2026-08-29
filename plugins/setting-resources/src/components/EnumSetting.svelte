@@ -30,11 +30,12 @@
     twoPanelsSeparators,
     showPopup
   } from '@hcengineering/ui'
-  import { showMenu } from '@hcengineering/view-resources'
+  import { isRoleActionForbidden, showMenu } from '@hcengineering/view-resources'
   import setting from '../plugin'
   import EnumValues from './EnumValues.svelte'
 
   const query = createQuery()
+  $: readOnly = isRoleActionForbidden(core.class.TxUpdateDoc, core.class.Enum)
 
   let enums: Enum[] = []
   let selected: Enum | undefined
@@ -58,13 +59,15 @@
   <Header adaptive={'disabled'}>
     <Breadcrumb icon={setting.icon.Enums} label={setting.string.Enums} size={'large'} isCurrent />
     <svelte:fragment slot="actions">
-      <ModernButton
-        kind={'primary'}
-        icon={IconAdd}
-        label={setting.string.CreateEnum}
-        size={'small'}
-        on:click={create}
-      />
+      {#if !readOnly}
+        <ModernButton
+          kind={'primary'}
+          icon={IconAdd}
+          label={setting.string.CreateEnum}
+          size={'small'}
+          on:click={create}
+        />
+      {/if}
     </svelte:fragment>
   </Header>
   <div class="hulyComponent-content__container columns">
@@ -93,6 +96,7 @@
                 <Label label={setting.string.EnumsCount} params={{ count: value.enumValues.length }} />
               </span>
             </div>
+            {#if !readOnly}
             <ButtonIcon
               kind={'tertiary'}
               icon={IconMoreH}
@@ -105,6 +109,7 @@
                 })
               }}
             />
+            {/if}
           </button>
         {/each}
       </Scroller>

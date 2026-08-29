@@ -249,6 +249,9 @@
     "ShowQRCode": "Hiện mã QR",
     "EnterVerificationCode": "Nhập mã xác minh",
     "OverrideAttribute": "Ghi đè thuộc tính",
-    "Required": "Bắt buộc"
+    "Required": "Bắt buộc",
+    "ForbidCreateEnumPermission": "Cấm tạo enum",
+    "ForbidUpdateEnumPermission": "Cấm cập nhật enum",
+    "ForbidRemoveEnumPermission": "Cấm xóa enum"
   }
 }

@@ -19,6 +19,7 @@
   import { TrackerEvents } from '@hcengineering/tracker'
   import { HeaderButton, showPopup } from '@hcengineering/ui'
   import view from '@hcengineering/view'
+  import { isRoleActionForbidden } from '@hcengineering/view-resources'
 
   import { onDestroy } from 'svelte'
   import tracker from '../plugin'
@@ -30,6 +31,7 @@
   let draftExists = false
   let projectExists = false
   let loading = true
+  $: canCreateProject = !isRoleActionForbidden(core.class.TxCreateDoc, tracker.class.Project)
 
   const query = createQuery()
   const client = getClient()
@@ -66,16 +68,16 @@
 
   let mainActionId: string | undefined = undefined
   let visibleActions: string[] = []
-  function updateActions (draft: boolean, project: boolean, closed: boolean): void {
+  function updateActions (draft: boolean, project: boolean, closed: boolean, canCreateProject: boolean): void {
     mainActionId = draft || !closed ? tracker.string.ResumeDraft : tracker.string.NewIssue
     if (project) {
-      visibleActions = [tracker.string.CreateProject, mainActionId, tracker.string.Import]
+      visibleActions = [...(canCreateProject ? [tracker.string.CreateProject] : []), mainActionId, tracker.string.Import]
     } else {
-      visibleActions = [tracker.string.CreateProject]
+      visibleActions = canCreateProject ? [tracker.string.CreateProject] : []
     }
   }
 
-  $: updateActions(draftExists, projectExists, closed)
+  $: updateActions(draftExists, projectExists, closed, canCreateProject)
 </script>
 
 <HeaderButton
@@ -87,7 +89,7 @@
     {
       id: tracker.string.CreateProject,
       label: tracker.string.CreateProject,
-      accountRole: AccountRole.User,
+      accountRole: canCreateProject ? AccountRole.User : AccountRole.Maintainer,
       callback: newProject
     },
     {

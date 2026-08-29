@@ -273,7 +273,10 @@
     "UnsetParentIssue": "Bỏ công việc cha",
     "ForbidCreateProjectPermission": "Cấm tạo dự án",
     "ForbidCreateProjectPermissionDescription": "Không cho người dùng tạo dự án mới",
-    "AllowCreatingIssues": "Cho phép tạo công việc"
+    "AllowCreatingIssues": "Cho phép tạo công việc",
+    "ForbidUpdateProjectPermission": "Cấm cập nhật dự án",
+    "ForbidProjectMixinPermission": "Cấm thay đổi cấu hình dự án",
+    "ForbidRemoveProjectPermission": "Cấm xóa dự án"
   },
   "status": {}
 }

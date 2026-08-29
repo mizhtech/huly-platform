@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Ref } from '@hcengineering/core'
+import { type Permission, type Ref } from '@hcengineering/core'
 import type { IntlString } from '@hcengineering/platform'
 import { mergeIds } from '@hcengineering/platform'
 import setting, { settingId } from '@hcengineering/setting'
@@ -21,6 +21,16 @@ import { type AnyComponent } from '@hcengineering/ui/src/types'
 import { type Widget } from '@hcengineering/workbench'
 
 export default mergeIds(settingId, setting, {
+  permission: {
+    ForbidCreateEnum: '' as Ref<Permission>,
+    ForbidUpdateEnum: '' as Ref<Permission>,
+    ForbidRemoveEnum: '' as Ref<Permission>
+  },
+  string: {
+    ForbidCreateEnumPermission: '' as IntlString,
+    ForbidUpdateEnumPermission: '' as IntlString,
+    ForbidRemoveEnumPermission: '' as IntlString
+  },
   ids: {
     SettingsWidget: '' as Ref<Widget>
   },

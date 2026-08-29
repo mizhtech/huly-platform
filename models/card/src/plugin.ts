@@ -58,7 +58,8 @@ export default mergeIds(cardId, card, {
     CardNotificationGroup: '' as Ref<NotificationGroup>,
     CardCreateNotification: '' as Ref<NotificationType>,
     CardNotification: '' as Ref<NotificationType>,
-    CardMessageNotification: '' as Ref<NotificationType>
+    CardMessageNotification: '' as Ref<NotificationType>,
+    ModulePermissionGroupUser: '' as Ref<Doc>
   },
   resolver: {
     Location: '' as Resource<(loc: Location) => Promise<ResolvedLocation | undefined>>,

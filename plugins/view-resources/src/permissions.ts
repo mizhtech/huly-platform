@@ -10,6 +10,7 @@ import core, {
 } from '@hcengineering/core'
 import { getMetadata } from '@hcengineering/platform'
 import { getClient } from '@hcengineering/presentation'
+import { isRoleActionForbidden } from './rolePermissions'
 
 export function canChangeAttribute (
   attr: AnyAttribute,
@@ -47,6 +48,7 @@ export function canChangeAttribute (
 }
 
 export function canChangeDoc (_class: Ref<Class<Doc>>, space: Ref<Space>, store: PermissionsStore): boolean {
+  if (isRoleActionForbidden(core.class.TxUpdateDoc, _class) || isRoleActionForbidden(core.class.TxMixin, _class)) return false
   const arePermissionsDisabled = getMetadata(core.metadata.DisablePermissions) ?? false
   if (arePermissionsDisabled) return true
   if (store.whitelist.has(space)) return true
@@ -86,6 +88,7 @@ export function canChangeDoc (_class: Ref<Class<Doc>>, space: Ref<Space>, store:
 }
 
 export function canRemoveDoc (_class: Ref<Class<Doc>>, space: Ref<Space>, store: PermissionsStore): boolean {
+  if (isRoleActionForbidden(core.class.TxRemoveDoc, _class)) return false
   const arePermissionsDisabled = getMetadata(core.metadata.DisablePermissions) ?? false
   if (arePermissionsDisabled) return true
   if (store.whitelist.has(space)) return true
@@ -108,6 +111,7 @@ export function canRemoveDoc (_class: Ref<Class<Doc>>, space: Ref<Space>, store:
 }
 
 export function canCreateObject (_class: Ref<Class<Doc>>, space: Ref<Space>, store: PermissionsStore): boolean {
+  if (isRoleActionForbidden(core.class.TxCreateDoc, _class)) return false
   const arePermissionsDisabled = getMetadata(core.metadata.DisablePermissions) ?? false
   if (arePermissionsDisabled) return true
   if (store.whitelist.has(space)) return true

@@ -396,3 +396,5 @@ export default async (): Promise<Resources> => ({
     GetLink: getLink
   }
 })
+
+export { isRoleActionForbidden } from './rolePermissions'

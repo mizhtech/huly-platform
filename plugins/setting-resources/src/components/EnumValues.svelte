@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Enum } from '@hcengineering/core'
+  import core, { Enum } from '@hcengineering/core'
   import presentation, { getClient, MessageBox } from '@hcengineering/presentation'
   import {
     ModernEditbox,
@@ -31,6 +31,7 @@
   } from '@hcengineering/ui'
   import type { DropdownIntlItem } from '@hcengineering/ui'
   import setting from '../plugin'
+  import { isRoleActionForbidden } from '@hcengineering/view-resources'
   import EnumValuesList from './EnumValuesList.svelte'
   import IconCrossedArrows from './icons/CrossedArrows.svelte'
   import IconBulletList from './icons/BulletList.svelte'
@@ -39,6 +40,7 @@
   export let value: Enum
 
   const client = getClient()
+  $: readOnly = isRoleActionForbidden(core.class.TxUpdateDoc, core.class.Enum)
 
   let newValue: string = ''
   let newItem: boolean = false
@@ -164,6 +166,17 @@
   }
 </script>
 
+{#if readOnly}
+<div class="flex-col flex-gap-4">
+  <div class="font-medium-16">{value.name}</div>
+  <div class="flex-col flex-gap-2">
+    <span class="font-medium-12"><Label label={setting.string.Options} /></span>
+    {#each value.enumValues as option}
+      <span class="font-regular-14">{option}</span>
+    {/each}
+  </div>
+</div>
+{:else}
 <div class="flex-between flex-gap-2">
   <ModernEditbox
     bind:value={value.name}
@@ -182,6 +195,8 @@
     hasMenu
   />
 </div>
+{/if}
+{#if !readOnly}
 <input
   bind:this={inputFile}
   disabled={inputFile == null}
@@ -267,3 +282,5 @@
     </div>
   {/if}
 </div>
+
+{/if}

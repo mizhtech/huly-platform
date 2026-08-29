@@ -151,6 +151,7 @@
     "WorkspaceStatusIn4Hours": "Sau 4 giờ",
     "WorkspaceStatusEndOfDay": "Cuối ngày",
     "WorkspaceStatusPickDate": "Chọn ngày",
-    "HideInactive": "Ẩn không hoạt động"
+    "HideInactive": "Ẩn không hoạt động",
+    "ForbidCreateContactPermission": "Cấm tạo liên hệ"
   }
 }

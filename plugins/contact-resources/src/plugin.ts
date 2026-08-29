@@ -15,7 +15,7 @@
 //
 
 import contact, { contactId } from '@hcengineering/contact'
-import { type Client, type Doc } from '@hcengineering/core'
+import { type Client, type Doc, type Permission, type Ref } from '@hcengineering/core'
 import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
 import { type LabelAndProps, type Location } from '@hcengineering/ui/src/types'
 import {
@@ -27,7 +27,11 @@ import {
 } from '@hcengineering/view'
 
 export default mergeIds(contactId, contact, {
+  permission: {
+    ForbidCreateContact: '' as Ref<Permission>
+  },
   string: {
+    ForbidCreateContactPermission: '' as IntlString,
     HideInactive: '' as IntlString,
     Apply: '' as IntlString,
     CreatePerson: '' as IntlString,

@@ -87,6 +87,7 @@
     "TwoColumns": "Two columns",
     "Grid": "Grid",
     "RichtextProperties": "Richtext Properties",
-    "ShowAllVersions": "Show all versions"
+    "ShowAllVersions": "Show all versions",
+    "ForbidCardMixinPermission": "Forbid card configuration changes"
   }
 }
