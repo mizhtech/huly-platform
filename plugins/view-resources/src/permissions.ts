@@ -10,13 +10,14 @@ import core, {
 } from '@hcengineering/core'
 import { getMetadata } from '@hcengineering/platform'
 import { getClient } from '@hcengineering/presentation'
-import { isRoleActionForbidden } from './rolePermissions'
+import { isRoleActionForbidden, isRoleUpdateForbidden } from './rolePermissions'
 
 export function canChangeAttribute (
   attr: AnyAttribute,
   space: Ref<TypedSpace>,
   store: PermissionsStore,
-  _class: Ref<Class<Doc>>
+  _class: Ref<Class<Doc>>,
+  object?: Doc
 ): boolean {
   const arePermissionsDisabled = getMetadata(core.metadata.DisablePermissions) ?? false
   if (arePermissionsDisabled) return true
@@ -44,11 +45,16 @@ export function canChangeAttribute (
     return true
   }
 
-  return canChangeDoc(_class, space, store)
+  return canChangeDoc(_class, space, store, object)
 }
 
-export function canChangeDoc (_class: Ref<Class<Doc>>, space: Ref<Space>, store: PermissionsStore): boolean {
-  if (isRoleActionForbidden(core.class.TxUpdateDoc, _class) || isRoleActionForbidden(core.class.TxMixin, _class)) return false
+export function canChangeDoc (
+  _class: Ref<Class<Doc>>,
+  space: Ref<Space>,
+  store: PermissionsStore,
+  object?: Doc
+): boolean {
+  if (object !== undefined ? isRoleUpdateForbidden(object) : isRoleActionForbidden(core.class.TxUpdateDoc, _class)) return false
   const arePermissionsDisabled = getMetadata(core.metadata.DisablePermissions) ?? false
   if (arePermissionsDisabled) return true
   if (store.whitelist.has(space)) return true

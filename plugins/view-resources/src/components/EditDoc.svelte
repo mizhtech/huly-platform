@@ -33,6 +33,7 @@
   import { createEventDispatcher, onDestroy } from 'svelte'
 
   import { DocNavLink, ParentsNavigator, getDocAttrsInfo, getDocLabel, getDocMixins, showMenu, parseLinkId } from '..'
+  import { isRoleUpdateForbidden } from '../rolePermissions'
   import { getCollectionCounter } from '../utils'
   import DocAttributeBar from './DocAttributeBar.svelte'
   import RelationsEditor from './RelationsEditor.svelte'
@@ -47,6 +48,7 @@
   let lastId: Ref<Doc> | undefined
   let objectId: Ref<Doc> | undefined
   let object: Doc
+  $: effectiveReadonly = readonly || (object !== undefined && isRoleUpdateForbidden(object))
 
   const pClient = getClient()
   const hierarchy = pClient.getHierarchy()
@@ -257,7 +259,7 @@
       dispatch('close')
     }}
     withoutActivity={!activityOptions.enabled}
-    withoutInput={!activityOptions.showInput || readonly}
+    withoutInput={!activityOptions.showInput || effectiveReadonly}
   >
     <svelte:fragment slot="title">
       {#if !embedded}<ParentsNavigator element={object} />{/if}
@@ -271,9 +273,9 @@
     <svelte:fragment slot="utils">
       <ComponentExtensions
         extension={view.extensions.EditDocTitleExtension}
-        props={{ size: 'medium', kind: 'ghost', _id, _class, value: object, readonly }}
+        props={{ size: 'medium', kind: 'ghost', _id, _class, value: object, readonly: effectiveReadonly }}
       />
-      {#if !readonly}
+      {#if !effectiveReadonly}
         <Button
           icon={IconMoreH}
           iconProps={{ size: 'medium' }}
@@ -308,7 +310,7 @@
             vertical: dir === 'column',
             allowedCollections,
             embedded,
-            readonly
+            readonly: effectiveReadonly
           }}
           on:update={updateKeys}
         />
@@ -316,27 +318,27 @@
         <DocAttributeBar
           {object}
           {mixins}
-          {readonly}
+          readonly={effectiveReadonly}
           ignoreKeys={[...ignoreKeys, ...collectionArrays, ...inplaceAttributes]}
           {allowedCollections}
           on:update={updateKeys}
         />
       {:else}
-        <AttributesBar {object} _class={realObjectClass} {keys} {readonly} />
+        <AttributesBar {object} _class={realObjectClass} {keys} readonly={effectiveReadonly} />
       {/if}
     </svelte:fragment>
 
     <svelte:fragment slot="header">
       {#if mainEditor && mainEditor.editor && mainEditor.pinned}
         <div class="flex-col flex-grow my-4">
-          <Component is={mainEditor.editor} props={{ object, readonly }} on:open={handleOpen} />
+          <Component is={mainEditor.editor} props={{ object, readonly: effectiveReadonly }} on:open={handleOpen} />
         </div>
       {/if}
     </svelte:fragment>
 
     {#if mainEditor && mainEditor.editor && !mainEditor.pinned}
       <div class="flex-col flex-grow flex-no-shrink step-tb-6">
-        <Component is={mainEditor.editor} props={{ object, readonly }} on:open={handleOpen} />
+        <Component is={mainEditor.editor} props={{ object, readonly: effectiveReadonly }} on:open={handleOpen} />
       </div>
     {/if}
 
@@ -351,7 +353,7 @@
               object,
               space: object.space,
               key: collection.key,
-              readonly,
+              readonly: effectiveReadonly,
               [collection.key.key]: getCollectionCounter(hierarchy, object, collection.key)
             }}
           />
@@ -359,17 +361,17 @@
       {/if}
     {/each}
 
-    <RelationsEditor {object} {readonly} />
+    <RelationsEditor {object} readonly={effectiveReadonly} />
 
     {#if editorFooter}
       <div class="step-tb-6">
-        <Component is={editorFooter.footer} props={{ object, _class, ...editorFooter.props, readonly }} />
+        <Component is={editorFooter.footer} props={{ object, _class, ...editorFooter.props, readonly: effectiveReadonly }} />
       </div>
     {/if}
 
     <svelte:fragment slot="panel-footer">
       {#if panelFooter}
-        <Component is={panelFooter.footer} props={{ object, _class, ...panelFooter.props, readonly }} />
+        <Component is={panelFooter.footer} props={{ object, _class, ...panelFooter.props, readonly: effectiveReadonly }} />
       {/if}
     </svelte:fragment>
   </Panel>
