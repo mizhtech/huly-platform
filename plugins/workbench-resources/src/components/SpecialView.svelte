@@ -54,7 +54,7 @@
   export let createEvent: string | undefined = undefined
   export let createLabel: IntlString | undefined = undefined
   export let createComponent: AnyComponent | undefined = undefined
-  export let createTxClass: Ref<Class<Tx>> = core.class.TxCreateDoc
+  export let createTxClass: Ref<Class<Tx>> | undefined = undefined
   export let createObjectClass: Ref<Class<Doc>> | undefined = undefined
   export let createComponentProps: Record<string, any> = {}
   export let createButton: AnyComponent | undefined = undefined
@@ -79,7 +79,9 @@
   let viewOptions: ViewOptions | undefined
 
   let isQueryLoaded = queryBuilder === undefined
-  $: canCreate = createObjectClass === undefined || !isRoleActionForbidden(createTxClass, createObjectClass)
+  $: effectiveCreateTxClass = createTxClass ?? core.class.TxCreateDoc
+  $: effectiveCreateObjectClass = createObjectClass ?? _class
+  $: canCreate = !isRoleActionForbidden(effectiveCreateTxClass, effectiveCreateObjectClass)
 
   $: baseQueryMixin = hierarchy.classHierarchyMixin(_class, view.mixin.BaseQuery)
 

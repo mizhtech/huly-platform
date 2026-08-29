@@ -506,6 +506,7 @@ export function createModel (builder: Builder): void {
               },
               createLabel: contact.string.Guest,
               createComponent: contact.component.CreateGuest,
+              createTxClass: core.class.TxCreateDoc,
               createObjectClass: contact.class.Person
             }
           },
@@ -524,6 +525,7 @@ export function createModel (builder: Builder): void {
               label: contact.string.Person,
               createLabel: contact.string.CreatePerson,
               createComponent: contact.component.CreatePerson,
+              createTxClass: core.class.TxCreateDoc,
               createObjectClass: contact.class.Person
             }
           },
@@ -539,6 +541,7 @@ export function createModel (builder: Builder): void {
               label: contact.string.Organization,
               createLabel: contact.string.CreateOrganization,
               createComponent: contact.component.CreateOrganization,
+              createTxClass: core.class.TxCreateDoc,
               createObjectClass: contact.class.Organization
             }
           }
