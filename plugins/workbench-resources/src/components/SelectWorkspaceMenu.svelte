@@ -17,7 +17,7 @@
   import { isArchivingMode, systemAccountUuid, WorkspaceInfoWithStatus } from '@hcengineering/core'
   import login from '@hcengineering/login'
   import { getMetadata, getResource } from '@hcengineering/platform'
-  import presentation, { createQuery, decodeTokenPayload, hasResource, isAdminUser } from '@hcengineering/presentation'
+  import presentation, { createQuery, hasResource, isAdminUser } from '@hcengineering/presentation'
   import {
     closePopup,
     Component,
@@ -187,9 +187,6 @@
             {$workspacesStore.length}
           </div>
         {/if}
-      </div>
-      <div class="p-2 ml-2 mb-4 select-text flex-col bordered">
-        {decodeTokenPayload(getMetadata(presentation.metadata.Token) ?? '').workspace ?? ''}
       </div>
     {/if}
     <div class="ap-scroll">

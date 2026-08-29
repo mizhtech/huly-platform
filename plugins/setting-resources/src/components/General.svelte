@@ -20,6 +20,7 @@
   import { translateCB } from '@hcengineering/platform'
   import { createQuery, getClient, MessageBox } from '@hcengineering/presentation'
   import { WorkspaceSetting } from '@hcengineering/setting'
+  import { clearCurrentWorkspaceSession, removeWorkspaceFromStore } from '@hcengineering/workbench-resources'
   import {
     Breadcrumb,
     Button,
@@ -99,7 +100,9 @@
       dangerous: true,
       action: async () => {
         await accountClient.deleteWorkspace()
-        navigate({ path: [loginId] })
+        removeWorkspaceFromStore(workspaceUrl)
+        await clearCurrentWorkspaceSession()
+        navigate({ path: [loginId, 'selectWorkspace'] })
       }
     })
   }

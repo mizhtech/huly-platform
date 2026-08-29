@@ -216,12 +216,11 @@ export async function logIn (loginInfo: { account: string, token?: string }): Pr
   setMetadataLocalStorage(login.metadata.LoginAccount, loginInfo.account)
 }
 
-export async function logOut (): Promise<void> {
-  const accountsUrl = getMetadata(login.metadata.AccountsUrl)
-  try {
-    await getAccountClient(accountsUrl).deleteCookie()
-  } catch (error) {}
+export function removeWorkspaceFromStore (workspaceUrl: string): void {
+  workspacesStore.update((workspaces) => workspaces.filter((workspace) => workspace.url !== workspaceUrl))
+}
 
+export async function clearCurrentWorkspaceSession (): Promise<void> {
   const currentWorkspace = getMetadata(presentation.metadata.WorkspaceUuid)
   if (currentWorkspace !== undefined) {
     setPresentationCookie('', currentWorkspace)
@@ -229,9 +228,20 @@ export async function logOut (): Promise<void> {
 
   setMetadata(presentation.metadata.Token, null)
   setMetadata(presentation.metadata.WorkspaceUuid, null)
+  setMetadata(presentation.metadata.WorkspaceName, null)
   setMetadata(presentation.metadata.WorkspaceDataId, null)
+
+  await closeClient()
+}
+
+export async function logOut (): Promise<void> {
+  const accountsUrl = getMetadata(login.metadata.AccountsUrl)
+  try {
+    await getAccountClient(accountsUrl).deleteCookie()
+  } catch (error) {}
+
+  await clearCurrentWorkspaceSession()
+
   setMetadataLocalStorage(login.metadata.LoginEndpoint, null)
   setMetadataLocalStorage(login.metadata.LoginAccount, null)
-
-  void closeClient()
 }
