@@ -3,7 +3,7 @@
     "Organization": "Organization",
     "Department": "Department",
     "ParentDepartmentLabel": "Parent department",
-    "Structure":"Structure",
+    "Structure": "Structure",
     "CreateDepartment": "Create department",
     "CreateDepartmentLabel": "Department",
     "DepartmentPlaceholder": "Department",
@@ -65,6 +65,9 @@
     "ReportedDays": "Reported days",
     "Tasks": "Tasks",
     "TPD": "TPD",
-    "EXTRa": "EXTRa"
+    "EXTRa": "EXTRa",
+    "ForbidCreateDepartmentPermission": "Forbid create department",
+    "ForbidUpdateDepartmentPermission": "Forbid update department",
+    "ForbidRemoveDepartmentPermission": "Forbid delete department"
   }
 }

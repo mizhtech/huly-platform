@@ -13,7 +13,7 @@
 // limitations under the License.
 -->
 <script lang="ts">
-  import { Class, Doc, DocumentQuery, FindOptions, Ref, Space, WithLookup, mergeQueries } from '@hcengineering/core'
+  import core, { Class, Doc, DocumentQuery, FindOptions, Ref, Space, Tx, WithLookup, mergeQueries } from '@hcengineering/core'
   import { Asset, getResource, IntlString, Resource } from '@hcengineering/platform'
   import { getClient, ComponentExtensions } from '@hcengineering/presentation'
   import {
@@ -38,7 +38,8 @@
     getResultQuery,
     getViewletSpecialActions,
     ViewletSelector,
-    ViewletSettingButton
+    ViewletSettingButton,
+    isRoleActionForbidden
   } from '@hcengineering/view-resources'
   import workbench, { type ParentsNavigationModel } from '@hcengineering/workbench'
   import ComponentNavigator from './ComponentNavigator.svelte'
@@ -53,6 +54,8 @@
   export let createEvent: string | undefined = undefined
   export let createLabel: IntlString | undefined = undefined
   export let createComponent: AnyComponent | undefined = undefined
+  export let createTxClass: Ref<Class<Tx>> = core.class.TxCreateDoc
+  export let createObjectClass: Ref<Class<Doc>> | undefined = undefined
   export let createComponentProps: Record<string, any> = {}
   export let createButton: AnyComponent | undefined = undefined
   export let isCreationDisabled = false
@@ -76,6 +79,7 @@
   let viewOptions: ViewOptions | undefined
 
   let isQueryLoaded = queryBuilder === undefined
+  $: canCreate = createObjectClass === undefined || !isRoleActionForbidden(createTxClass, createObjectClass)
 
   $: baseQueryMixin = hierarchy.classHierarchyMixin(_class, view.mixin.BaseQuery)
 
@@ -130,14 +134,14 @@
   }
 
   function showCreateDialog (): void {
-    if (createComponent === undefined) return
+    if (createComponent === undefined || !canCreate) return
     showPopup(createComponent, { ...createComponentProps, space }, 'top')
   }
 </script>
 
 <Header
   adaptive={modes !== undefined ? 'doubleRow' : filterVisible ? 'freezeActions' : 'disabled'}
-  hideActions={!(createLabel && createComponent) &&
+  hideActions={!(createLabel && createComponent && canCreate) &&
     createButton === undefined &&
     (viewletActions == null || viewletActions.length === 0)}
   hideExtra={modes === undefined}
@@ -178,7 +182,7 @@
         />
       {/each}
     {/if}
-    {#if createLabel && createComponent}
+    {#if createLabel && createComponent && canCreate}
       <Button
         icon={IconAdd}
         label={createLabel}
@@ -229,7 +233,7 @@
         viewlet,
         viewOptions,
         viewOptionsConfig: viewlet.viewOptions?.other,
-        createItemDialog: createComponent,
+        createItemDialog: canCreate ? createComponent : undefined,
         createItemLabel: createLabel,
         query: resultQuery,
         totalQuery: query,
@@ -249,7 +253,7 @@
         viewlet,
         viewOptions,
         viewOptionsConfig: viewlet.viewOptions?.other,
-        createItemDialog: createComponent,
+        createItemDialog: canCreate ? createComponent : undefined,
         createItemLabel: createLabel,
         query: resultQuery,
         totalQuery: query,

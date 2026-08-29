@@ -20,6 +20,7 @@
   import setting, { IntegrationType } from '@hcengineering/setting'
   import { createFocusManager, EditBox, FocusHandler, Scroller } from '@hcengineering/ui'
   import { createEventDispatcher, onMount } from 'svelte'
+  import { isRoleUpdateForbidden } from '@hcengineering/view-resources'
   import contact from '../plugin'
   import ChannelsEditor from './ChannelsEditor.svelte'
   import Company from './icons/Company.svelte'
@@ -28,6 +29,7 @@
   export let readonly: boolean = false
 
   const client = getClient()
+  $: effectiveReadonly = readonly || isRoleUpdateForbidden(object)
 
   const dispatch = createEventDispatcher()
 
@@ -62,7 +64,7 @@
     <div class="flex-grow flex-col">
       <div class="name">
         <EditBox
-          disabled={readonly}
+          disabled={effectiveReadonly}
           placeholder={contact.string.PersonFirstNamePlaceholder}
           bind:value={object.name}
           on:change={nameChange}
@@ -72,7 +74,7 @@
       <div class="separator" />
       <Scroller contentDirection={'horizontal'} padding={'.125rem .125rem .5rem'} stickedScrollBars thinScrollBars>
         <ChannelsEditor
-          editable={!readonly}
+          editable={!effectiveReadonly}
           attachedTo={object._id}
           attachedClass={object._class}
           {integrations}

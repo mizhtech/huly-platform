@@ -15,11 +15,11 @@
 <script lang="ts">
   import contact, { Employee } from '@hcengineering/contact'
   import { Avatar, EmployeePresenter, UsersPopup } from '@hcengineering/contact-resources'
-  import { Ref, WithLookup } from '@hcengineering/core'
+  import core, { Ref, WithLookup } from '@hcengineering/core'
   import { Department, Staff } from '@hcengineering/hr'
   import { getClient } from '@hcengineering/presentation'
   import { Button, IconAdd, Label, closeTooltip, eventToHTMLElement, showPopup } from '@hcengineering/ui'
-  import { openDoc, showMenu } from '@hcengineering/view-resources'
+  import { isRoleActionForbidden, openDoc, showMenu } from '@hcengineering/view-resources'
   import hr from '../plugin'
   import { addMember } from '../utils'
   import CreateDepartment from './CreateDepartment.svelte'
@@ -33,9 +33,11 @@
   $: currentDescendants = descendants.get(value._id) ?? []
 
   const client = getClient()
+  const canCreateDepartment = !isRoleActionForbidden(core.class.TxCreateDoc, hr.class.Department)
+  const canUpdateDepartment = !isRoleActionForbidden(core.class.TxUpdateDoc, hr.class.Department)
 
   async function changeLead (result: Employee | null | undefined): Promise<void> {
-    if (result === undefined) {
+    if (!canUpdateDepartment || result === undefined) {
       return
     }
 
@@ -46,6 +48,7 @@
   }
 
   function openLeadEditor (event: MouseEvent) {
+    if (!canUpdateDepartment) return
     event?.preventDefault()
     event?.stopPropagation()
     showPopup(
@@ -65,6 +68,7 @@
   }
 
   function createChild (e: MouseEvent) {
+    if (!canCreateDepartment) return
     showPopup(CreateDepartment, { space: value._id }, eventToHTMLElement(e))
   }
 
@@ -113,7 +117,9 @@
   >
     <div class="flex-center">
       <div class="mr-2">
-        <Button icon={IconAdd} kind={'list'} on:click={createChild} />
+        {#if canCreateDepartment}
+          <Button icon={IconAdd} kind={'list'} on:click={createChild} />
+        {/if}
       </div>
       <Avatar size={'medium'} person={value} icon={hr.icon.Department} name={value.name} />
       <div class="flex-row ml-2 mr-4">
@@ -136,7 +142,7 @@
             personLabel: hr.string.TeamLeadTooltip,
             placeholderLabel: hr.string.AssignLead
           }}
-          onEmployeeEdit={openLeadEditor}
+          onEmployeeEdit={canUpdateDepartment ? openLeadEditor : undefined}
         />
       </div>
     </div>

@@ -22,6 +22,7 @@
   import setting, { IntegrationType } from '@hcengineering/setting'
   import { Component, EditBox, FocusHandler, Scroller, createFocusManager } from '@hcengineering/ui'
   import { createEventDispatcher, onMount } from 'svelte'
+  import { isRoleUpdateForbidden } from '@hcengineering/view-resources'
   import contact from '../plugin'
   import Avatar from './Avatar.svelte'
   import ChannelsDropdown from './ChannelsDropdown.svelte'
@@ -44,7 +45,7 @@
     if (!h.hasMixin(object, contact.mixin.Employee)) return true
     return hasAccountRole(account, AccountRole.Maintainer)
   }
-  $: editable = !readonly && isEditable(owner, object)
+  $: editable = !readonly && !isRoleUpdateForbidden(object) && isEditable(owner, object)
 
   let avatarEditor: EditableAvatar
 

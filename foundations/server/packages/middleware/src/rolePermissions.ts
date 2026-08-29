@@ -70,9 +70,21 @@ export class RolePermissionsMiddleware extends BaseMiddleware implements Middlew
         const permission = byId.get(id)
         if (permission?.forbid !== true) continue
         if (!this.matches(cud, permission)) continue
+        if (await this.isIdentityUpdate(ctx, cud)) continue
         this.forbidden()
       }
     }
+  }
+
+  private async isIdentityUpdate (ctx: MeasureContext<SessionData>, tx: TxCUD<Doc>): Promise<boolean> {
+    if (tx._class !== core.class.TxUpdateDoc) return false
+
+    const access = this.context.hierarchy.classHierarchyMixin(tx.objectClass, core.mixin.TxAccessLevel)
+    if (access?.isIdentity !== true) return false
+
+    const docs = await this.findAll(ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 })
+    const target = docs[0] as (Doc & { personUuid?: string }) | undefined
+    return target?.personUuid === ctx.contextData.account.uuid
   }
 
   private canManagePolicy (ctx: MeasureContext<SessionData>, privileged: boolean): boolean {

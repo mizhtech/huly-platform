@@ -28,10 +28,16 @@ import {
 
 export default mergeIds(contactId, contact, {
   permission: {
-    ForbidCreateContact: '' as Ref<Permission>
+    ForbidCreateContact: '' as Ref<Permission>,
+    ForbidCreateEmployee: '' as Ref<Permission>,
+    ForbidUpdateContact: '' as Ref<Permission>,
+    ForbidRemoveContact: '' as Ref<Permission>
   },
   string: {
     ForbidCreateContactPermission: '' as IntlString,
+    ForbidCreateEmployeePermission: '' as IntlString,
+    ForbidUpdateContactPermission: '' as IntlString,
+    ForbidRemoveContactPermission: '' as IntlString,
     HideInactive: '' as IntlString,
     Apply: '' as IntlString,
     CreatePerson: '' as IntlString,

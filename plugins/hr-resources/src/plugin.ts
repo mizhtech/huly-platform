@@ -13,12 +13,21 @@
 // limitations under the License.
 //
 
+import { type Permission, type Ref } from '@hcengineering/core'
 import hr, { hrId } from '@hcengineering/hr'
 import { type IntlString, mergeIds } from '@hcengineering/platform'
 
 export default mergeIds(hrId, hr, {
+  permission: {
+    ForbidCreateDepartment: '' as Ref<Permission>,
+    ForbidUpdateDepartment: '' as Ref<Permission>,
+    ForbidRemoveDepartment: '' as Ref<Permission>
+  },
   string: {
     HRApplication: '' as IntlString,
+    ForbidCreateDepartmentPermission: '' as IntlString,
+    ForbidUpdateDepartmentPermission: '' as IntlString,
+    ForbidRemoveDepartmentPermission: '' as IntlString,
     Department: '' as IntlString,
     Organization: '' as IntlString,
     Departments: '' as IntlString,

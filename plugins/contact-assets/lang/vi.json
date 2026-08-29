@@ -152,6 +152,9 @@
     "WorkspaceStatusEndOfDay": "Cuối ngày",
     "WorkspaceStatusPickDate": "Chọn ngày",
     "HideInactive": "Ẩn không hoạt động",
-    "ForbidCreateContactPermission": "Cấm tạo liên hệ"
+    "ForbidCreateContactPermission": "Cấm tạo liên hệ",
+    "ForbidCreateEmployeePermission": "Cấm tạo nhân viên",
+    "ForbidUpdateContactPermission": "Cấm sửa liên hệ",
+    "ForbidRemoveContactPermission": "Cấm xóa liên hệ"
   }
 }

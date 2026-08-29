@@ -14,14 +14,16 @@
 -->
 <script lang="ts">
   import contact from '@hcengineering/contact'
-  import { DocumentQuery, Ref, WithLookup } from '@hcengineering/core'
+  import core, { DocumentQuery, Ref, WithLookup } from '@hcengineering/core'
   import type { Department, Staff } from '@hcengineering/hr'
   import { createQuery } from '@hcengineering/presentation'
+  import { isRoleActionForbidden } from '@hcengineering/view-resources'
   import { Button, IconAdd, Label, Scroller, SearchEdit, eventToHTMLElement, showPopup } from '@hcengineering/ui'
   import hr from '../plugin'
   import CreateDepartment from './CreateDepartment.svelte'
   import DepartmentCard from './DepartmentCard.svelte'
 
+  const canCreateDepartment = !isRoleActionForbidden(core.class.TxCreateDoc, hr.class.Department)
   let search = ''
   let resultQuery: DocumentQuery<Department> = {}
 
@@ -30,6 +32,7 @@
   }
 
   function showCreateDialog (ev: MouseEvent) {
+    if (!canCreateDepartment) return
     showPopup(CreateDepartment, {}, eventToHTMLElement(ev))
   }
 
@@ -76,7 +79,9 @@
   </div>
 
   <div class="mb-1 clear-mins">
-    <Button icon={IconAdd} label={hr.string.CreateDepartmentLabel} kind={'primary'} on:click={showCreateDialog} />
+    {#if canCreateDepartment}
+      <Button icon={IconAdd} label={hr.string.CreateDepartmentLabel} kind={'primary'} on:click={showCreateDialog} />
+    {/if}
   </div>
 </div>
 <div class="ac-header full divide search-start">

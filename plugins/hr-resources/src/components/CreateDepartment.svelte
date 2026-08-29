@@ -22,6 +22,7 @@
   import { createEventDispatcher } from 'svelte'
   import hr from '../plugin'
   import DepartmentEditor from './DepartmentEditor.svelte'
+  import { isRoleActionForbidden } from '@hcengineering/view-resources'
   import { Analytics } from '@hcengineering/analytics'
 
   export let parent: Ref<Department> = hr.ids.Head
@@ -36,8 +37,10 @@
   }
 
   const client = getClient()
+  const canCreateDepartment = !isRoleActionForbidden(core.class.TxCreateDoc, hr.class.Department)
 
   async function createDepartment () {
+    if (!canCreateDepartment) return
     const id = await client.createDoc(hr.class.Department, core.space.Workspace, {
       name,
       description: '',
@@ -56,7 +59,7 @@
 <Card
   label={hr.string.CreateDepartment}
   okAction={createDepartment}
-  canSave={!!name}
+  canSave={canCreateDepartment && !!name}
   on:close={() => {
     dispatch('close')
   }}

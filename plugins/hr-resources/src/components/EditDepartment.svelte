@@ -21,6 +21,7 @@
   import { Department } from '@hcengineering/hr'
   import setting, { IntegrationType } from '@hcengineering/setting'
   import { createEventDispatcher, onMount } from 'svelte'
+  import { isRoleActionForbidden } from '@hcengineering/view-resources'
   import hr from '../plugin'
   import Members from './Members.svelte'
 
@@ -31,9 +32,11 @@
 
   const dispatch = createEventDispatcher()
   const client = getClient()
+  const canUpdateDepartment = !isRoleActionForbidden(core.class.TxUpdateDoc, hr.class.Department)
+  $: structuralReadonly = readonly || !canUpdateDepartment
 
   async function onAvatarDone () {
-    if (object === undefined) return
+    if (object === undefined || structuralReadonly) return
 
     if (object.avatar != null) {
       await avatarEditor.removeAvatar(object.avatar)
@@ -43,7 +46,7 @@
   }
 
   async function nameChange (): Promise<void> {
-    if (object === undefined) return
+    if (object === undefined || structuralReadonly) return
     await client.update(object, {
       name: object.name
     })
@@ -88,11 +91,11 @@
     </div>
     <div class="flex-grow flex-col">
       <div class="name">
-        <EditBox placeholder={core.string.Name} bind:value={object.name} on:change={nameChange} focusIndex={1} />
+        <EditBox disabled={structuralReadonly} placeholder={core.string.Name} bind:value={object.name} on:change={nameChange} focusIndex={1} />
       </div>
       <div class="separator" />
       <div class="flex-row-center">
-        <ChannelsEditor attachedTo={object._id} attachedClass={object._class} {integrations} focusIndex={10} on:click />
+        <ChannelsEditor editable={!structuralReadonly} attachedTo={object._id} attachedClass={object._class} {integrations} focusIndex={10} on:click />
       </div>
     </div>
   </div>

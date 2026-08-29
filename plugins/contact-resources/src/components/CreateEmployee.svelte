@@ -22,7 +22,7 @@
     Person,
     SocialIdentityRef
   } from '@hcengineering/contact'
-  import {
+  import core, {
     AccountRole,
     AttachedData,
     buildSocialIdString,
@@ -37,6 +37,7 @@
   import { createFocusManager, EditBox, FocusHandler, IconInfo, Label } from '@hcengineering/ui'
   import { createEventDispatcher } from 'svelte'
   import { ChannelsDropdown } from '..'
+  import { isRoleActionForbidden } from '@hcengineering/view-resources'
   import contact from '../plugin'
   import { employeeBySocialKeyStore, getAccountClient } from '../utils'
   import EditableAvatar from './EditableAvatar.svelte'
@@ -70,6 +71,7 @@
   const accountClient = getAccountClient()
 
   async function createEmployee (): Promise<void> {
+    if (isRoleActionForbidden(core.class.TxMixin, contact.class.Person)) return
     try {
       saving = true
       changeEmail()

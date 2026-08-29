@@ -60,6 +60,7 @@ import notification from '@hcengineering/notification'
 import { type Asset, type IntlString } from '@hcengineering/platform'
 import { PaletteColorIndexes } from '@hcengineering/ui/src/colors'
 import hr from './plugin'
+import { definePermissions } from './permissions'
 
 export { hrId } from '@hcengineering/hr'
 export { hrOperation } from './migration'
@@ -186,6 +187,23 @@ export class TPublicHoliday extends TDoc implements PublicHoliday {
 }
 
 export function createModel (builder: Builder): void {
+  definePermissions(builder)
+  builder.createDoc(
+    core.class.ModulePermissionGroup,
+    core.space.Model,
+    {
+      application: hr.app.HR,
+      role: AccountRole.User,
+      permissions: [
+        hr.permission.ForbidCreateDepartment,
+        hr.permission.ForbidUpdateDepartment,
+        hr.permission.ForbidRemoveDepartment
+      ],
+      enabled: true
+    },
+    hr.ids.ModulePermissionGroupUser
+  )
+
   builder.createModel(TDepartment, TRequest, TRequestType, TPublicHoliday, TStaff, TTzDate)
 
   builder.createDoc(
@@ -319,7 +337,8 @@ export function createModel (builder: Builder): void {
       input: 'any',
       category: hr.category.HR,
       target: hr.class.Department,
-      context: { mode: 'context', application: hr.app.HR, group: 'create' }
+      context: { mode: 'context', application: hr.app.HR, group: 'create' },
+      visibilityTester: view.function.CanUpdateObject
     },
     hr.action.EditDepartment
   )
@@ -340,7 +359,8 @@ export function createModel (builder: Builder): void {
       input: 'focus',
       category: hr.category.HR,
       target: hr.class.Department,
-      context: { mode: 'context', application: hr.app.HR, group: 'create' }
+      context: { mode: 'context', application: hr.app.HR, group: 'create' },
+      visibilityTester: view.function.CanCreateObject
     },
     hr.action.CreateDepartment
   )
@@ -360,7 +380,8 @@ export function createModel (builder: Builder): void {
       },
       target: hr.class.Department,
       context: { mode: ['context', 'browser'], group: 'tools' },
-      override: [view.action.Delete]
+      override: [view.action.Delete],
+      visibilityTester: view.function.CanDeleteObject
     },
     hr.action.ArchiveDepartment
   )

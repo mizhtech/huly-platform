@@ -147,6 +147,8 @@ export default mergeIds(viewId, view, {
     FilterDateCustom: '' as FilterFunction,
     ShowEmptyGroups: '' as ViewCategoryAction,
     HideArchived: '' as ViewOptionsAction,
+    CanCreateObject: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
+    CanUpdateObject: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
     CanDeleteObject: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
     CanEditSpace: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,
     CanArchiveSpace: '' as Resource<(doc?: Doc | Doc[]) => Promise<boolean>>,

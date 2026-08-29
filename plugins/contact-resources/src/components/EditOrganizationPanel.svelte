@@ -13,7 +13,8 @@
     getCollectionCounter,
     getDocAttrsInfo,
     getDocMixins,
-    showMenu
+    showMenu,
+    isRoleUpdateForbidden
   } from '@hcengineering/view-resources'
   import { createEventDispatcher, onDestroy } from 'svelte'
   import { Organization } from '@hcengineering/contact'
@@ -65,6 +66,7 @@
     return undefined
   }
 
+  $: effectiveReadonly = readonly || (object !== undefined && isRoleUpdateForbidden(object))
   $: editorFooter = getEditorFooter(contact.class.Organization, object)
   $: updateObject(_id)
 
@@ -97,7 +99,7 @@
     on:close={() => {
       dispatch('close')
     }}
-    withoutInput={readonly}
+    withoutInput={effectiveReadonly}
   >
     <svelte:fragment slot="title">
       <DocNavLink noUnderline {object}>
@@ -107,7 +109,7 @@
 
     <svelte:fragment slot="attributes" let:direction={dir}>
       {#if dir === 'column'}
-        <DocAttributeBar {object} {mixins} {ignoreKeys} {readonly} />
+        <DocAttributeBar {object} {mixins} {ignoreKeys} readonly={effectiveReadonly} />
       {/if}
     </svelte:fragment>
 
@@ -118,7 +120,7 @@
     </svelte:fragment>
 
     <svelte:fragment slot="utils">
-      {#if !readonly}
+      {#if !effectiveReadonly}
         <Button
           icon={IconMoreH}
           iconProps={{ size: 'medium' }}
@@ -140,7 +142,7 @@
     </svelte:fragment>
 
     <div class="flex-col flex-grow flex-no-shrink step-tb-6">
-      <EditOrganization {object} {readonly} />
+      <EditOrganization {object} readonly={effectiveReadonly} />
       <div class="flex-col flex-grow w-full mt-6 relative">
         <AttachmentStyleBoxCollabEditor
           focusIndex={30}
@@ -148,7 +150,7 @@
           key={{ key: 'description', attr: descriptionKey }}
           placeholder={core.string.Description}
           enableAttachments={false}
-          {readonly}
+          readonly={effectiveReadonly}
           on:saved={(evt) => {
             saved = evt.detail
           }}
@@ -167,7 +169,7 @@
               object,
               space: object.space,
               key: editor.key,
-              readonly,
+              readonly: effectiveReadonly,
               [editor.key.key]: getCollectionCounter(hierarchy, object, editor.key)
             }}
           />
@@ -178,7 +180,7 @@
       <div class="step-tb-6">
         <Component
           is={editorFooter.footer}
-          props={{ object, _class: contact.class.Organization, ...editorFooter.props, readonly }}
+          props={{ object, _class: contact.class.Organization, ...editorFooter.props, readonly: effectiveReadonly }}
         />
       </div>
     {/if}

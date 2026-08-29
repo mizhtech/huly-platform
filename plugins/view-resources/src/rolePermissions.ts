@@ -32,3 +32,14 @@ export function isRoleActionForbidden (txClass: Ref<Class<Tx>>, objectClass: Ref
     })
   })
 }
+
+export function isRoleUpdateForbidden (doc: Doc): boolean {
+  if (!isRoleActionForbidden(core.class.TxUpdateDoc, doc._class)) return false
+
+  const account = getCurrentAccount()
+  const hierarchy = getClient().getHierarchy()
+  const access = hierarchy.classHierarchyMixin(doc._class, core.mixin.TxAccessLevel)
+  if (access?.isIdentity === true && (doc as Doc & { personUuid?: string }).personUuid === account.uuid) return false
+
+  return true
+}

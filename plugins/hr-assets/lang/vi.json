@@ -65,6 +65,9 @@
     "ReportedDays": "Ngày đã báo cáo",
     "Tasks": "Nhiệm vụ",
     "TPD": "TPD",
-    "EXTRa": "EXTRa"
+    "EXTRa": "EXTRa",
+    "ForbidCreateDepartmentPermission": "Cấm tạo phòng ban",
+    "ForbidUpdateDepartmentPermission": "Cấm sửa phòng ban",
+    "ForbidRemoveDepartmentPermission": "Cấm xóa phòng ban"
   }
 }

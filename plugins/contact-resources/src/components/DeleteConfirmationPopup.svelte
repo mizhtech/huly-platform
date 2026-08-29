@@ -17,7 +17,7 @@
   import { AccountRole, Doc, getCurrentAccount, PersonId, Ref, uniqueNotEmpty } from '@hcengineering/core'
   import { Card, isAdminUser } from '@hcengineering/presentation'
   import ui, { Button, Label } from '@hcengineering/ui'
-  import { ObjectPresenter } from '@hcengineering/view-resources'
+  import { ObjectPresenter, canDeleteObject } from '@hcengineering/view-resources'
   import view from '@hcengineering/view-resources/src/plugin'
   import { createEventDispatcher } from 'svelte'
   import { IntlString } from '@hcengineering/platform'
@@ -33,6 +33,8 @@
   const me = getCurrentEmployee()
   const objectArray = Array.isArray(object) ? object : [object]
   const dispatch = createEventDispatcher()
+  let roleCanDelete = false
+  $: void canDeleteObject(objectArray).then((value) => { roleCanDelete = value })
   let creators: Ref<Person>[] | undefined
   $: getPersonRefsByPersonIdsCb(uniqueNotEmpty(objectArray.map((obj) => obj.createdBy)), (refs) => {
     creators = Array.from(refs.values())
@@ -43,7 +45,8 @@
       (creators !== undefined && creators.length === 1 && creators[0] === me) ||
       getCurrentAccount().role === AccountRole.Owner ||
       isAdminUser()) &&
-    canDeleteExtra
+    canDeleteExtra &&
+    roleCanDelete
   $: label = canDelete ? view.string.DeleteObject : view.string.DeletePopupNoPermissionTitle
 </script>
 

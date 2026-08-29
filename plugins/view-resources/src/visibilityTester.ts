@@ -26,7 +26,7 @@ import core, {
 import { getClient } from '@hcengineering/presentation'
 import { get } from 'svelte/store'
 import { spaceSpace } from './utils'
-import { isRoleActionForbidden } from './rolePermissions'
+import { isRoleActionForbidden, isRoleUpdateForbidden } from './rolePermissions'
 
 function isTypedSpace (space: Space): space is TypedSpace {
   return getClient().getHierarchy().isDerived(space._class, core.class.TypedSpace)
@@ -35,6 +35,19 @@ function isTypedSpace (space: Space): space is TypedSpace {
 function isSpaceOwner (space: Space): boolean {
   const currentAccount = getCurrentAccount()
   return currentAccount.role === AccountRole.Owner || (space.owners ?? []).includes(currentAccount.uuid)
+}
+
+
+export async function canCreateObject (doc?: Doc | Doc[]): Promise<boolean> {
+  if (doc === undefined) return false
+  const targets = Array.isArray(doc) ? doc : [doc]
+  return !targets.some((target) => isRoleActionForbidden(core.class.TxCreateDoc, target._class))
+}
+
+export async function canUpdateObject (doc?: Doc | Doc[]): Promise<boolean> {
+  if (doc === undefined) return false
+  const targets = Array.isArray(doc) ? doc : [doc]
+  return !targets.some((target) => isRoleUpdateForbidden(target))
 }
 
 export async function canDeleteObject (doc?: Doc | Doc[]): Promise<boolean> {

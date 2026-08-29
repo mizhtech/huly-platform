@@ -152,6 +152,9 @@
     "WorkspaceStatusEndOfDay": "End of day",
     "WorkspaceStatusPickDate": "Choose date",
     "HideInactive": "Hide inactive",
-    "ForbidCreateContactPermission": "Forbid create contact"
+    "ForbidCreateContactPermission": "Forbid create contact",
+    "ForbidCreateEmployeePermission": "Forbid create employee",
+    "ForbidUpdateContactPermission": "Forbid update contact",
+    "ForbidRemoveContactPermission": "Forbid delete contact"
   }
 }

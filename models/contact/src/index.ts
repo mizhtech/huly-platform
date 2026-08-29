@@ -332,7 +332,12 @@ export function createModel (builder: Builder): void {
   builder.createDoc(core.class.ModulePermissionGroup, core.space.Model, {
     application: contact.app.Contacts,
     role: AccountRole.User,
-    permissions: [contact.permission.ForbidCreateContact],
+    permissions: [
+      contact.permission.ForbidCreateContact,
+      contact.permission.ForbidCreateEmployee,
+      contact.permission.ForbidUpdateContact,
+      contact.permission.ForbidRemoveContact
+    ],
     enabled: true
   }, contact.ids.ModulePermissionGroupUser)
 
@@ -481,7 +486,9 @@ export function createModel (builder: Builder): void {
                 role: { $ne: 'GUEST' }
               },
               createLabel: contact.string.CreateEmployee,
-              createComponent: contact.component.CreateEmployee
+              createComponent: contact.component.CreateEmployee,
+              createTxClass: core.class.TxMixin,
+              createObjectClass: contact.class.Person
             }
           },
           {
@@ -498,7 +505,8 @@ export function createModel (builder: Builder): void {
                 role: 'GUEST'
               },
               createLabel: contact.string.Guest,
-              createComponent: contact.component.CreateGuest
+              createComponent: contact.component.CreateGuest,
+              createObjectClass: contact.class.Person
             }
           },
           {
@@ -515,7 +523,8 @@ export function createModel (builder: Builder): void {
               icon: contact.icon.Person,
               label: contact.string.Person,
               createLabel: contact.string.CreatePerson,
-              createComponent: contact.component.CreatePerson
+              createComponent: contact.component.CreatePerson,
+              createObjectClass: contact.class.Person
             }
           },
           {
@@ -529,7 +538,8 @@ export function createModel (builder: Builder): void {
               icon: contact.icon.Company,
               label: contact.string.Organization,
               createLabel: contact.string.CreateOrganization,
-              createComponent: contact.component.CreateOrganization
+              createComponent: contact.component.CreateOrganization,
+              createObjectClass: contact.class.Organization
             }
           }
         ]

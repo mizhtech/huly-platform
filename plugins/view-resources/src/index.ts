@@ -149,8 +149,10 @@ import { getLink, openDocFromRef } from './utils'
 import { hideArchived, showEmptyGroups } from './viewOptions'
 import {
   canArchiveSpace,
+  canCreateObject,
   canDeleteObject,
   canDeleteSpace,
+  canUpdateObject,
   canEditSpace,
   canJoinSpace,
   canLeaveSpace,
@@ -191,7 +193,7 @@ export { default as ListView } from './components/list/ListView.svelte'
 export { default as NavLink } from './components/navigator/NavLink.svelte'
 export { default as StatusPresenter } from './components/status/StatusPresenter.svelte'
 export { default as StatusRefPresenter } from './components/status/StatusRefPresenter.svelte'
-export { canArchiveSpace, canDeleteObject, canDeleteSpace, canEditSpace } from './visibilityTester'
+export { canArchiveSpace, canCreateObject, canDeleteObject, canDeleteSpace, canEditSpace, canUpdateObject } from './visibilityTester'
 
 export * from './filter'
 export * from './icons'
@@ -382,6 +384,8 @@ export default async (): Promise<Resources> => ({
     AnalyticsMiddleware: AnalyticsMiddleware.create,
     // eslint-disable-next-line @typescript-eslint/unbound-method
     ReadOnlyAccessMiddleware: ReadOnlyAccessMiddleware.create,
+    CanCreateObject: canCreateObject,
+    CanUpdateObject: canUpdateObject,
     CanDeleteObject: canDeleteObject,
     CanEditSpace: canEditSpace,
     CanArchiveSpace: canArchiveSpace,
@@ -397,4 +401,4 @@ export default async (): Promise<Resources> => ({
   }
 })
 
-export { isRoleActionForbidden } from './rolePermissions'
+export { isRoleActionForbidden, isRoleUpdateForbidden } from './rolePermissions'

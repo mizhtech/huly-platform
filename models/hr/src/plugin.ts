@@ -67,6 +67,7 @@ export default mergeIds(hrId, hr, {
     EditRequestType: '' as ViewAction
   },
   ids: {
-    HRNotificationGroup: '' as Ref<NotificationGroup>
+    HRNotificationGroup: '' as Ref<NotificationGroup>,
+    ModulePermissionGroupUser: '' as Ref<Doc>
   }
 })
