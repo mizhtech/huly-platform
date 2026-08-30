@@ -101,16 +101,23 @@
 </form>
 
 <style lang="scss">
-  .workspace-create { width:100%; max-width:35rem; margin:auto; padding:2.2rem 3rem 1rem; color:white; }
-  .welcome { font-size:.96rem; font-weight:500; color:rgba(255,255,255,.88); }
-  h1 { margin:.45rem 0 .6rem; font-size:2rem; line-height:1.15; }
-  .subtitle { margin:0 0 2rem; color:rgba(255,255,255,.58); }
-  .form-fields { display:flex; flex-direction:column; gap:1rem; }
-  .demo-toggle { display:flex; align-items:center; min-height:4rem; gap:1rem; padding:0 1.1rem; border:1px solid rgba(255,255,255,.13); border-radius:.8rem; background:rgba(10,17,55,.18); cursor:pointer; }
-  .field-icon { display:flex; color:#7180ff; }.demo-label{flex:1;color:rgba(255,255,255,.82);font-size:.9rem}.region-selector{padding:.65rem 1rem;border:1px solid rgba(255,255,255,.11);border-radius:.8rem}
-  .primary-action { display:flex; align-items:center; justify-content:center; gap:.75rem; width:100%; min-height:4rem; margin-top:1.4rem; border:0; border-radius:.8rem; background:linear-gradient(100deg,#4458ff,#5e55f1); color:white; font:inherit; font-weight:600; cursor:pointer; }.primary-action:disabled{opacity:.5}
-  .divider { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; margin:1.6rem 0; color:rgba(255,255,255,.45); font-size:.82rem }.divider span{height:1px;background:rgba(255,255,255,.11)}
-  .have-workspace { text-align:center; color:rgba(255,255,255,.55); font-size:.84rem }.have-workspace button{border:0;background:none;color:#8178ff;font:inherit;cursor:pointer}
-  .support-footer { display:flex; justify-content:space-between; margin-top:4rem; padding-top:1.25rem; border-top:1px solid rgba(255,255,255,.09); color:rgba(255,255,255,.55); font-size:.82rem }
+.workspace-create { width:100%; max-width:30rem; margin:auto; padding:2.4rem 2.6rem 1.2rem; color:#17203b; }
+  .welcome { font-size:.92rem; font-weight:500; color:#59647d; }
+  h1 { margin:.4rem 0 .5rem; font-size:1.9rem; line-height:1.15; color:#141c35; }
+  .subtitle { margin:0 0 1.8rem; color:#7b849c; }
+  .form-fields { display:flex; flex-direction:column; gap:.8rem; }
+  .demo-toggle { display:flex; align-items:center; min-height:4rem; gap:.9rem; padding:0 1rem; border:1px solid #dce1ee; border-radius:.82rem; background:rgba(255,255,255,.68); cursor:pointer; box-shadow:0 4px 14px rgba(79,91,139,.03); }
+  .demo-toggle:hover { background:rgba(255,255,255,.9); }
+  .field-icon { display:flex; color:#6672e6; }
+  .demo-label { flex:1; color:#39445f; font-size:.88rem; font-weight:500; }
+  .region-selector { padding:.65rem 1rem; border:1px solid #dce1ee; border-radius:.82rem; background:rgba(255,255,255,.68); }
+  .primary-action { display:flex; align-items:center; justify-content:center; gap:.75rem; width:100%; min-height:3.75rem; margin-top:1.2rem; border:0; border-radius:.8rem; background:linear-gradient(100deg,#4f6df5,#8357ee); box-shadow:0 10px 24px rgba(95,87,227,.18); color:white; font:inherit; font-weight:600; cursor:pointer; transition:transform .15s ease,box-shadow .15s ease; }
+  .primary-action:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 14px 30px rgba(95,87,227,.24)}
+  .primary-action:disabled{opacity:.48;box-shadow:none}
+  .divider { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; margin:1.45rem 0; color:#9aa2b5; font-size:.8rem }
+  .divider span{height:1px;background:#e0e4ef}
+  .have-workspace { text-align:center; color:#7b849c; font-size:.82rem }
+  .have-workspace button{border:0;background:none;color:#665ee8;font:inherit;font-weight:500;cursor:pointer}
+  .support-footer { display:flex; justify-content:space-between; margin-top:3.25rem; padding-top:1.1rem; border-top:1px solid #e3e6ef; color:#7b849c; font-size:.8rem }
   @media(max-width:480px){.workspace-create{padding:1rem 1.25rem}.support-footer{margin-top:2rem}}
 </style>

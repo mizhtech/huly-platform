@@ -28,18 +28,18 @@
 {/if}
 
 <style lang="scss">
-  .container {
+.container {
     min-height: 3rem;
-    padding: 0.65rem 0.9rem;
-    background-color: var(--theme-button-default);
-    border: 1px solid var(--theme-button-border);
-    border-radius: 0.75rem;
+    padding: .65rem .9rem;
+    color: #53607b;
+    background: rgba(245, 247, 255, .85);
+    border: 1px solid #dce1ee;
+    border-radius: .75rem;
   }
-
   .error {
     color: var(--system-error-color);
     fill: var(--system-error-color);
-    background-color: var(--theme-button-default);
+    background: rgba(255, 245, 246, .92);
     border-color: var(--system-error-60-color);
   }
 </style>

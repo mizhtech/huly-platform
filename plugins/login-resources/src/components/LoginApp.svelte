@@ -127,7 +127,7 @@
   <AdminWorkspaces />
 {:else}
   <div
-    class="theme-dark w-full h-full backd"
+    class="w-full h-full backd"
     class:paneld={$deviceInfo.docWidth <= 768}
     class:white={!$themeStore.dark}
   >
@@ -149,7 +149,7 @@
         style:position="fixed"
         style:left={$deviceInfo.docWidth <= 480 ? '.75rem' : '1.75rem'}
         style:top={'calc(3rem + var(--huly-top-indent, 0rem))'}
-        class="flex-row-center"
+        class="platform-brand flex-row-center"
       >
         <LoginIcon /><span class="fs-title ml-2">{getMetadata(workbench.metadata.PlatformTitle)}</span>
       </div>
@@ -206,27 +206,36 @@
 {/if}
 
 <style lang="scss">
-  .back-image {
+.back-image {
     position: fixed;
     top: 32px;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 32px);
     object-fit: cover;
-    object-position: left top;
+    object-position: center center;
+    user-select: none;
+    pointer-events: none;
   }
+
   .backd {
     position: relative;
-    background-color: var(--theme-bg-color);
+    overflow: hidden;
+    background: #f7f8ff;
+    color: #17203b;
 
     .bg-image {
+      position: relative;
       display: flex;
       flex-direction: row-reverse;
+      align-items: center;
       width: 100%;
       height: 100%;
+      padding-right: clamp(2rem, 5vw, 6.5rem) !important;
     }
+
     &.paneld {
-      background: rgba(45, 50, 160, 0.5);
+      background: linear-gradient(145deg, #f9faff 0%, #eef2ff 100%);
 
       .panel-base {
         padding-top: 5rem;
@@ -236,67 +245,42 @@
     }
   }
 
+  .platform-brand {
+    color: #17203b;
+    z-index: 3;
+  }
+
   .panel {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 50%;
-    height: 100%;
-    min-width: 35rem;
-    max-width: 41rem;
-    background: rgba(45, 50, 160, 0.5);
-    mix-blend-mode: normal;
-    box-shadow: -30px 1.52px 173.87px #121437;
-    backdrop-filter: blur(157.855px);
-    border-radius: 1rem;
+    width: min(31rem, 42vw);
+    min-width: 29rem;
+    max-width: 32rem;
+    max-height: calc(100dvh - 7rem);
+    background: rgba(255, 255, 255, 0.72);
+    border: 1px solid rgba(125, 136, 182, 0.2);
+    border-radius: 1.4rem;
+    box-shadow: 0 24px 70px rgba(75, 86, 145, 0.14);
+    backdrop-filter: blur(28px) saturate(115%);
+    -webkit-backdrop-filter: blur(28px) saturate(115%);
 
-    &::after {
-      overflow: hidden;
-      position: absolute;
-      content: '';
-      inset: 0;
-      background: radial-gradient(161.92% 96.11% at 11.33% 3.89%, #313d9a 0%, #202669 100%);
-      border-radius: 1rem;
-      z-index: -1;
-    }
     &::before {
       position: absolute;
       content: '';
       inset: 0;
-      padding: 1px;
-      background: conic-gradient(
-          rgba(255, 255, 255, 0.18) 10%,
-          rgba(126, 120, 165, 0.5),
-          rgba(191, 216, 253, 0.5),
-          rgba(246, 247, 249, 0.32),
-          rgba(219, 229, 242, 0.34) 60%,
-          rgba(163, 203, 255, 0.24) 90%
-        )
-        border-box;
-      -webkit-mask:
-        linear-gradient(#000 0 0) content-box,
-        linear-gradient(#000 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      border-radius: 1rem;
-      transform: rotate(180deg);
-      transition: opacity 0.15s var(--timing-main);
-      opacity: 0.7;
+      border-radius: inherit;
+      pointer-events: none;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
     }
   }
+
   .backd.paneld::after,
   .panel::after {
-    overflow: hidden;
-    position: absolute;
-    content: '';
-    inset: 0;
-    background: radial-gradient(161.92% 96.11% at 11.33% 3.89%, #313d9a 0%, #202669 100%);
-    z-index: -1;
+    display: none;
   }
-  .panel::after {
-    border-radius: 1rem;
-  }
+
   .form-content {
     display: flex;
     flex-direction: column;
@@ -312,14 +296,28 @@
     display: flex;
     align-items: center;
     gap: .85rem;
-    color: rgba(255,255,255,.58);
+    color: #75809b;
     font-size: .8rem;
     z-index: 2;
   }
-  .brand-footer i { font-style: normal; opacity: .55; }
+  .brand-footer i { font-style: normal; opacity: .5; }
+
   .panel.onboarding {
-    width: min(48%, 46rem);
-    min-width: 38rem;
-    max-width: 46rem;
+    width: min(31rem, 42vw);
+    min-width: 29rem;
+    max-width: 32rem;
+  }
+
+  @media (max-width: 1100px) {
+    .backd .bg-image { padding-right: 2rem !important; }
+    .panel,
+    .panel.onboarding { width: min(30rem, 48vw); min-width: 27rem; }
+  }
+
+  @media (max-width: 768px) {
+    .back-image { display: none !important; }
+    .backd .bg-image { padding: 0 !important; }
+    .platform-brand { color: #17203b; }
+    .panel-base { background: transparent; box-shadow: none; border: 0; backdrop-filter: none; }
   }
 </style>

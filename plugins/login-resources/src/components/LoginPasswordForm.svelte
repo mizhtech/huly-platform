@@ -71,16 +71,56 @@
 </form>
 
 <style lang="scss">
-  .password-form { display:flex; flex-direction:column; width:100%; max-width:35rem; margin:auto; padding:2rem 3rem 1rem; color:white; }
-  .auth-mark { align-self:center; width:4.8rem; height:4.8rem; display:flex; align-items:center; justify-content:center; border-radius:1rem; margin-bottom:1.7rem; background:linear-gradient(145deg,rgba(80,87,218,.65),rgba(38,42,128,.4)); border:1px solid rgba(255,255,255,.12); }
-  h1 { margin:0; text-align:center; font-size:2rem; line-height:1.2; }
-  .subtitle { min-height:1.4rem; margin:.75rem 0 2.5rem; text-align:center; color:rgba(255,255,255,.62); font-size:1rem; }
-  .fields { display:flex; flex-direction:column; gap:1rem; }
-  .password-options { display:flex; align-items:center; justify-content:space-between; gap:1rem; margin:1.15rem 0; font-size:.86rem; }
-  .remember { display:flex; align-items:center; gap:.55rem; color:rgba(255,255,255,.86); }
-  .remember input { width:1.1rem; height:1.1rem; accent-color:#5965ff; }
-  a { color:#7d75ff; text-decoration:none; }
-  .primary-action { display:flex; align-items:center; justify-content:center; gap:1rem; width:100%; min-height:4rem; margin-top:1rem; border:0; border-radius:.8rem; background:linear-gradient(100deg,#3949db,#6847ef); color:white; font:inherit; font-weight:600; cursor:pointer; }
-  .primary-action:disabled { opacity:.5; cursor:default; }
-  @media (max-width: 480px) { .password-form { padding:1rem 1.25rem; } }
+.password-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 29rem;
+    margin: auto;
+    padding: 2.25rem 2.6rem 1rem;
+    color: #17203b;
+  }
+  .auth-mark {
+    align-self: center;
+    width: 4.25rem;
+    height: 4.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    margin-bottom: 1.45rem;
+    color: white;
+    background: linear-gradient(145deg, #5d7cff, #8358ef);
+    border: 1px solid rgba(255,255,255,.75);
+    box-shadow: 0 12px 30px rgba(91, 91, 224, .2);
+  }
+  h1 { margin: 0; text-align: center; font-size: 1.85rem; line-height: 1.2; color:#121a33; }
+  .subtitle { min-height: 1.35rem; margin: .6rem 0 2rem; text-align: center; color: #7b849c; font-size: .95rem; }
+  .fields { display: flex; flex-direction: column; gap: .8rem; }
+  .password-options { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin: 1rem 0 .8rem; font-size: .84rem; }
+  .remember { display: flex; align-items: center; gap: .55rem; color: #46516b; }
+  .remember input { width: 1.05rem; height: 1.05rem; accent-color: #6170ef; }
+  a { color: #665ee8; text-decoration: none; font-weight: 500; }
+  a:hover { color:#5148d7; }
+  .primary-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    min-height: 3.7rem;
+    margin-top: .85rem;
+    border: 0;
+    border-radius: .8rem;
+    background: linear-gradient(100deg, #4f6df5, #8357ee);
+    box-shadow: 0 10px 24px rgba(95, 87, 227, .18);
+    color: white;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  }
+  .primary-action:hover:not(:disabled) { transform: translateY(-1px); box-shadow:0 14px 30px rgba(95,87,227,.24); }
+  .primary-action:disabled { opacity: .48; cursor: default; box-shadow:none; }
+  @media (max-width: 480px) { .password-form { padding: 1rem 1.25rem; } }
 </style>

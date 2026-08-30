@@ -24,10 +24,10 @@
   <AuthIcons name="chevron" size={21} />
 </button>
 <style lang="scss">
-  .workspace-item { display:flex; align-items:center; width:100%; min-height:6rem; padding:1rem 1.15rem; gap:1rem; border:1px solid rgba(255,255,255,.11); border-radius:1rem; background:rgba(25,37,102,.2); color:white; text-align:left; cursor:pointer; }
-  .workspace-item:hover:not(:disabled) { background:rgba(57,70,158,.28); border-color:rgba(255,255,255,.2); }
-  .workspace-avatar { flex:0 0 4.1rem; height:4.1rem; border-radius:.75rem; display:flex; align-items:center; justify-content:center; font-size:1.45rem; font-weight:600; }
-  .workspace-copy { flex:1; min-width:0; display:flex; flex-direction:column; gap:.42rem; }
-  .workspace-name { display:flex; align-items:center; gap:.7rem; font-size:1.1rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .workspace-meta { font-size:.82rem; color:rgba(255,255,255,.56); }
+.workspace-item { display:flex; align-items:center; width:100%; min-height:5.25rem; padding:.9rem 1rem; gap:.9rem; border:1px solid #dfe3ed; border-radius:.9rem; background:rgba(255,255,255,.72); color:#1b2540; text-align:left; cursor:pointer; box-shadow:0 5px 16px rgba(75,86,132,.035); transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease,background .15s ease; }
+  .workspace-item:hover:not(:disabled) { transform:translateY(-1px); background:#fff; border-color:#cfd5e5; box-shadow:0 10px 24px rgba(75,86,132,.08); }
+  .workspace-avatar { flex:0 0 3.65rem; height:3.65rem; border-radius:.72rem; display:flex; align-items:center; justify-content:center; color:white; font-size:1.25rem; font-weight:650; box-shadow:inset 0 1px 0 rgba(255,255,255,.24); }
+  .workspace-copy { flex:1; min-width:0; display:flex; flex-direction:column; gap:.34rem; }
+  .workspace-name { display:flex; align-items:center; gap:.7rem; font-size:1rem; font-weight:650; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .workspace-meta { font-size:.78rem; color:#858ea3; letter-spacing:.01em; }
 </style>

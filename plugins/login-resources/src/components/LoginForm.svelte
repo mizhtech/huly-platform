@@ -41,7 +41,7 @@
   {#if method === LoginMethods.Otp}
     <LoginOtpForm {navigateUrl} {signUpDisabled} {email} {caption} {subtitle} {onLogin} on:change={(event) => (method = event.detail)} />
   {:else}
-    <LoginPasswordForm {navigateUrl} {signUpDisabled} {email} caption={caption ?? login.string.LogIn} subtitle={subtitle ?? ''} {onLogin} />
+    <LoginPasswordForm {navigateUrl} {signUpDisabled} {email} caption={caption ?? login.string.LogIn} {subtitle} {onLogin} />
   {/if}
 
   <div class="alternate-actions">
@@ -56,9 +56,9 @@
 </div>
 
 <style lang="scss">
-  .login-flow { width:100%; max-width:35rem; margin:auto; }
-  .alternate-actions { padding:0 3rem 1rem; }
-  .separator { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; gap:1rem; margin:1.6rem 0 .9rem; color:rgba(255,255,255,.45); font-size:.82rem; }
-  .separator span { height:1px; background:rgba(255,255,255,.11); }
-  @media (max-width:480px) { .alternate-actions { padding:0 1.25rem 1rem; } }
+.login-flow { width: 100%; max-width: 29rem; margin: auto; }
+  .alternate-actions { padding: 0 2.6rem 1rem; }
+  .separator { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 1rem; margin: 1.35rem 0 .75rem; color: #98a0b4; font-size: .8rem; }
+  .separator span { height: 1px; background: #e0e4ef; }
+  @media (max-width: 480px) { .alternate-actions { padding: 0 1.25rem 1rem; } }
 </style>

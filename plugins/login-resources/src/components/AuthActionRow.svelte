@@ -12,8 +12,23 @@
   <AuthIcons name="chevron" size={18} />
 </button>
 <style lang="scss">
-  .action-row { display:flex; align-items:center; width:100%; min-height:3.2rem; gap:.9rem; padding:0 .3rem; border:0; background:transparent; color:rgba(255,255,255,.9); cursor:pointer; font:inherit; text-align:left; }
-  .action-row:hover:not(:disabled) { color:white; }
-  .action-row__icon { width:2rem; display:flex; justify-content:center; }
-  .action-row__label { flex:1; }
+.action-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 3.05rem;
+    gap: .9rem;
+    padding: 0 .45rem;
+    border: 0;
+    border-radius: .65rem;
+    background: transparent;
+    color: #35415d;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: background .15s ease, color .15s ease;
+  }
+  .action-row:hover:not(:disabled) { color: #202a47; background: rgba(92, 103, 196, .055); }
+  .action-row__icon { width: 2rem; display: flex; justify-content: center; color:#6872d7; }
+  .action-row__label { flex: 1; }
 </style>

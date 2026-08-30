@@ -126,10 +126,17 @@
 </div>
 
 <style lang="scss">
-  .workspace-select { width:100%; max-width:39rem; margin:auto; padding:2.3rem 3rem 1.5rem; color:white; overflow:auto; }
-  .account-name{font-size:.95rem;color:rgba(255,255,255,.85)} h1{margin:.45rem 0 .45rem;font-size:2rem}.subtitle{margin:0 0 1.7rem;color:rgba(255,255,255,.58)}
-  .search{margin-bottom:1rem}.loader{min-height:16rem;display:flex;align-items:center;justify-content:center}.workspace-list{display:flex;flex-direction:column;gap:.85rem;max-height:28rem;overflow:auto;padding:.1rem}
-  .add-workspace{display:flex;align-items:center;justify-content:center;gap:.8rem;width:100%;min-height:4.6rem;margin-top:1rem;border:1px dashed rgba(255,255,255,.22);border-radius:1rem;background:rgba(18,28,83,.18);color:white;font:inherit;font-weight:600;cursor:pointer}.add-workspace:hover{background:rgba(55,65,145,.24)}
-  .account-switch{margin-top:2.5rem;padding-top:1.8rem;border-top:1px solid rgba(255,255,255,.09);text-align:center;color:rgba(255,255,255,.52);font-size:.86rem}.account-switch button{display:block;margin:.45rem auto 0;border:0;background:none;color:#847cff;font:inherit;font-weight:600;cursor:pointer}.empty{margin:1rem 0;color:rgba(255,255,255,.62)}
+.workspace-select { width:100%; max-width:32rem; margin:auto; padding:2.4rem 2.6rem 1.5rem; color:#17203b; overflow:auto; }
+  .account-name{font-size:.9rem;color:#59647d}
+  h1{margin:.4rem 0 .4rem;font-size:1.9rem;color:#141c35}
+  .subtitle{margin:0 0 1.55rem;color:#7b849c}
+  .search{margin-bottom:.9rem}
+  .loader{min-height:14rem;display:flex;align-items:center;justify-content:center}
+  .workspace-list{display:flex;flex-direction:column;gap:.72rem;max-height:26rem;overflow:auto;padding:.1rem}
+  .add-workspace{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;min-height:4.2rem;margin-top:.9rem;border:1px dashed #c9d0e2;border-radius:.9rem;background:rgba(255,255,255,.46);color:#545fca;font:inherit;font-weight:600;cursor:pointer;transition:background .15s ease,border-color .15s ease}
+  .add-workspace:hover{background:rgba(255,255,255,.82);border-color:#aeb8d5}
+  .account-switch{margin-top:2rem;padding-top:1.5rem;border-top:1px solid #e3e6ef;text-align:center;color:#8a93a8;font-size:.83rem}
+  .account-switch button{display:block;margin:.4rem auto 0;border:0;background:none;color:#665ee8;font:inherit;font-weight:600;cursor:pointer}
+  .empty{margin:1rem 0;color:#7b849c}
   @media(max-width:480px){.workspace-select{padding:1rem 1.25rem}.workspace-list{max-height:none}}
 </style>
