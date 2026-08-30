@@ -120,6 +120,16 @@
     "ContactSupport": "Contact support",
     "Security": "Security",
     "Reliability": "Reliability",
-    "Performance": "Performance"
+    "Performance": "Performance",
+    "ForgotPasswordSubtitle": "Enter your email to receive password recovery instructions",
+    "EnterAccountEmail": "Enter your account email",
+    "SendRecoveryLink": "Recover",
+    "RecoveryEmailSent": "Check your email",
+    "RecoveryEmailSentDescription": "We sent password recovery instructions to your email.",
+    "CreateNewPassword": "Create new password",
+    "CreateNewPasswordSubtitle": "Choose a new password for your account",
+    "ConfirmNewPassword": "Confirm new password",
+    "BackToLogin": "Back to login",
+    "InvalidRecoveryLink": "This recovery link is invalid or has expired."
   }
 }

@@ -102,6 +102,16 @@ export default mergeIds(loginId, login, {
     ContactSupport: '' as IntlString,
     Security: '' as IntlString,
     Reliability: '' as IntlString,
-    Performance: '' as IntlString
+    Performance: '' as IntlString,
+    ForgotPasswordSubtitle: '' as IntlString,
+    EnterAccountEmail: '' as IntlString,
+    SendRecoveryLink: '' as IntlString,
+    RecoveryEmailSent: '' as IntlString,
+    RecoveryEmailSentDescription: '' as IntlString,
+    CreateNewPassword: '' as IntlString,
+    CreateNewPasswordSubtitle: '' as IntlString,
+    ConfirmNewPassword: '' as IntlString,
+    BackToLogin: '' as IntlString,
+    InvalidRecoveryLink: '' as IntlString
   }
 })

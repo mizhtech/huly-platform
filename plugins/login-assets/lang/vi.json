@@ -120,6 +120,16 @@
     "ContactSupport": "Liên hệ hỗ trợ",
     "Security": "Bảo mật",
     "Reliability": "Tin cậy",
-    "Performance": "Hiệu suất"
+    "Performance": "Hiệu suất",
+    "ForgotPasswordSubtitle": "Nhập email của bạn để nhận hướng dẫn khôi phục mật khẩu",
+    "EnterAccountEmail": "Nhập email tài khoản",
+    "SendRecoveryLink": "Khôi phục",
+    "RecoveryEmailSent": "Kiểm tra email của bạn",
+    "RecoveryEmailSentDescription": "Chúng tôi đã gửi hướng dẫn khôi phục mật khẩu đến email của bạn.",
+    "CreateNewPassword": "Tạo mật khẩu mới",
+    "CreateNewPasswordSubtitle": "Đặt mật khẩu mới cho tài khoản của bạn",
+    "ConfirmNewPassword": "Nhập lại mật khẩu mới",
+    "BackToLogin": "Quay lại đăng nhập",
+    "InvalidRecoveryLink": "Liên kết khôi phục không hợp lệ hoặc đã hết hạn."
   }
 }

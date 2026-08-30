@@ -12,16 +12,16 @@ export class LoginPage {
   inputPassword = (): Locator => this.page.locator('input[name=current-password]')
   buttonLogin = (): Locator => this.page.locator('button', { hasText: 'Log In' })
   loginWithPassword = (): Locator => this.page.locator('a', { hasText: 'Login with password' })
-  linkSignUp = (): Locator => this.page.getByRole('button', { name: /Sign Up|Create account/ }).or(this.page.getByRole('link', { name: 'Sign Up' }))
+  linkSignUp = (): Locator => this.page.getByRole('button', { name: /Sign Up|Create account/ }).or(this.page.getByRole('button', { name: /Do not have an account?.*Sign Up/ }))
   invalidCredentialsMessage = (): Locator =>
     this.page.getByText('Account not found or the provided credentials are incorrect')
 
   recoverLink = (): Locator => this.page.getByRole('link', { name: 'Forgot your password?' })
   passwordRecovery = (): Locator => this.page.getByText('Password recovery')
-  recoveryLoginText = (): Locator => this.page.getByText('Know your password? Log In')
-  recoverySignUpText = (): Locator => this.page.getByText('Do not have an account? Sign Up')
-  recoveryLogin = (): Locator => this.page.getByRole('link', { name: 'Log In' })
-  recoverySignUp = (): Locator => this.page.getByRole('link', { name: 'Sign Up' })
+  recoveryLoginText = (): Locator => this.page.getByText('Know your password?').locator('..')
+  recoverySignUpText = (): Locator => this.page.getByText('Do not have an account?').locator('..')
+  recoveryLogin = (): Locator => this.page.getByRole('button', { name: /Know your password?.*Log In/ })
+  recoverySignUp = (): Locator => this.page.getByRole('button', { name: /Do not have an account?.*Sign Up/ })
 
   profileButton = (): Locator => this.page.locator('#profile-button')
   popupItemButton = (hasText: string): Locator => this.page.locator('div.popup button[class*="menu"]', { hasText })
