@@ -12,7 +12,7 @@ export class LoginPage {
   inputPassword = (): Locator => this.page.locator('input[name=current-password]')
   buttonLogin = (): Locator => this.page.locator('button', { hasText: 'Log In' })
   loginWithPassword = (): Locator => this.page.locator('a', { hasText: 'Login with password' })
-  linkSignUp = (): Locator => this.page.locator('a.title', { hasText: 'Sign Up' })
+  linkSignUp = (): Locator => this.page.getByRole('button', { name: /Sign Up|Create account/ }).or(this.page.getByRole('link', { name: 'Sign Up' }))
   invalidCredentialsMessage = (): Locator =>
     this.page.getByText('Account not found or the provided credentials are incorrect')
 

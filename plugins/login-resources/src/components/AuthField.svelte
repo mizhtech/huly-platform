@@ -6,7 +6,7 @@
   export let value = ''
   export let label: IntlString
   export let name: string
-  export let icon: 'mail' | 'lock' | 'briefcase' = 'mail'
+  export let icon: 'mail' | 'lock' | 'user' | 'briefcase' = 'mail'
   export let type: 'text' | 'email' | 'password' = 'text'
   export let autocomplete: string | undefined = undefined
   export let disabled = false
