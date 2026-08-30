@@ -606,7 +606,6 @@ export function createModel (builder: Builder): void {
         'city',
         'attachments',
         'modifiedOn',
-        { key: '', presenter: view.component.RolePresenter, label: view.string.Role },
         {
           key: '$lookup.channels',
           label: contact.string.ContactInfo,
@@ -637,7 +636,7 @@ export function createModel (builder: Builder): void {
         'city',
         'attachments',
         'modifiedOn',
-        { key: '', presenter: view.component.RolePresenter, label: view.string.Role },
+        'position',
         {
           key: '$lookup.channels',
           label: contact.string.ContactInfo,
@@ -677,7 +676,6 @@ export function createModel (builder: Builder): void {
         'city',
         'attachments',
         'modifiedOn',
-        { key: '', presenter: view.component.RolePresenter, label: view.string.Role },
         {
           key: '$lookup.channels',
           label: contact.string.ContactInfo,
