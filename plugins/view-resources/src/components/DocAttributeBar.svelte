@@ -48,7 +48,12 @@
   on:update
 />
 {#each _mixins as mixin}
-  {@const to = !hierarchy.hasMixin(mixin, setting.mixin.UserMixin) ? object._class : mixin.extends}
+  {@const parentMixinIsRendered = _mixins.some((candidate) => candidate._id === mixin.extends)}
+  {@const to = parentMixinIsRendered
+    ? mixin.extends
+    : !hierarchy.hasMixin(mixin, setting.mixin.UserMixin)
+      ? object._class
+      : mixin.extends}
   {#if !hierarchy.hasMixin(mixin, setting.mixin.Editable) || hierarchy.as(mixin, setting.mixin.Editable).value}
     {#key mixin._id}
       <ClassAttributeBar

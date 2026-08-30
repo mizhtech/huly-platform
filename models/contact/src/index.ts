@@ -271,7 +271,6 @@ export class TEmployee extends TPerson implements Employee {
     statuses?: number
 
   @Prop(TypeString(), contact.string.Position)
-  @Hidden()
     position?: string | null
 
   declare personUuid?: AccountUuid
