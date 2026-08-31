@@ -1223,7 +1223,11 @@ export async function checkInvite (ctx: MeasureContext, invite: WorkspaceInvite,
   //   throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   // }
 
-  if (invite.email != null && invite.email.trim().length > 0 && invite.email !== email) {
+  if (
+    invite.email != null &&
+    invite.email.trim().length > 0 &&
+    cleanEmail(invite.email) !== cleanEmail(email)
+  ) {
     ctx.warn("Invite doesn't allow this email address", { email, ...invite })
     throw new PlatformError(new Status(Severity.ERROR, platform.status.Forbidden, {}))
   }

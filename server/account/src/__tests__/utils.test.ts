@@ -62,6 +62,7 @@ import {
   getMailUrl,
   getSocialIdByKey,
   getWorkspaceInvite,
+  checkInvite,
   loginOrSignUpWithProvider,
   sendEmail,
   addSocialIdBase,
@@ -114,6 +115,33 @@ describe('account utils', () => {
       ['   spaced@email.com   ', 'spaced@email.com', 'should trim multiple spaces']
     ])('%s -> %s (%s)', (input, expected) => {
       expect(cleanEmail(input)).toBe(expected)
+    })
+  })
+
+  describe('checkInvite', () => {
+    const ctx = { warn: jest.fn() } as unknown as MeasureContext
+    const invite = {
+      id: 'invite-id',
+      workspaceUuid: 'workspace-id' as WorkspaceUuid,
+      remainingUses: 1,
+      expiresOn: 0,
+      email: 'user@example.com'
+    } as any
+
+    beforeEach(() => {
+      jest.clearAllMocks()
+    })
+
+    test.each([
+      'USER@EXAMPLE.COM',
+      '  user@example.com  ',
+      '  User@Example.COM  '
+    ])('accepts equivalent normalized email %s', async (email) => {
+      await expect(checkInvite(ctx, invite, email)).resolves.toBe(invite.workspaceUuid)
+    })
+
+    test('rejects a genuinely different email', async () => {
+      await expect(checkInvite(ctx, invite, 'other@example.com')).rejects.toThrow(PlatformError)
     })
   })
 
