@@ -295,7 +295,10 @@ async function resendInvite (doc: Person): Promise<void> {
     message: contact.string.ResendInviteDescr,
     action: async () => {
       const _resendInvite = await getResource(login.function.ResendInvite)
-      await _resendInvite(emailSocialId?.value, AccountRole.User)
+      await _resendInvite(emailSocialId.value, AccountRole.User)
+
+      const employee = client.getHierarchy().as(doc, contact.mixin.Employee)
+      await client.update(employee, { active: true })
     }
   })
 }

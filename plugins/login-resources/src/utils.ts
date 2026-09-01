@@ -802,12 +802,7 @@ export async function sendInvite (email: string, role: AccountRole): Promise<voi
 }
 
 export async function resendInvite (email: string, role: AccountRole): Promise<void> {
-  try {
-    await getAccountClient().resendInvite(email, role)
-  } catch (e) {
-    console.log('Failed to resend invite', email, role)
-    console.error(e)
-  }
+  await getAccountClient().resendInvite(email, role)
 }
 
 export async function requestPassword (email: string): Promise<Status> {

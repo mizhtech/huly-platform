@@ -523,9 +523,23 @@ describe('account operations', () => {
       ;(mockDb.invite.insertOne as jest.Mock).mockResolvedValue(newInviteId)
       global.fetch = jest.fn().mockResolvedValue({ ok: true })
 
+      const beforeTest = Date.now()
       await resendInvite(mockCtx, mockDb, mockBranding, mockToken, { email: mockEmail, role: AccountRole.User })
+      const afterTest = Date.now()
 
-      expect(mockDb.invite.insertOne).toHaveBeenCalled()
+      expect(mockDb.invite.insertOne).toHaveBeenCalledWith(
+        expect.objectContaining({
+          workspaceUuid: mockWorkspace.uuid,
+          email: mockEmail,
+          remainingUses: 1,
+          role: AccountRole.User,
+          expiresOn: expect.any(Number)
+        })
+      )
+      const actualInvite = (mockDb.invite.insertOne as jest.Mock).mock.calls[0][0]
+      const expectedExpiration = 48 * 60 * 60 * 1000
+      expect(actualInvite.expiresOn).toBeGreaterThanOrEqual(beforeTest + expectedExpiration - 1)
+      expect(actualInvite.expiresOn).toBeLessThanOrEqual(afterTest + expectedExpiration)
       expect(global.fetch).toHaveBeenCalled()
     })
   })

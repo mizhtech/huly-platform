@@ -974,7 +974,8 @@ export async function resendInvite (
   verifyAllowedRole(callerRole, role, extra)
 
   const expHours = 48
-  const newExp = Date.now() + expHours * 60 * 60 * 1000
+  const expirationDuration = expHours * 60 * 60 * 1000
+  const newExp = Date.now() + expirationDuration
 
   const invite = await db.invite.findOne({ workspaceUuid, email })
   let inviteId: string
@@ -982,7 +983,7 @@ export async function resendInvite (
     inviteId = invite.id
     await db.invite.update({ id: invite.id }, { expiresOn: newExp, remainingUses: 1, role })
   } else {
-    inviteId = await createInvite(ctx, db, branding, token, { exp: newExp, email, limit: 1, role })
+    inviteId = await createInvite(ctx, db, branding, token, { exp: expirationDuration, email, limit: 1, role })
   }
   const front = getFrontUrl(branding)
   const link = concatLink(front, `/login/join?inviteId=${inviteId}`)
