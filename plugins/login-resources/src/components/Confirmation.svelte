@@ -19,7 +19,7 @@
   import { logIn } from '@hcengineering/workbench'
 
   import login from '../plugin'
-  import { afterConfirm, confirm, goTo } from '../utils'
+  import { afterConfirm, confirm, goTo, navigateToWorkspace } from '../utils'
 
   export let status: Status<any> = OK
 
@@ -34,7 +34,15 @@
 
     if (result != null) {
       await logIn(result)
-      await afterConfirm()
+
+      // signUpJoin confirmation can complete the invitation server-side and return
+      // workspace credentials directly. Preserve that flow instead of falling back
+      // to the generic workspace selector.
+      if ('workspaceUrl' in result) {
+        navigateToWorkspace(result.workspaceUrl, result)
+      } else {
+        await afterConfirm()
+      }
     } else {
       goTo('login')
     }

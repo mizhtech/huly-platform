@@ -55,6 +55,7 @@
   let currentAccountName: string | undefined
   let joiningWithAccount = false
   let inviteWorkspaceName: string | undefined
+  let confirmationSentEmail: string | undefined
 
   $: signupStore.setSignUpFlow(page === 'signUp')
 
@@ -111,22 +112,32 @@
       status = loginStatus
 
       if (result != null) {
-        await logIn(result)
-        setLoginInfo(result)
-
-        if (location.query?.navigateUrl != null) {
-          try {
-            const loc = JSON.parse(decodeURIComponent(location.query.navigateUrl)) as Location
-            if (loc.path[1] === result.workspaceUrl) {
-              navigate(loc)
-              return
-            }
-          } catch (err: any) {
-            // Json parse error could be ignored
-          }
+        // When email confirmation is required signUpJoin creates the account and sends the
+        // confirmation email, but deliberately does not return workspace credentials yet.
+        // Surface that state explicitly instead of trying to open an undefined workspace.
+        if (page === 'signUp' && !('workspaceUrl' in result)) {
+          confirmationSentEmail = object.username
+          return
         }
 
-        navigate({ path: [workbenchId, result.workspaceUrl] })
+        if ('workspaceUrl' in result) {
+          await logIn(result)
+          setLoginInfo(result)
+
+          if (location.query?.navigateUrl != null) {
+            try {
+              const loc = JSON.parse(decodeURIComponent(location.query.navigateUrl)) as Location
+              if (loc.path[1] === result.workspaceUrl) {
+                navigate(loc)
+                return
+              }
+            } catch (err: any) {
+              // Json parse error could be ignored
+            }
+          }
+
+          navigate({ path: [workbenchId, result.workspaceUrl] })
+        }
       }
     }
   }
@@ -135,9 +146,11 @@
   $: secondaryButtonAction =
     page === 'login'
       ? () => {
+          confirmationSentEmail = undefined
           page = 'signUp'
         }
       : () => {
+          confirmationSentEmail = undefined
           page = 'login'
         }
 
@@ -299,6 +312,42 @@
       </div>
     </div>
   </div>
+{:else if confirmationSentEmail != null}
+  <div
+    class="join-confirmation-container"
+    style:padding={loginFormPadding($deviceInfo.docWidth, $deviceInfo.docHeight)}
+    style:min-height={loginFormMinHeight($deviceInfo.docHeight)}
+  >
+    <div class="join-confirmation">
+      <div class="join-title">
+        <Label label={login.string.ConfirmationSent} />
+      </div>
+      <div class="join-subtitle">
+        <Label label={login.string.ConfirmationSent2} />
+      </div>
+      <div class="join-confirmation-email">{confirmationSentEmail}</div>
+      <div class="join-confirmation-actions">
+        <Button
+          label={login.string.ChangeEmail}
+          size={'large'}
+          shape={'round2'}
+          on:click={() => {
+            confirmationSentEmail = undefined
+            page = 'signUp'
+          }}
+        />
+        <Button
+          label={login.string.HaveAccount}
+          size={'large'}
+          shape={'round2'}
+          on:click={() => {
+            confirmationSentEmail = undefined
+            page = 'login'
+          }}
+        />
+      </div>
+    </div>
+  </div>
 {:else}
   <Form
     caption={login.string.JoinWorkspace}
@@ -342,10 +391,31 @@
     color: var(--theme-caption-color);
   }
 
+  .join-confirmation-container,
   .join-with-account-container {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+  }
+
+  .join-confirmation {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.75rem;
+
+    .join-confirmation-email {
+      overflow-wrap: anywhere;
+      font-weight: 500;
+      color: var(--theme-caption-color);
+    }
+
+    .join-confirmation-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.5rem;
+    }
   }
 
   .join-with-account {

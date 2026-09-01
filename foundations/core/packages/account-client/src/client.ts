@@ -103,7 +103,7 @@ export interface AccountClient {
     last: string,
     inviteId: string,
     workspaceUrl: string
-  ) => Promise<WorkspaceLoginInfo>
+  ) => Promise<WorkspaceLoginInfo | LoginInfo>
   join: (email: string, password: string, inviteId: string, workspaceUrl: string) => Promise<WorkspaceLoginInfo>
   createInvite: (exp: number, emailMask: string, limit: number, role: AccountRole) => Promise<string>
   /**
@@ -575,7 +575,7 @@ class AccountClientImpl implements AccountClient {
     last: string,
     inviteId: string,
     workspaceUrl: string
-  ): Promise<WorkspaceLoginInfo> {
+  ): Promise<WorkspaceLoginInfo | LoginInfo> {
     const request = {
       method: 'signUpJoin' as const,
       params: { email, password, first, last, inviteId, workspaceUrl }

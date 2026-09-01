@@ -715,7 +715,7 @@ export async function signUpJoin (
   last: string,
   inviteId: string,
   workspace: string
-): Promise<[Status, WorkspaceLoginInfo | null]> {
+): Promise<[Status, WorkspaceLoginInfo | LoginInfo | null]> {
   try {
     const workspaceLoginInfo = await getAccountClient().signUpJoin(email, password, first, last, inviteId, workspace)
 
