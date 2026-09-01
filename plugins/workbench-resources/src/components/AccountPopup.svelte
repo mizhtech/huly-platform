@@ -163,7 +163,7 @@
       })
     }
     actions.push(...getMenu(items, ['main']))
-    if (hasAccountRole(account, AccountRole.User) && !isDisabled('invites') && canGenerateInviteLink) {
+    if (hasAccountRole(account, AccountRole.Maintainer) && !isDisabled('invites') && canGenerateInviteLink) {
       actions.push({
         icon: setting.icon.InviteWorkspace,
         label: setting.string.InviteWorkspace,

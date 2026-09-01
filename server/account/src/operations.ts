@@ -669,6 +669,7 @@ export async function createInvite (
   }
 
   const callerRole = await db.getWorkspaceRole(account, workspace.uuid)
+  verifyAllowedRole(callerRole, AccountRole.Maintainer, extra)
   verifyAllowedRole(callerRole, role, extra)
 
   if (autoJoin === true) {
@@ -727,6 +728,7 @@ export async function sendInvite (
   }
 
   const callerRole = await db.getWorkspaceRole(account, workspace.uuid)
+  verifyAllowedRole(callerRole, AccountRole.Maintainer, extra)
   verifyAllowedRole(callerRole, role, extra)
 
   const inviteLink = await createInviteLink(ctx, db, branding, token, params)
@@ -872,6 +874,7 @@ export async function createInviteLink (
   }
 
   const callerRole = await db.getWorkspaceRole(account, workspace.uuid)
+  verifyAllowedRole(callerRole, AccountRole.Maintainer, extra)
   verifyAllowedRole(callerRole, role, extra)
 
   if (autoJoin === true) {
@@ -971,6 +974,7 @@ export async function resendInvite (
   checkRateLimit(account, workspaceUuid)
 
   const callerRole = await db.getWorkspaceRole(account, workspace.uuid)
+  verifyAllowedRole(callerRole, AccountRole.Maintainer, extra)
   verifyAllowedRole(callerRole, role, extra)
 
   const expHours = 48

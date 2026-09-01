@@ -17,7 +17,8 @@
   import login, { loginId } from '@hcengineering/login'
   import { getClient, createQuery, isDisabled } from '@hcengineering/presentation'
   import settingPlg from '../plugin'
-  import setting, { SettingsCategory, SettingsEvents } from '@hcengineering/setting'
+  import setting, { RoleCapability, SettingsCategory, SettingsEvents } from '@hcengineering/setting'
+  import { getResource } from '@hcengineering/platform'
   import {
     Component,
     Label,
@@ -59,6 +60,7 @@
   const account = getCurrentAccount()
   let asideComponent: ComponentType | AnyComponent | null = null
   let asideProps: object | null = null
+  let canGenerateInviteLink = false
 
   const settingsQuery = createQuery()
   settingsQuery.query(
@@ -83,6 +85,13 @@
     })
   )
   onMount(() => {
+    void getResource(setting.function.HasRoleCapability).then((checkCapability) => {
+      if (checkCapability != null) {
+        void checkCapability(RoleCapability.GenerateInviteLink).then((value: boolean) => {
+          canGenerateInviteLink = value
+        })
+      }
+    })
     setTimeout(() => {
       if (categoryId === undefined) $deviceInfo.navigator.visible = true
     }, 500)
@@ -193,7 +202,7 @@
           label={setting.string.SelectWorkspace}
           on:click={selectWorkspace}
         />
-        {#if hasAccountRole(account, AccountRole.User) && !isDisabled('invites')}
+        {#if hasAccountRole(account, AccountRole.Maintainer) && !isDisabled('invites') && canGenerateInviteLink}
           <NavItem
             icon={setting.icon.InviteWorkspace}
             label={setting.string.InviteWorkspace}

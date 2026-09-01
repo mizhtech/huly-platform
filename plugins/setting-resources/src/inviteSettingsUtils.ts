@@ -53,11 +53,7 @@ export function normalizeInviteRoles (
   return mapped.length > 0 ? mapped : [...fallback]
 }
 
-export const DEFAULT_INVITE_LINK_GENERATOR_ROLES: AccountRole[] = [
-  AccountRole.User,
-  AccountRole.Maintainer,
-  AccountRole.Owner
-]
+export const DEFAULT_INVITE_LINK_GENERATOR_ROLES: AccountRole[] = [AccountRole.Maintainer, AccountRole.Owner]
 
 export const INVITE_SETTINGS_DEFAULT_EXPIRATION_HOURS = 48
 export const INVITE_SETTINGS_DEFAULT_LIMIT = -1

@@ -67,12 +67,10 @@
   $: lang = $themeStore?.language
   $: if (typeof lang === 'string') {
     void Promise.all([
-      translate(settingRes.string.User, {}, lang),
       translate(settingRes.string.Maintainer, {}, lang),
       translate(settingRes.string.Owner, {}, lang)
-    ]).then(([userLabel, maintainerLabel, ownerLabel]) => {
+    ]).then(([maintainerLabel, ownerLabel]) => {
       inviteLinkGeneratorRolesItems = [
-        { id: AccountRole.User, label: userLabel },
         { id: AccountRole.Maintainer, label: maintainerLabel },
         { id: AccountRole.Owner, label: ownerLabel }
       ]
@@ -86,7 +84,7 @@
     mask = state.emailMask
     limit = state.limit
     defaultInviteRole = state.defaultInviteRole
-    inviteLinkGeneratorRoles = state.inviteLinkGeneratorRoles
+    inviteLinkGeneratorRoles = state.inviteLinkGeneratorRoles.filter((role) => role >= AccountRole.Maintainer)
     noLimit = state.noLimit
     loading = false
   }

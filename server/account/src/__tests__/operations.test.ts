@@ -158,6 +158,25 @@ describe('account operations', () => {
     })
   })
 
+  describe('workspace invite minimum role', () => {
+    beforeEach(() => {
+      ;(mockDb.account.findOne as jest.Mock).mockResolvedValue(mockAccount)
+      ;(mockDb.workspace.findOne as jest.Mock).mockResolvedValue(mockWorkspace)
+      ;(mockDb.getWorkspaceRole as jest.Mock).mockResolvedValue(AccountRole.User)
+    })
+
+    test.each([
+      ['createInvite', () => createInvite(mockCtx, mockDb, mockBranding, mockToken, { exp: 1000, email: 'test@example.com', limit: 1, role: AccountRole.User })],
+      ['createInviteLink', () => createInviteLink(mockCtx, mockDb, mockBranding, mockToken, { email: 'test@example.com', role: AccountRole.User })],
+      ['sendInvite', () => sendInvite(mockCtx, mockDb, mockBranding, mockToken, { email: 'test@example.com', role: AccountRole.User })],
+      ['resendInvite', () => resendInvite(mockCtx, mockDb, mockBranding, mockToken, { email: 'test@example.com', role: AccountRole.User })]
+    ])('rejects User caller for %s', async (_name, operation) => {
+      await expect(operation()).rejects.toMatchObject({
+        status: expect.objectContaining({ code: platform.status.Forbidden })
+      })
+    })
+  })
+
   describe('createInvite', () => {
     test('should create invite for authorized maintainer', async () => {
       const inviteId = 'new-invite-id'

@@ -93,6 +93,13 @@ describe('inviteSettingsUtils', () => {
     })
   })
 
+  describe('default invite link generator roles', () => {
+    it('starts at Maintainer and excludes User', () => {
+      expect(DEFAULT_INVITE_LINK_GENERATOR_ROLES).toEqual([AccountRole.Maintainer, AccountRole.Owner])
+      expect(DEFAULT_INVITE_LINK_GENERATOR_ROLES).not.toContain(AccountRole.User)
+    })
+  })
+
   describe('getDefaultInviteRole / getDefaultInviterRoles', () => {
     it('uses User and default generator list when metadata unset', () => {
       mockGetMetadata.mockReturnValue(undefined)

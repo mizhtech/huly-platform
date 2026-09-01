@@ -66,6 +66,7 @@
   }
 
   async function getLink (expHours: number, mask: string, limit: number | undefined, role: AccountRole): Promise<void> {
+    if (!isOwnerOrMaintainer || !canGenerateInviteLinks) return
     loading = true
     link = await getInviteLink(expHours, mask, limit ?? -1, role)
     loading = false
@@ -191,9 +192,9 @@
         label={login.string.GetLink}
         size={'medium'}
         kind={'primary'}
-        disabled={!canGenerateInviteLinks}
+        disabled={!isOwnerOrMaintainer || !canGenerateInviteLinks}
         on:click={() => {
-          if (!canGenerateInviteLinks) return
+          if (!isOwnerOrMaintainer || !canGenerateInviteLinks) return
           const effectiveLimit = limit ?? 0
           if (effectiveLimit > 0 || noLimit) {
             void getLink(expHours, emailMask, limit, role ?? defaultInviteRole)

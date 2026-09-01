@@ -35,6 +35,10 @@ export function hasRoleCapability (
   roleByCapability: Record<string, AccountRole[]> | undefined | null,
   inviteLinkGeneratorRoles?: AccountRole[] | undefined | null
 ): boolean {
+  if (capabilityId === RoleCapability.GenerateInviteLink && !hasAccountRole(account, AccountRole.Maintainer)) {
+    return false
+  }
+
   const roles = getRolesForCapability(capabilityId, roleByCapability, inviteLinkGeneratorRoles)
   return roles.some((role) => hasAccountRole(account, role))
 }

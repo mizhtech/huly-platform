@@ -46,10 +46,16 @@ describe('roleCapability (Generate invite link permission)', () => {
   })
 
   describe('hasRoleCapability', () => {
-    it('allows User when falling back to default generator roles', () => {
+    it('denies User when falling back to default generator roles', () => {
       expect(
         hasRoleCapability(account(AccountRole.User), RoleCapability.GenerateInviteLink, undefined, undefined)
-      ).toBe(true)
+      ).toBe(false)
+    })
+
+    it('denies User even when legacy workspace settings explicitly include User', () => {
+      expect(
+        hasRoleCapability(account(AccountRole.User), RoleCapability.GenerateInviteLink, undefined, [AccountRole.User])
+      ).toBe(false)
     })
 
     it('denies User when only Owner may generate', () => {
