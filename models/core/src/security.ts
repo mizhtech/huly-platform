@@ -167,6 +167,8 @@ export class TPermission extends TDoc implements Permission {
   label!: IntlString
   txClass?: Ref<Class<Tx>>
   forbid?: boolean
+  @Prop(TypeBoolean(), core.string.Permission)
+    allowCreator?: boolean
   objectClass?: Ref<Class<Doc<Space>>>
   scope?: 'space' | 'workspace'
   description?: IntlString

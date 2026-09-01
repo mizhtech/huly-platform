@@ -10,7 +10,17 @@ import core, {
 } from '@hcengineering/core'
 import { getClient } from '@hcengineering/presentation'
 
-export function isRoleActionForbidden (txClass: Ref<Class<Tx>>, objectClass: Ref<Class<Doc>>): boolean {
+function isCreator (doc: Doc): boolean {
+  const account = getCurrentAccount()
+  return doc.createdBy !== undefined &&
+    (doc.createdBy === account.primarySocialId || account.socialIds.includes(doc.createdBy))
+}
+
+export function isRoleActionForbidden (
+  txClass: Ref<Class<Tx>>,
+  objectClass: Ref<Class<Doc>>,
+  doc?: Doc
+): boolean {
   const account = getCurrentAccount()
   if (account.role === AccountRole.Admin) return false
   const client = getClient()
@@ -26,15 +36,19 @@ export function isRoleActionForbidden (txClass: Ref<Class<Tx>>, objectClass: Ref
     return group.permissions.some((id) => {
       if (disabled.has(id)) return false
       const permission = byId.get(id)
-      return permission?.forbid === true &&
-        permission.txClass === txClass &&
-        (permission.objectClass === undefined || hierarchy.isDerived(objectClass, permission.objectClass))
+      if (
+        permission?.forbid !== true ||
+        permission.txClass !== txClass ||
+        (permission.objectClass !== undefined && !hierarchy.isDerived(objectClass, permission.objectClass))
+      ) return false
+      if (permission.allowCreator === true && doc !== undefined && isCreator(doc)) return false
+      return true
     })
   })
 }
 
 export function isRoleUpdateForbidden (doc: Doc): boolean {
-  if (!isRoleActionForbidden(core.class.TxUpdateDoc, doc._class)) return false
+  if (!isRoleActionForbidden(core.class.TxUpdateDoc, doc._class, doc)) return false
 
   const account = getCurrentAccount()
   const hierarchy = getClient().getHierarchy()

@@ -15,13 +15,30 @@
 //
 
 import { type ChatMessageViewlet } from '@hcengineering/chunter'
-import type { Client, Doc, Ref } from '@hcengineering/core'
+import type { Client, Doc, ModulePermissionGroup, Permission, Ref } from '@hcengineering/core'
 import { inventoryId } from '@hcengineering/inventory'
 import inventory from '@hcengineering/inventory-resources/src/plugin'
 import { type IntlString, mergeIds, type Resource } from '@hcengineering/platform'
 import type { AnyComponent } from '@hcengineering/ui/src/types'
 import { type Action, type ActionCategory, type ViewAction, type Viewlet } from '@hcengineering/view'
 export default mergeIds(inventoryId, inventory, {
+  permission: {
+    UserUpdateCategory: '' as Ref<Permission>,
+    UserRemoveCategory: '' as Ref<Permission>,
+    UserUpdateProduct: '' as Ref<Permission>,
+    UserRemoveProduct: '' as Ref<Permission>,
+    UserUpdateVariant: '' as Ref<Permission>,
+    UserRemoveVariant: '' as Ref<Permission>,
+    GuestMutateCategory: '' as Ref<Permission>,
+    GuestMutateProduct: '' as Ref<Permission>,
+    GuestMutateVariant: '' as Ref<Permission>
+  },
+  permissionGroup: {
+    User: '' as Ref<ModulePermissionGroup>,
+    Guest: '' as Ref<ModulePermissionGroup>,
+    DocGuest: '' as Ref<ModulePermissionGroup>,
+    ReadOnlyGuest: '' as Ref<ModulePermissionGroup>
+  },
   action: {
     CreateSubcategory: '' as Ref<Action>
   },

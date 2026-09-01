@@ -13,7 +13,7 @@
 // limitations under the License.
 //
 
-import { type Domain, IndexKind, type Ref } from '@hcengineering/core'
+import { AccountRole, type Domain, IndexKind, type Ref } from '@hcengineering/core'
 import { type Category, type Product, type Variant, inventoryId } from '@hcengineering/inventory'
 import { type Builder, Collection, Index, Model, Prop, TypeRef, TypeString, UX } from '@hcengineering/model'
 import attachment from '@hcengineering/model-attachment'
@@ -26,6 +26,7 @@ import chunter from '@hcengineering/model-chunter'
 import activity from '@hcengineering/activity'
 
 import inventory from './plugin'
+import { createInventoryPermissions } from './permissions'
 export { inventoryId } from '@hcengineering/inventory'
 export { inventoryOperation } from './migration'
 export { default } from './plugin'
@@ -78,6 +79,7 @@ export class TVariant extends TAttachedDoc implements Variant {
 
 export function createModel (builder: Builder): void {
   builder.createModel(TCategory, TProduct, TVariant)
+  createInventoryPermissions(builder)
 
   builder.mixin(inventory.class.Product, core.class.Class, activity.mixin.ActivityDoc, {})
   builder.mixin(inventory.class.Category, core.class.Class, activity.mixin.ActivityDoc, {})
@@ -156,6 +158,7 @@ export function createModel (builder: Builder): void {
       icon: inventory.icon.InventoryApplication,
       alias: inventoryId,
       hidden: false,
+      accessLevel: AccountRole.User,
       navigatorModel: {
         specials: [
           {

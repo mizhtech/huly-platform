@@ -571,6 +571,7 @@ export interface Permission extends Doc {
   label: IntlString
   txClass?: Ref<Class<Tx>>
   forbid?: boolean
+  allowCreator?: boolean
   objectClass?: Ref<Class<Doc>>
   scope?: 'space' | 'workspace'
   txMatch?: DocumentQuery<Tx>

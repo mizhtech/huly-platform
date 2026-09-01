@@ -58,7 +58,7 @@ export async function canDeleteObject (doc?: Doc | Doc[]): Promise<boolean> {
   const client = getClient()
   const targets = Array.isArray(doc) ? doc : [doc]
 
-  if (targets.some((target) => isRoleActionForbidden(core.class.TxRemoveDoc, target._class))) {
+  if (targets.some((target) => isRoleActionForbidden(core.class.TxRemoveDoc, target._class, target))) {
     return false
   }
 

@@ -72,10 +72,26 @@ export class RolePermissionsMiddleware extends BaseMiddleware implements Middlew
         const permission = byId.get(id)
         if (permission?.forbid !== true) continue
         if (!this.matches(cud, permission)) continue
+        if (await this.isCreatorAllowed(ctx, cud, permission)) continue
         if (await this.isIdentityUpdate(ctx, cud)) continue
         this.forbidden()
       }
     }
+  }
+
+  private async isCreatorAllowed (
+    ctx: MeasureContext<SessionData>,
+    tx: TxCUD<Doc>,
+    permission: Permission
+  ): Promise<boolean> {
+    if (permission.allowCreator !== true || tx._class === core.class.TxCreateDoc) return false
+
+    const docs = await this.findAll(ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 })
+    const target = docs[0]
+    if (target?.createdBy === undefined) return false
+
+    const account = ctx.contextData.account
+    return target.createdBy === account.primarySocialId || account.socialIds.includes(target.createdBy)
   }
 
   private async isIdentityUpdate (ctx: MeasureContext<SessionData>, tx: TxCUD<Doc>): Promise<boolean> {
