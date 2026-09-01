@@ -130,6 +130,11 @@
     "CreateNewPasswordSubtitle": "Đặt mật khẩu mới cho tài khoản của bạn",
     "ConfirmNewPassword": "Nhập lại mật khẩu mới",
     "BackToLogin": "Quay lại đăng nhập",
-    "InvalidRecoveryLink": "Liên kết khôi phục không hợp lệ hoặc đã hết hạn."
+    "InvalidRecoveryLink": "Liên kết khôi phục không hợp lệ hoặc đã hết hạn.",
+    "JoinLoginSubtitle": "Đăng nhập bằng tài khoản của bạn để nhận lời mời tham gia workspace.",
+    "JoinSignupSubtitle": "Tạo tài khoản để nhận lời mời tham gia workspace.",
+    "JoinCurrentAccountSubtitle": "Tiếp tục bằng tài khoản đang đăng nhập.",
+    "JoinConfirmationTitle": "Kiểm tra email của bạn",
+    "JoinLoadingSubtitle": "Đang kiểm tra lời mời và quyền truy cập workspace."
   }
 }

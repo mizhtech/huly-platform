@@ -130,6 +130,11 @@
     "CreateNewPasswordSubtitle": "Choose a new password for your account",
     "ConfirmNewPassword": "Confirm new password",
     "BackToLogin": "Back to login",
-    "InvalidRecoveryLink": "This recovery link is invalid or has expired."
+    "InvalidRecoveryLink": "This recovery link is invalid or has expired.",
+    "JoinLoginSubtitle": "Sign in with your account to accept this workspace invitation.",
+    "JoinSignupSubtitle": "Create your account to accept this workspace invitation.",
+    "JoinCurrentAccountSubtitle": "Continue with the account that is already signed in.",
+    "JoinConfirmationTitle": "Check your email",
+    "JoinLoadingSubtitle": "We are checking your invitation and workspace access."
   }
 }

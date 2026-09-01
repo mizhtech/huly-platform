@@ -112,6 +112,11 @@ export default mergeIds(loginId, login, {
     CreateNewPasswordSubtitle: '' as IntlString,
     ConfirmNewPassword: '' as IntlString,
     BackToLogin: '' as IntlString,
-    InvalidRecoveryLink: '' as IntlString
+    InvalidRecoveryLink: '' as IntlString,
+    JoinLoginSubtitle: '' as IntlString,
+    JoinSignupSubtitle: '' as IntlString,
+    JoinCurrentAccountSubtitle: '' as IntlString,
+    JoinConfirmationTitle: '' as IntlString,
+    JoinLoadingSubtitle: '' as IntlString
   }
 })

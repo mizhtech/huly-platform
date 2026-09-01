@@ -154,8 +154,8 @@
         <LoginIcon /><span class="fs-title ml-2">{getMetadata(workbench.metadata.PlatformTitle)}</span>
       </div>
 
-      <div class="panel-base" class:panel={$deviceInfo.docWidth > 768} class:white={!$themeStore.dark} class:onboarding={page === 'login' || page === 'signup' || page === 'password' || page === 'recovery' || page === 'createWorkspace' || page === 'selectWorkspace'}>
-        <Scroller padding={page === 'signup' || page === 'password' || page === 'recovery' ? '.5rem 0' : '1rem 0'}>
+      <div class="panel-base" class:panel={$deviceInfo.docWidth > 768} class:white={!$themeStore.dark} class:onboarding={page === 'login' || page === 'signup' || page === 'password' || page === 'recovery' || page === 'createWorkspace' || page === 'selectWorkspace' || page === 'join'}>
+        <Scroller padding={page === 'signup' || page === 'password' || page === 'recovery' || page === 'join' ? '.5rem 0' : '1rem 0'}>
           <div class="form-content">
             {#if page === 'login'}
               {#if localLoginHidden}
@@ -192,7 +192,7 @@
         </Scroller>
       </div>
 
-      {#if $deviceInfo.docWidth > 768 && (page === 'login' || page === 'signup' || page === 'password' || page === 'recovery' || page === 'createWorkspace' || page === 'selectWorkspace')}
+      {#if $deviceInfo.docWidth > 768 && (page === 'login' || page === 'signup' || page === 'password' || page === 'recovery' || page === 'createWorkspace' || page === 'selectWorkspace' || page === 'join')}
         <div class="brand-footer">
           <span><Label label={login.string.Security} /></span><i>•</i>
           <span><Label label={login.string.Reliability} /></span><i>•</i>
