@@ -464,15 +464,16 @@ export async function ensureEmployeeForPerson (
           city: '',
           avatarType: AvatarType.COLOR
         }
-        personRef = generateId()
+        const newPersonRef = generateId<Person>()
 
         const createPersonTx = txFactory.createTxCreateDoc(
           contact.class.Person,
           contact.space.Contacts,
           data,
-          personRef
+          newPersonRef
         )
         await client.tx(createPersonTx)
+        personRef = newPersonRef
       })
     } else if (personByUuid === undefined) {
       // Local person found only by social identity, need to set personUuid

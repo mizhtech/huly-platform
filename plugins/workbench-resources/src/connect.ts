@@ -480,6 +480,16 @@ export async function connect (title: string): Promise<Client | undefined> {
       return
     }
 
+    const employeeDoc = await newClient.findOne(contact.mixin.Employee, { _id: employee })
+    if (employeeDoc === undefined) {
+      console.error('Failed to load ensured employee')
+      navigate({
+        path: [loginId],
+        query: {}
+      })
+      return
+    }
+
     const space = await newClient.findOne(contact.class.PersonSpace, { person: employee }, { projection: { _id: 1 } })
 
     setCurrentEmployee(employee)

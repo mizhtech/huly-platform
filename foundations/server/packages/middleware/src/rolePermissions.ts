@@ -11,6 +11,7 @@ import core, {
   type Tx,
   type TxApplyIf,
   type TxCUD,
+  type TxCreateDoc,
   type TxMixin,
   TxProcessor
 } from '@hcengineering/core'
@@ -78,10 +79,23 @@ export class RolePermissionsMiddleware extends BaseMiddleware implements Middlew
   }
 
   private async isIdentityUpdate (ctx: MeasureContext<SessionData>, tx: TxCUD<Doc>): Promise<boolean> {
-    if (tx._class !== core.class.TxUpdateDoc && tx._class !== core.class.TxMixin) return false
+    if (
+      tx._class !== core.class.TxCreateDoc &&
+      tx._class !== core.class.TxUpdateDoc &&
+      tx._class !== core.class.TxMixin
+    ) return false
 
     const access = this.context.hierarchy.classHierarchyMixin(tx.objectClass, core.mixin.TxAccessLevel)
     if (access?.isIdentity !== true) return false
+
+    if (tx._class === core.class.TxCreateDoc) {
+      const createTx = tx as TxCreateDoc<Doc>
+      const personUuid = (createTx.attributes as { personUuid?: string }).personUuid
+      if (personUuid !== ctx.contextData.account.uuid) return false
+
+      const existing = await this.findAll(ctx, tx.objectClass, { personUuid }, { limit: 1 })
+      return existing.length === 0
+    }
 
     const docs = await this.findAll(ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 })
     const target = docs[0] as (Doc & { personUuid?: string }) | undefined
@@ -89,7 +103,12 @@ export class RolePermissionsMiddleware extends BaseMiddleware implements Middlew
 
     if (tx._class === core.class.TxMixin) {
       const mixinTx = tx as TxMixin<Doc, Doc>
-      return this.context.hierarchy.hasMixin(target, mixinTx.mixin)
+      if (this.context.hierarchy.hasMixin(target, mixinTx.mixin)) return true
+
+      // A newly joined workspace member must be able to bootstrap identity mixins
+      // on their own identity document. Role permissions still prevent applying
+      // the same mixin to another person's identity.
+      return true
     }
 
     return true
