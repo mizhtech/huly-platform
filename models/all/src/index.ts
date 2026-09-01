@@ -181,7 +181,7 @@ export default function buildModel (): Builder {
       {
         label: card.string.Cards,
         description: card.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: false,
         icon: card.icon.Card,
         classFilter: defaultFilter
@@ -231,7 +231,7 @@ export default function buildModel (): Builder {
       {
         label: recruit.string.ConfigLabel,
         description: recruit.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: false,
         icon: recruit.icon.RecruitApplication,
         classFilter: defaultFilter
@@ -244,7 +244,7 @@ export default function buildModel (): Builder {
       {
         label: telegram.string.ConfigLabel,
         description: telegram.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: true,
         icon: contact.icon.Telegram,
         classFilter: defaultFilter
@@ -268,7 +268,7 @@ export default function buildModel (): Builder {
       {
         label: gmail.string.ConfigLabel,
         description: gmail.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: true,
         icon: contact.icon.Email,
         classFilter: defaultFilter
@@ -280,7 +280,7 @@ export default function buildModel (): Builder {
       {
         label: inventory.string.ConfigLabel,
         description: inventory.string.ConfigDescription,
-        enabled: false,
+        enabled: true,
         beta: true,
         icon: inventory.icon.InventoryApplication,
         classFilter: defaultFilter
@@ -380,7 +380,7 @@ export default function buildModel (): Builder {
       {
         label: github.string.ConfigLabel,
         description: github.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: false,
         icon: github.icon.Github,
         classFilter: defaultFilter
@@ -392,7 +392,7 @@ export default function buildModel (): Builder {
       {
         label: love.string.Office,
         description: love.string.LoveDescription,
-        enabled: true,
+        enabled: false,
         beta: false,
         icon: love.icon.Love,
         classFilter: defaultFilter
@@ -407,7 +407,7 @@ export default function buildModel (): Builder {
       {
         label: processes.string.ConfigLabel,
         description: processes.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: false,
         icon: processes.icon.Process,
         classFilter: defaultFilter
@@ -432,7 +432,7 @@ export default function buildModel (): Builder {
       {
         label: questions.string.ConfigLabel,
         description: questions.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: false,
         icon: questions.icon.Question,
         classFilter: defaultFilter
@@ -468,7 +468,7 @@ export default function buildModel (): Builder {
       {
         label: testManagement.string.ConfigLabel,
         description: testManagement.string.ConfigDescription,
-        enabled: true,
+        enabled: false,
         beta: true,
         icon: testManagement.icon.TestManagementApplication,
         classFilter: defaultFilter
