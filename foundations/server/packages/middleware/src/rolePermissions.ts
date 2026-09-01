@@ -11,6 +11,7 @@ import core, {
   type Tx,
   type TxApplyIf,
   type TxCUD,
+  type TxMixin,
   TxProcessor
 } from '@hcengineering/core'
 import platform, { PlatformError, Severity, Status } from '@hcengineering/platform'
@@ -77,14 +78,21 @@ export class RolePermissionsMiddleware extends BaseMiddleware implements Middlew
   }
 
   private async isIdentityUpdate (ctx: MeasureContext<SessionData>, tx: TxCUD<Doc>): Promise<boolean> {
-    if (tx._class !== core.class.TxUpdateDoc) return false
+    if (tx._class !== core.class.TxUpdateDoc && tx._class !== core.class.TxMixin) return false
 
     const access = this.context.hierarchy.classHierarchyMixin(tx.objectClass, core.mixin.TxAccessLevel)
     if (access?.isIdentity !== true) return false
 
     const docs = await this.findAll(ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 })
     const target = docs[0] as (Doc & { personUuid?: string }) | undefined
-    return target?.personUuid === ctx.contextData.account.uuid
+    if (target?.personUuid !== ctx.contextData.account.uuid) return false
+
+    if (tx._class === core.class.TxMixin) {
+      const mixinTx = tx as TxMixin<Doc, Doc>
+      return this.context.hierarchy.hasMixin(target, mixinTx.mixin)
+    }
+
+    return true
   }
 
   private canManagePolicy (ctx: MeasureContext<SessionData>, privileged: boolean): boolean {
