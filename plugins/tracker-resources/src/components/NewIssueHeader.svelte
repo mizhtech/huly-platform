@@ -71,7 +71,7 @@
   function updateActions (draft: boolean, project: boolean, closed: boolean, canCreateProject: boolean): void {
     mainActionId = draft || !closed ? tracker.string.ResumeDraft : tracker.string.NewIssue
     if (project) {
-      visibleActions = [...(canCreateProject ? [tracker.string.CreateProject] : []), mainActionId, tracker.string.Import]
+      visibleActions = [...(canCreateProject ? [tracker.string.CreateProject] : []), mainActionId]
     } else {
       visibleActions = canCreateProject ? [tracker.string.CreateProject] : []
     }
@@ -105,11 +105,5 @@
       keyBindingPromise: newIssueKeyBindingPromise,
       callback: newIssue
     },
-    {
-      id: tracker.string.Import,
-      label: tracker.string.Import,
-      accountRole: AccountRole.User,
-      callback: newIssue
-    }
   ]}
 />
