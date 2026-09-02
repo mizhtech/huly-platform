@@ -169,6 +169,8 @@ export class TPermission extends TDoc implements Permission {
   forbid?: boolean
   @Prop(TypeBoolean(), core.string.Permission)
     allowCreator?: boolean
+  @Prop(TypeBoolean(), core.string.Permission)
+    includeAttached?: boolean
   objectClass?: Ref<Class<Doc<Space>>>
   scope?: 'space' | 'workspace'
   description?: IntlString

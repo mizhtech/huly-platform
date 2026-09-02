@@ -19,6 +19,7 @@
   import notification from '../plugin'
 
   export let object: Doc
+  export let readonly = false
 
   let collaborators: Collaborator[] = []
 
@@ -38,6 +39,7 @@
   $: accounts = collaborators.map((c) => c.collaborator)
 
   async function change (res: AccountUuid[]): Promise<void> {
+    if (readonly) return
     const toAdd: AccountUuid[] = res.filter((a) => !accounts.includes(a))
     const toRemove: Collaborator[] = collaborators.filter((a) => !res.includes(a.collaborator))
     for (const account of toAdd) {
@@ -51,4 +53,4 @@
   }
 </script>
 
-<AccountArrayEditor label={notification.string.Collaborators} value={accounts} onChange={change} />
+<AccountArrayEditor label={notification.string.Collaborators} value={accounts} {readonly} onChange={readonly ? undefined : change} />

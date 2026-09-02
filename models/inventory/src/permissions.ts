@@ -22,7 +22,8 @@ export function createInventoryPermissions (builder: Builder): void {
         txClass,
         objectClass,
         forbid: true,
-        allowCreator: true
+        allowCreator: true,
+        includeAttached: id === inventory.permission.UserUpdateProduct
       },
       id
     )

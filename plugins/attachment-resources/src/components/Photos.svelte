@@ -26,6 +26,7 @@
   export let objectId: Ref<Doc>
   export let space: Ref<Space>
   export let _class: Ref<Class<Doc>>
+  export let readonly = false
 
   let inputFile: HTMLInputElement
   let loading = 0
@@ -44,7 +45,7 @@
   )
 
   async function create (file: File): Promise<void> {
-    if (!file.type.startsWith('image/')) return
+    if (readonly || !file.type.startsWith('image/')) return
     loading++
     try {
       const { uuid, metadata } = await uploadFile(file)
@@ -64,6 +65,7 @@
   }
 
   function fileSelected (): void {
+    if (readonly) return
     const list = inputFile.files
     if (list === null || list.length === 0) return
     for (let index = 0; index < list.length; index++) {
@@ -76,6 +78,7 @@
   }
 
   function fileDrop (e: DragEvent): void {
+    if (readonly) return
     const list = e.dataTransfer?.files
     if (list === undefined || list.length === 0) return
     for (let index = 0; index < list.length; index++) {
@@ -93,7 +96,7 @@
     el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
     if (item !== undefined) {
       showAttachmentPreviewPopup(item)
-    } else {
+    } else if (!readonly) {
       inputFile.click()
     }
   }
@@ -106,18 +109,18 @@
     </span>
     {#if loading}
       <Spinner />
-    {:else}
+    {:else if !readonly}
       <Button
         icon={IconAdd}
         kind={'ghost'}
         on:click={() => {
-          inputFile.click()
+          if (!readonly) inputFile.click()
         }}
       />
     {/if}
     <input
       bind:this={inputFile}
-      disabled={inputFile == null}
+      disabled={readonly || inputFile == null}
       multiple
       type="file"
       name="file"
@@ -133,7 +136,7 @@
     class="antiSection-empty attachments items mt-3"
     class:solid={dragover}
     on:dragover|preventDefault={() => {
-      dragover = true
+      if (!readonly) dragover = true
     }}
     on:dragleave={() => {
       dragover = false
@@ -153,10 +156,12 @@
         {/await}
       </div>
     {/each}
-    <!-- svelte-ignore a11y-click-events-have-key-events -->
-    <div class="flex-center item new-item" on:click={click}>
-      <UploadDuo size={'large'} />
-    </div>
+    {#if !readonly}
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
+      <div class="flex-center item new-item" on:click={click}>
+        <UploadDuo size={'large'} />
+      </div>
+    {/if}
   </div>
 </div>
 

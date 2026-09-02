@@ -572,6 +572,7 @@ export interface Permission extends Doc {
   txClass?: Ref<Class<Tx>>
   forbid?: boolean
   allowCreator?: boolean
+  includeAttached?: boolean
   objectClass?: Ref<Class<Doc>>
   scope?: 'space' | 'workspace'
   txMatch?: DocumentQuery<Tx>

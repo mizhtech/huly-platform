@@ -25,6 +25,7 @@
   export let readonly = false
 
   const create = (ev: MouseEvent): void => {
+    if (readonly) return
     showPopup(CreateVariant, { product: objectId }, eventToHTMLElement(ev))
   }
 </script>

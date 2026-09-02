@@ -71,24 +71,71 @@ export class RolePermissionsMiddleware extends BaseMiddleware implements Middlew
         if (disabled.has(id)) continue
         const permission = byId.get(id)
         if (permission?.forbid !== true) continue
-        if (!this.matches(cud, permission)) continue
-        if (await this.isCreatorAllowed(ctx, cud, permission)) continue
+        const permissionTarget = await this.getPermissionTarget(ctx, cud, permission)
+        if (permissionTarget === undefined) continue
+        if (this.isCreatorAllowed(ctx, permissionTarget, permission)) continue
         if (await this.isIdentityUpdate(ctx, cud)) continue
         this.forbidden()
       }
     }
   }
 
-  private async isCreatorAllowed (
+  private async getPermissionTarget (
     ctx: MeasureContext<SessionData>,
     tx: TxCUD<Doc>,
     permission: Permission
-  ): Promise<boolean> {
-    if (permission.allowCreator !== true || tx._class === core.class.TxCreateDoc) return false
+  ): Promise<Doc | null | undefined> {
+    if (
+      (permission.txClass === undefined || tx._class === permission.txClass) &&
+      (permission.objectClass === undefined ||
+        this.context.hierarchy.isDerived(tx.objectClass, permission.objectClass)) &&
+      this.matchesQuery(tx, permission)
+    ) {
+      if (permission.allowCreator !== true) return null
+      if (tx._class === core.class.TxCreateDoc) return null
+      return (await this.findAll(ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 }))[0] ?? null
+    }
 
-    const docs = await this.findAll(ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 })
-    const target = docs[0]
-    if (target?.createdBy === undefined) return false
+    if (permission.includeAttached !== true || permission.objectClass === undefined) return undefined
+
+    const attached = await this.getAttachedTarget(ctx, tx)
+    if (
+      attached === undefined ||
+      !this.context.hierarchy.isDerived(attached.attachedToClass, permission.objectClass)
+    ) return undefined
+
+    const parent = (
+      await this.findAll(ctx, attached.attachedToClass, { _id: attached.attachedTo }, { limit: 1 })
+    )[0]
+    return parent ?? null
+  }
+
+  private async getAttachedTarget (
+    ctx: MeasureContext<SessionData>,
+    tx: TxCUD<Doc>
+  ): Promise<{ attachedTo: Ref<Doc>, attachedToClass: Ref<Class<Doc>> } | undefined> {
+    if (tx._class === core.class.TxCreateDoc) {
+      const attributes = (tx as TxCreateDoc<Doc>).attributes as {
+        attachedTo?: Ref<Doc>
+        attachedToClass?: Ref<Class<Doc>>
+      }
+      if (attributes.attachedTo === undefined || attributes.attachedToClass === undefined) return undefined
+      return { attachedTo: attributes.attachedTo, attachedToClass: attributes.attachedToClass }
+    }
+
+    const target = (
+      await this.findAll(ctx, tx.objectClass, { _id: tx.objectId }, { limit: 1 })
+    )[0] as (Doc & { attachedTo?: Ref<Doc>, attachedToClass?: Ref<Class<Doc>> }) | undefined
+    if (target?.attachedTo === undefined || target.attachedToClass === undefined) return undefined
+    return { attachedTo: target.attachedTo, attachedToClass: target.attachedToClass }
+  }
+
+  private isCreatorAllowed (
+    ctx: MeasureContext<SessionData>,
+    target: Doc | null,
+    permission: Permission
+  ): boolean {
+    if (permission.allowCreator !== true || target?.createdBy === undefined) return false
 
     const account = ctx.contextData.account
     return target.createdBy === account.primarySocialId || account.socialIds.includes(target.createdBy)
@@ -138,16 +185,9 @@ export class RolePermissionsMiddleware extends BaseMiddleware implements Middlew
     return protectedPolicyClasses.some((target) => this.context.hierarchy.isDerived(objectClass, target))
   }
 
-  private matches (tx: TxCUD<Doc>, permission: Permission): boolean {
-    if (permission.txClass !== undefined && tx._class !== permission.txClass) return false
-    if (
-      permission.objectClass !== undefined &&
-      !this.context.hierarchy.isDerived(tx.objectClass, permission.objectClass)
-    ) return false
-    if (permission.txMatch !== undefined) {
-      return matchQuery([tx], permission.txMatch, tx._class, this.context.hierarchy, true).length > 0
-    }
-    return true
+  private matchesQuery (tx: TxCUD<Doc>, permission: Permission): boolean {
+    if (permission.txMatch === undefined) return true
+    return matchQuery([tx], permission.txMatch, tx._class, this.context.hierarchy, true).length > 0
   }
 
   private forbidden (): never {
