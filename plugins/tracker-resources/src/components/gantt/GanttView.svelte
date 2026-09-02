@@ -1219,7 +1219,27 @@
 
   // C — padding follows the active tick granularity, so a
   // wheel-zoomed view also gets sensible left/right padding.
-  $: dateRange = computeDateRange(issues, milestones, tickZoomLevel)
+  //
+  // `navigationOffsetMs` lets toolbar navigation move the time window even
+  // when the chart fits the viewport. In that state the horizontal scrollbar
+  // proxy is intentionally not mounted, so the old scroll-only handlers were
+  // no-ops for Today / Previous / Next. Keep the offset separate from the
+  // data-derived range so live issue updates retain the user's current window.
+  let navigationOffsetMs = 0
+  let navigationSpaceKey = space === undefined ? '' : String(space)
+  $: {
+    const nextSpaceKey = space === undefined ? '' : String(space)
+    if (nextSpaceKey !== navigationSpaceKey) {
+      navigationSpaceKey = nextSpaceKey
+      navigationOffsetMs = 0
+      canvasViewportLeft = 0
+    }
+  }
+  $: naturalDateRange = computeDateRange(issues, milestones, tickZoomLevel)
+  $: dateRange = {
+    from: naturalDateRange.from + navigationOffsetMs,
+    to: naturalDateRange.to + navigationOffsetMs
+  }
 
   // Maximum-zoom-out floor: bars must always occupy at least
   // BAR_COVERAGE_MIN of the canvas viewport, so the user can't pan into
@@ -3520,15 +3540,21 @@
   // hThumbLeft) stay stale until the next pointermove. The explicit
   // queueMicrotask path keeps `canvasViewportLeft` and dependant reactive
   // expressions (including classifyArrowVisibility) in sync.
-  function jumpToToday (): void {
-    if (hScrollEl == null) return
-    const x = timeScale.toX(Date.now())
-    hScrollEl.scrollTo({ left: Math.max(0, x - canvasViewportWidth / 2), behavior: 'smooth' })
+  /** Move the data-derived time window so `timestamp` is centered in the
+   * currently visible canvas. This works with and without horizontal overflow
+   * and preserves the current scrollbar position when one exists. */
+  function centerNavigationWindowAt (timestamp: number): void {
+    const visibleCenter = timeScale.fromX(canvasViewportLeft + canvasViewportWidth / 2)
+    navigationOffsetMs += timestamp - visibleCenter
     queueMicrotask(syncViewport)
   }
+  function jumpToToday (): void {
+    centerNavigationWindowAt(Date.now())
+  }
   function pageScroll (dir: -1 | 1): void {
-    if (hScrollEl == null) return
-    hScrollEl.scrollBy({ left: dir * canvasViewportWidth * 0.8, behavior: 'smooth' })
+    const visibleFrom = timeScale.fromX(canvasViewportLeft)
+    const visibleTo = timeScale.fromX(canvasViewportLeft + canvasViewportWidth)
+    navigationOffsetMs += dir * Math.abs(visibleTo - visibleFrom) * 0.8
     queueMicrotask(syncViewport)
   }
   function jumpToStart (): void {
@@ -3542,12 +3568,10 @@
     queueMicrotask(syncViewport)
   }
   function jumpToDate (iso: string): void {
-    if (hScrollEl == null || iso === '') return
+    if (iso === '') return
     const t = Date.parse(iso)
     if (isNaN(t)) return
-    const x = timeScale.toX(t)
-    hScrollEl.scrollTo({ left: Math.max(0, x - canvasViewportWidth / 2), behavior: 'smooth' })
-    queueMicrotask(syncViewport)
+    centerNavigationWindowAt(t)
   }
   let datePickerValue: string = ''
 

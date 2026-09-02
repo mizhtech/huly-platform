@@ -24,6 +24,12 @@
    * popup duplicate is undesired.
    */
   export let hideKeys: string[] = []
+  /**
+   * Use the wider popup shell for viewlets whose option labels need more
+   * horizontal room (notably Gantt in translated locales). The default keeps
+   * the compact menu used by List/Kanban and every existing consumer.
+   */
+  export let widePopup: boolean = false
 
   const dispatch = createEventDispatcher()
 
@@ -102,7 +108,7 @@
   })
 </script>
 
-<div class="antiCard dialog menu">
+<div class="antiCard dialog" class:menu={!widePopup} class:x-small={widePopup}>
   <div class="antiCard-menu__spacer" />
   {#if !hideGroupingAndOrdering && hasMultipleSelections(config.groupBy)}
     {#each groups as group, i}

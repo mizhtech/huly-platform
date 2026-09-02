@@ -36,6 +36,9 @@
   // the "other" toggle/dropdown rendering (useful for viewlets that expose
   // the same ViewOption elsewhere, e.g. Gantt's `ganttGroupBy` toolbar).
   export let hideKeys: string[] = []
+  // Gantt has many long translated labels; let that view opt into the wider
+  // ViewOptions shell without changing the compact popup for other viewlets.
+  export let widePopup: boolean = false
 
   const dispatch = createEventDispatcher()
   const client = getClient()
@@ -90,7 +93,7 @@
 
     showPopup(
       ViewOptionsEditor,
-      { viewlet, config, viewOptions: h.clone(viewOptions), hideGroupingAndOrdering, hideKeys },
+      { viewlet, config, viewOptions: h.clone(viewOptions), hideGroupingAndOrdering, hideKeys, widePopup },
       btn,
       () => {
         pressed = false

@@ -54,6 +54,9 @@
    */
   export let hideKeys: string[] = []
 
+  /** Render Customize View with the wider popup shell. */
+  export let widePopup: boolean = false
+
   /**
    * When false, the Configure-columns ButtonIcon is hidden. List mode keeps
    * the default `true` (column visibility is meaningful there). Gantt mode
@@ -97,7 +100,15 @@
 
 {#if viewlet}
   {#if viewOptions && showViewOptions}
-    <ViewOptionsButton {viewlet} {kind} {viewOptions} {viewOptionsConfig} {hideGroupingAndOrdering} {hideKeys} />
+    <ViewOptionsButton
+      {viewlet}
+      {kind}
+      {viewOptions}
+      {viewOptionsConfig}
+      {hideGroupingAndOrdering}
+      {hideKeys}
+      {widePopup}
+    />
   {/if}
   {#if showConfigureColumns}
     <!-- Configure-columns button gets its own IntlString so the tooltip differs

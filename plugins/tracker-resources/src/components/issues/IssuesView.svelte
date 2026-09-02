@@ -165,6 +165,7 @@
       hideGroupingAndOrdering={isGanttMode}
       showConfigureColumns={!isGanttMode}
       hideKeys={isGanttMode ? ['ganttGroupBy'] : []}
+      widePopup={isGanttMode}
     />
   </svelte:fragment>
 
