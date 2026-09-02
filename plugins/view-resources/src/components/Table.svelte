@@ -50,7 +50,7 @@
   import { LoadingProps, buildConfigAssociation, buildConfigLookup, buildModel, restrictionStore } from '../utils'
   import IconUpDown from './icons/UpDown.svelte'
   import { getResultOptions, getResultQuery } from '../viewOptions'
-  import { canEditSpace } from '../visibilityTester'
+  import { canEditSpace, canUpdateObject } from '../visibilityTester'
   import contact, { PermissionsStore } from '@hcengineering/contact'
   import { Readable } from 'svelte/store'
   import { getResource } from '@hcengineering/platform'
@@ -377,7 +377,7 @@
     if (client.getHierarchy().isDerived(object._class, core.class.Space)) {
       return await canEditSpace(object)
     }
-    return true
+    return await canUpdateObject(object)
   }
 </script>
 

@@ -22,6 +22,7 @@
   export let objectId: Ref<Doc>
 
   export let variants: number
+  export let readonly = false
 
   const create = (ev: MouseEvent): void => {
     showPopup(CreateVariant, { product: objectId }, eventToHTMLElement(ev))
@@ -33,7 +34,9 @@
     <span class="antiSection-header__title">
       <Label label={inventory.string.Variants} />
     </span>
-    <Button icon={IconAdd} kind={'ghost'} on:click={create} />
+    {#if !readonly}
+      <Button icon={IconAdd} kind={'ghost'} on:click={create} />
+    {/if}
   </div>
   {#if variants > 0}
     <Table
@@ -42,6 +45,7 @@
       options={{}}
       query={{ attachedTo: objectId }}
       loadingProps={{ length: variants }}
+      {readonly}
     />
   {:else}
     <div class="antiSection-empty solid flex-col-center mt-3">
@@ -51,11 +55,13 @@
       <span class="text-sm content-dark-color mt-2">
         <Label label={inventory.string.NoVariantsForProduct} />
       </span>
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <!-- svelte-ignore a11y-no-static-element-interactions -->
-      <span class="text-sm content-color over-underline" on:click={create}>
-        <Label label={inventory.string.CreateVariant} />
-      </span>
+      {#if !readonly}
+        <!-- svelte-ignore a11y-click-events-have-key-events -->
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <span class="text-sm content-color over-underline" on:click={create}>
+          <Label label={inventory.string.CreateVariant} />
+        </span>
+      {/if}
     </div>
   {/if}
 </div>

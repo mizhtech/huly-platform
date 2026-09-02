@@ -25,6 +25,7 @@
     getCurrentAccount,
     pickPrimarySocialId,
     readOnlyGuestAccountUuid,
+    roleOrder,
     type Doc,
     type Permission,
     type Ref
@@ -156,12 +157,18 @@
     return !getDisabledPermissions(group).has(permissionId)
   }
 
+  function isModuleAccessLocked (group: ModulePermissionGroup): boolean {
+    const application = getApplication(group.application)
+    if (application?.accessLevel === undefined) return false
+    return roleOrder[group.role] < roleOrder[application.accessLevel]
+  }
+
   async function togglePermission (
     group: ModulePermissionGroup,
     permissionId: Ref<Permission>,
     enabled: boolean
   ): Promise<void> {
-    if (anonymousModulePermissionsReadOnly) return
+    if (anonymousModulePermissionsReadOnly || isModuleAccessLocked(group)) return
     if (!isModuleEnabled(group)) return
     const disabled = getDisabledPermissions(group)
     if (enabled) {
@@ -175,14 +182,14 @@
   }
 
   async function toggleModule (group: ModulePermissionGroup, enabled: boolean): Promise<void> {
-    if (anonymousModulePermissionsReadOnly) return
+    if (anonymousModulePermissionsReadOnly || isModuleAccessLocked(group)) return
     await client.updateDoc(core.class.ModulePermissionGroup, core.space.Model, group._id, {
       enabled
     } as any)
   }
 
   function isModuleEnabled (group: ModulePermissionGroup): boolean {
-    return group.enabled ?? true
+    return !isModuleAccessLocked(group) && (group.enabled ?? true)
   }
 
   function getPermissionLabel (permissionId: Ref<Permission>): IntlString {
@@ -392,6 +399,7 @@
               <div class="cardStack" class:cardStack-readonly={anonymousModulePermissionsReadOnly}>
                 {#each sortedVisibleModuleGroups as group}
                   {@const app = getApplication(group.application)}
+                  {@const moduleAccessLocked = isModuleAccessLocked(group)}
                   {@const moduleOn = isModuleEnabled(group)}
                   {@const permissionCount = (group.permissions ?? []).length}
                   {@const hasGuestAutoJoinRow =
@@ -425,7 +433,7 @@
                       </div>
                       <div class="permissionModuleCard-toggleCell">
                         <Toggle
-                          disabled={anonymousModulePermissionsReadOnly}
+                          disabled={anonymousModulePermissionsReadOnly || moduleAccessLocked}
                           on={moduleOn}
                           on:change={handleAccessToggle(group)}
                         />
@@ -442,7 +450,7 @@
                               </div>
                               <div class="permissionRow-toggleCell">
                                 <Toggle
-                                  disabled={!moduleOn || anonymousModulePermissionsReadOnly}
+                                  disabled={!moduleOn || anonymousModulePermissionsReadOnly || moduleAccessLocked}
                                   on={isPermissionActive(group, permissionId)}
                                   on:change={handlePermissionToggle(group, permissionId)}
                                 />

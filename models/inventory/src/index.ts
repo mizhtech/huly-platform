@@ -223,6 +223,7 @@ export function createModel (builder: Builder): void {
     input: 'focus',
     category: inventory.category.Inventory,
     target: inventory.class.Category,
+    visibilityTester: view.function.CanUpdateObject,
     context: {
       mode: ['context', 'browser'],
       group: 'associate'
