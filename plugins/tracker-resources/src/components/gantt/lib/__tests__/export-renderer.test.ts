@@ -51,11 +51,13 @@ describe('buildGanttExportSvg', () => {
       summaryRanges: new Map(),
       timeScale: createTimeScale('week', start),
       range: [start, start + 20 * DAY],
-      chartWidth: 320
+      chartWidth: 320,
+      issueListTitle: 'Công việc'
     })
 
     expect(svg).toContain('width="704"')
-    expect(svg).toContain('Issues')
+    expect(svg).toContain('Công việc')
+    expect(svg).not.toContain('>Issues</text>')
     expect(svg).toContain('TSK-1')
     expect(svg).toContain('Design work')
     expect(svg.indexOf('TSK-1')).toBeLessThan(svg.indexOf('class="chart-bg"'))
@@ -78,7 +80,8 @@ describe('buildGanttExportSvg', () => {
       summaryRanges: new Map(),
       timeScale: createTimeScale('week', start),
       range: [start, start + 20 * DAY],
-      chartWidth: 320
+      chartWidth: 320,
+      issueListTitle: 'Công việc'
     })
 
     expect(svg).toContain('class="dependency"')

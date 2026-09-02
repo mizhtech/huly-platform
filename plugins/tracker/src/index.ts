@@ -812,7 +812,20 @@ const pluginState = plugin(trackerId, {
     DependencyShiftedHeader: '' as IntlString,
     DependencyShiftedMessage: '' as IntlString,
     DependencyShiftedSubject: '' as IntlString,
-    Color: '' as IntlString
+    Color: '' as IntlString,
+    GanttHelpShowHelp: '' as IntlString,
+    GanttHelpMoveOneDay: '' as IntlString,
+    GanttHelpMoveSevenDays: '' as IntlString,
+    GanttHelpZoomIn: '' as IntlString,
+    GanttHelpZoomOut: '' as IntlString,
+    GanttHelpJumpToday: '' as IntlString,
+    GanttHelpZoomDay: '' as IntlString,
+    GanttHelpZoomWeek: '' as IntlString,
+    GanttHelpZoomMonth: '' as IntlString,
+    GanttHelpZoomQuarter: '' as IntlString,
+    GanttHelpExportPng: '' as IntlString,
+    GanttHelpCancelAction: '' as IntlString,
+    GanttHelpBypassCascade: '' as IntlString
   },
   extensions: {
     IssueListHeader: '' as ComponentExtensionId,

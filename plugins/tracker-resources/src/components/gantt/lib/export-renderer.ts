@@ -22,6 +22,7 @@ export interface GanttExportInput {
   timeScale: TimeScale
   range: [number, number]
   chartWidth: number
+  issueListTitle: string
   title?: string
 }
 
@@ -60,10 +61,10 @@ function barRange (row: LayoutRow, summaryRanges: Map<string, SummaryRange>): { 
   return { start: row.issue.startDate, end: row.issue.dueDate }
 }
 
-function renderIssueList (rows: LayoutRow[]): string {
+function renderIssueList (rows: LayoutRow[], title: string): string {
   const out: string[] = []
   out.push(`<rect x="0" y="0" width="${SIDEBAR_WIDTH}" height="${HEADER_HEIGHT + rowBottom(rows)}" fill="#f8fafc"/>`)
-  out.push(`<text x="${LEFT_PAD}" y="25" font-size="14" font-weight="700" fill="#0f172a">Issues</text>`)
+  out.push(`<text x="${LEFT_PAD}" y="25" font-size="14" font-weight="700" fill="#0f172a">${esc(title)}</text>`)
   for (const row of rows) {
     const y = HEADER_HEIGHT + row.y
     out.push(`<line x1="0" y1="${y + row.height}" x2="${SIDEBAR_WIDTH}" y2="${y + row.height}" stroke="#e2e8f0"/>`)
@@ -187,7 +188,7 @@ export function buildGanttExportSvg (input: GanttExportInput): string {
     `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}">`,
     '<style>text{font-family:Inter,Arial,sans-serif}.dependency{pointer-events:none}</style>',
     `<rect x="0" y="0" width="${width}" height="${height}" fill="#ffffff"/>`,
-    renderIssueList(input.rows),
+    renderIssueList(input.rows, input.issueListTitle),
     renderHeader({ ...input, chartWidth }, chartWidth),
     body.svg,
     renderDependencies(input.relations, body.rects),

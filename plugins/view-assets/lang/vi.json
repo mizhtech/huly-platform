@@ -153,6 +153,10 @@
     "RoleLabel": "Vai trò: {role}",
     "ForbidAttributeChanges": "Cấm thay đổi: ",
     "AllowAttributeChanges": "Cho phép thay đổi: ",
-    "RelationshipTable": "Ma trận truy vết"
+    "RelationshipTable": "Ma trận truy vết",
+    "ConfigureColumns": "Cấu hình cột",
+    "FilterOverflowBadge": "+{count}",
+    "AddFilter": "Thêm bộ lọc",
+    "HiddenFilters": "Bộ lọc bị ẩn"
   }
 }

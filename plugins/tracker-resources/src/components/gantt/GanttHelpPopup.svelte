@@ -5,6 +5,7 @@
 <script lang="ts">
   import { createEventDispatcher, onMount } from 'svelte'
   import { Label } from '@hcengineering/ui'
+  import type { IntlString } from '@hcengineering/platform'
   import tracker from '../../plugin'
 
   /**
@@ -30,22 +31,22 @@
 
   interface Row {
     key: string
-    label: string
+    label: IntlString
   }
   const rows: Row[] = [
-    { key: '?', label: 'Show this help' },
-    { key: '←  →', label: 'Move selected issue ±1 day' },
-    { key: 'Shift+←  Shift+→', label: 'Move selected issue ±7 days' },
-    { key: '+ / =', label: 'Zoom in' },
-    { key: '−', label: 'Zoom out' },
-    { key: 'T', label: 'Jump to today' },
-    { key: 'D', label: 'Zoom to day view' },
-    { key: 'W', label: 'Zoom to week view' },
-    { key: 'M', label: 'Zoom to month view' },
-    { key: 'Q', label: 'Zoom to quarter view' },
-    { key: 'E', label: 'Export visible view to PNG' },
-    { key: 'Esc', label: 'Cancel drag / close popup / dismiss this help' },
-    { key: 'Alt + drag', label: 'Bypass cascade simulation (force commit)' }
+    { key: '?', label: tracker.string.GanttHelpShowHelp },
+    { key: '←  →', label: tracker.string.GanttHelpMoveOneDay },
+    { key: 'Shift+←  Shift+→', label: tracker.string.GanttHelpMoveSevenDays },
+    { key: '+ / =', label: tracker.string.GanttHelpZoomIn },
+    { key: '−', label: tracker.string.GanttHelpZoomOut },
+    { key: 'T', label: tracker.string.GanttHelpJumpToday },
+    { key: 'D', label: tracker.string.GanttHelpZoomDay },
+    { key: 'W', label: tracker.string.GanttHelpZoomWeek },
+    { key: 'M', label: tracker.string.GanttHelpZoomMonth },
+    { key: 'Q', label: tracker.string.GanttHelpZoomQuarter },
+    { key: 'E', label: tracker.string.GanttHelpExportPng },
+    { key: 'Esc', label: tracker.string.GanttHelpCancelAction },
+    { key: 'Alt + drag', label: tracker.string.GanttHelpBypassCascade }
   ]
 </script>
 
@@ -57,7 +58,7 @@
     {#each rows as r (r.key)}
       <div class="row">
         <kbd>{r.key}</kbd>
-        <span>{r.label}</span>
+        <span><Label label={r.label} /></span>
       </div>
     {/each}
   </div>

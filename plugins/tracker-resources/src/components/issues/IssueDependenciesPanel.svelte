@@ -4,7 +4,7 @@
 -->
 <script lang="ts">
   import { createQuery, getClient, MessageBox } from '@hcengineering/presentation'
-  import { Label, addNotification, NotificationSeverity, showPopup } from '@hcengineering/ui'
+  import { Label, addNotification, NotificationSeverity, showPopup, tooltip } from '@hcengineering/ui'
   import { translate } from '@hcengineering/platform'
   import type { Ref } from '@hcengineering/core'
   import type { Issue, IssueRelation } from '@hcengineering/tracker'
@@ -240,7 +240,7 @@
 <span class="labelTop labelTop--with-action">
   <Label label={tracker.string.Dependencies} />
   {#if !readonly}
-    <button class="add-btn" type="button" title="Add dependency" on:click={onAddDependency}>+</button>
+    <button class="add-btn" type="button" use:tooltip={{ label: tracker.string.AddDependency }} on:click={onAddDependency}>+</button>
   {/if}
 </span>
 {#if total === 0}
@@ -271,7 +271,7 @@
             <button
               class="del-btn"
               type="button"
-              title="Remove dependency"
+              use:tooltip={{ label: tracker.string.DependencyDelete }}
               on:click|stopPropagation={() => removeDependency(rel)}>×</button
             >
           {/if}
@@ -300,7 +300,7 @@
             <button
               class="del-btn"
               type="button"
-              title="Remove dependency"
+              use:tooltip={{ label: tracker.string.DependencyDelete }}
               on:click|stopPropagation={() => removeDependency(rel)}>×</button
             >
           {/if}

@@ -487,7 +487,7 @@
             {/if}
           </span>
           {#if row.kind === 'milestone' && row.milestone !== null}
-            {#if showStatus}<span class="cell-status ms-icon" title="Milestone">◆</span>{/if}
+            {#if showStatus}<span class="cell-status ms-icon" use:tooltip={{ label: tracker.string.Milestone }}>◆</span>{/if}
             {#if showIssueCode}
               <span class="cell-id">
                 <span class="ms-tag">MS</span>

@@ -3415,6 +3415,7 @@
   async function exportToPng (): Promise<void> {
     const stamp = `gantt-${new Date().toISOString().slice(0, 10)}`
     try {
+      const issueListTitle = await translate(tracker.string.Issues, {}, $themeStore.language)
       await exportGanttDataToPng(
         {
           rows: sortedRows,
@@ -3423,6 +3424,7 @@
           timeScale,
           range: [dateRange.from, dateRange.to],
           chartWidth: totalCanvasWidth,
+          issueListTitle,
           title: `${formatRange(dateRange.from)} – ${formatRange(dateRange.to)}`
         },
         stamp
@@ -3435,6 +3437,7 @@
 
   async function exportToPdf (): Promise<void> {
     try {
+      const issueListTitle = await translate(tracker.string.Issues, {}, $themeStore.language)
       await exportGanttDataToPdf(
         {
           rows: sortedRows,
@@ -3443,6 +3446,7 @@
           timeScale,
           range: [dateRange.from, dateRange.to],
           chartWidth: totalCanvasWidth,
+          issueListTitle,
           title: `${formatRange(dateRange.from)} – ${formatRange(dateRange.to)}`
         },
         `gantt-${new Date().toISOString().slice(0, 10)}`
