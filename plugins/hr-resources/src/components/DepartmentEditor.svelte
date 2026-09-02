@@ -29,6 +29,7 @@
   export let justify: 'left' | 'center' = 'center'
   export let width: string | undefined = undefined
   export let object: Department | undefined
+  export let readonly = false
 
   let excluded: Ref<Department>[] = []
   let descendants: Map<Ref<Department>, Department[]> = new Map<Ref<Department>, Department[]>()
@@ -68,11 +69,11 @@
   {kind}
   {justify}
   {width}
-  readonly={value === undefined}
+  {readonly}
   showNavigate={false}
   autoSelect={false}
   bind:value
   on:change={(e) => {
-    onChange(e.detail)
+    if (!readonly) onChange(e.detail)
   }}
 />

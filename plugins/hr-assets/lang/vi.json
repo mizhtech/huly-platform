@@ -68,6 +68,7 @@
     "EXTRa": "EXTRa",
     "ForbidCreateDepartmentPermission": "Cấm tạo phòng ban",
     "ForbidUpdateDepartmentPermission": "Cấm sửa phòng ban",
-    "ForbidRemoveDepartmentPermission": "Cấm xóa phòng ban"
+    "ForbidRemoveDepartmentPermission": "Cấm xóa phòng ban",
+    "ForbidUpdateStaffDepartmentPermission": "Cấm thay đổi phòng ban của nhân viên"
   }
 }

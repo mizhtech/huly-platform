@@ -68,6 +68,7 @@
     "EXTRa": "EXTRa",
     "ForbidCreateDepartmentPermission": "Forbid create department",
     "ForbidUpdateDepartmentPermission": "Forbid update department",
-    "ForbidRemoveDepartmentPermission": "Forbid delete department"
+    "ForbidRemoveDepartmentPermission": "Forbid delete department",
+    "ForbidUpdateStaffDepartmentPermission": "Forbid update staff department"
   }
 }

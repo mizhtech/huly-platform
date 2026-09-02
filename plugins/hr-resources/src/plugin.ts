@@ -21,13 +21,15 @@ export default mergeIds(hrId, hr, {
   permission: {
     ForbidCreateDepartment: '' as Ref<Permission>,
     ForbidUpdateDepartment: '' as Ref<Permission>,
-    ForbidRemoveDepartment: '' as Ref<Permission>
+    ForbidRemoveDepartment: '' as Ref<Permission>,
+    ForbidUpdateStaffDepartment: '' as Ref<Permission>
   },
   string: {
     HRApplication: '' as IntlString,
     ForbidCreateDepartmentPermission: '' as IntlString,
     ForbidUpdateDepartmentPermission: '' as IntlString,
     ForbidRemoveDepartmentPermission: '' as IntlString,
+    ForbidUpdateStaffDepartmentPermission: '' as IntlString,
     Department: '' as IntlString,
     Organization: '' as IntlString,
     Departments: '' as IntlString,

@@ -197,7 +197,8 @@ export function createModel (builder: Builder): void {
       permissions: [
         hr.permission.ForbidCreateDepartment,
         hr.permission.ForbidUpdateDepartment,
-        hr.permission.ForbidRemoveDepartment
+        hr.permission.ForbidRemoveDepartment,
+        hr.permission.ForbidUpdateStaffDepartment
       ],
       enabled: true
     },

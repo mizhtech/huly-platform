@@ -21,6 +21,7 @@
   import { closeTooltip } from '@hcengineering/ui'
   import { showMenu } from '@hcengineering/view-resources'
   import hr from '../plugin'
+  import { canChangeStaffDepartment } from '../utils'
 
   import { flip } from 'svelte/animate'
 
@@ -41,10 +42,10 @@
     {#each persons as p (p._id)}
       <div
         class="ml-2 hover-trans icon"
-        draggable={true}
+        draggable={canChangeStaffDepartment(p)}
         animate:flip={{ duration: 200 }}
         on:drag={() => {
-          ondrag(p)
+          if (canChangeStaffDepartment(p)) ondrag(p)
         }}
         on:dragend|preventDefault|stopPropagation={() => {
           dragPerson = undefined

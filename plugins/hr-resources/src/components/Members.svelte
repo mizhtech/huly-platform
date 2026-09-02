@@ -22,6 +22,7 @@
   import { Viewlet, ViewletPreference } from '@hcengineering/view'
   import { Table, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
   import hr from '../plugin'
+  import { canManageStaffDepartments } from '../utils'
 
   export let department: Department
   export let members: Array<Ref<Employee>>
@@ -31,7 +32,7 @@
   let loading = true
 
   const createApp = async (ev: MouseEvent): Promise<void> => {
-    if (readonly) {
+    if (readonly || !canManageStaffDepartments()) {
       return
     }
 
@@ -73,7 +74,7 @@
         viewletQuery={{ _id: hr.viewlet.TableMember }}
       />
       <ViewletSettingButton kind={'tertiary'} bind:viewlet />
-      {#if !readonly}
+      {#if !readonly && canManageStaffDepartments()}
         <Button id={hr.string.AddMember} icon={IconAdd} kind={'ghost'} on:click={createApp} />
       {/if}
     </div>
@@ -98,7 +99,7 @@
         </span>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        {#if !readonly}
+        {#if !readonly && canManageStaffDepartments()}
           <span class="over-underline content-color" on:click={createApp}>
             <Label label={hr.string.AddMember} />
           </span>

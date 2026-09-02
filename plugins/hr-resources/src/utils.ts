@@ -1,5 +1,5 @@
 import { type Employee, getName } from '@hcengineering/contact'
-import { type Ref, type TxOperations } from '@hcengineering/core'
+import { AccountRole, getCurrentAccount, roleOrder, type Ref, type TxOperations } from '@hcengineering/core'
 import { type Department, type Request, type RequestType, type Staff, fromTzDate } from '@hcengineering/hr'
 import { MessageBox } from '@hcengineering/presentation'
 import { type Issue, type TimeSpendReport } from '@hcengineering/tracker'
@@ -8,8 +8,19 @@ import hr from './plugin'
 
 const todayDate = new Date()
 
+
+export function canManageStaffDepartments (): boolean {
+  return roleOrder[getCurrentAccount().role] >= roleOrder[AccountRole.Maintainer]
+}
+
+export function canChangeStaffDepartment (employee?: Employee): boolean {
+  if (employee == null) return false
+  if (canManageStaffDepartments()) return true
+  return employee.personUuid === getCurrentAccount().uuid
+}
+
 export async function addMember (client: TxOperations, employee?: Employee, value?: Department): Promise<void> {
-  if (employee === null || employee === undefined || value === undefined) {
+  if (employee === null || employee === undefined || value === undefined || !canChangeStaffDepartment(employee)) {
     return
   }
 

@@ -22,7 +22,7 @@
   import { Viewlet, ViewletPreference } from '@hcengineering/view'
   import { Table, ViewletSelector, ViewletSettingButton } from '@hcengineering/view-resources'
   import hr from '../plugin'
-  import { addMember } from '../utils'
+  import { addMember, canManageStaffDepartments } from '../utils'
 
   export let objectId: Ref<Department> | undefined
   let value: Department | undefined
@@ -43,6 +43,7 @@
     )
 
   function add (e: MouseEvent) {
+    if (!canManageStaffDepartments()) return
     showPopup(
       UsersPopup,
       {
@@ -80,7 +81,9 @@
         viewletQuery={{ _id: hr.viewlet.TableMember }}
       />
       <ViewletSettingButton kind={'ghost'} bind:viewlet />
-      <Button id={hr.string.AddEmployee} icon={IconAdd} kind={'ghost'} on:click={add} />
+      {#if canManageStaffDepartments()}
+        <Button id={hr.string.AddEmployee} icon={IconAdd} kind={'ghost'} on:click={add} />
+      {/if}
     </div>
   </svelte:fragment>
 
@@ -102,9 +105,11 @@
         </span>
         <!-- svelte-ignore a11y-click-events-have-key-events -->
         <!-- svelte-ignore a11y-no-static-element-interactions -->
-        <span class="text-sm content-color over-underline" on:click={add}>
-          <Label label={hr.string.AddMember} />
-        </span>
+        {#if canManageStaffDepartments()}
+          <span class="text-sm content-color over-underline" on:click={add}>
+            <Label label={hr.string.AddMember} />
+          </span>
+        {/if}
       </div>
     {/if}
   </svelte:fragment>

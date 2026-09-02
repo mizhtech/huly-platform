@@ -21,7 +21,7 @@
   import { Button, IconAdd, Label, closeTooltip, eventToHTMLElement, showPopup } from '@hcengineering/ui'
   import { isRoleActionForbidden, openDoc, showMenu } from '@hcengineering/view-resources'
   import hr from '../plugin'
-  import { addMember } from '../utils'
+  import { addMember, canChangeStaffDepartment } from '../utils'
   import CreateDepartment from './CreateDepartment.svelte'
   import DepartmentCard from './DepartmentCard.svelte'
   import PersonsPresenter from './PersonsPresenter.svelte'
@@ -100,15 +100,16 @@
 >
   <div
     class="flex-between pt-4 pb-4 pr-4 pl-2 w-full"
-    on:dragover|preventDefault|stopPropagation={(evt) => {
-      dragOver = value
+    on:dragover|preventDefault|stopPropagation={() => {
+      if (canChangeStaffDepartment(dragPerson)) dragOver = value
     }}
     on:dragend|preventDefault|stopPropagation={() => {
       dragPerson = undefined
       closeTooltip()
     }}
-    on:drop|preventDefault={(itm) => {
+    on:drop|preventDefault={() => {
       closeTooltip()
+      if (!canChangeStaffDepartment(dragPerson)) return
       addMember(client, dragPerson, value).then(() => {
         dragPerson = undefined
         dragOver = undefined
