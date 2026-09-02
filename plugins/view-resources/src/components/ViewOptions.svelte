@@ -108,7 +108,7 @@
   })
 </script>
 
-<div class="antiCard dialog" class:menu={!widePopup} class:x-small={widePopup}>
+<div class="antiCard dialog view-options-popup" class:menu={!widePopup} class:x-small={widePopup}>
   <div class="antiCard-menu__spacer" />
   {#if !hideGroupingAndOrdering && hasMultipleSelections(config.groupBy)}
     {#each groups as group, i}
@@ -202,3 +202,12 @@
   <slot name="extra" />
   <div class="antiCard-menu__spacer" />
 </div>
+
+<style lang="scss">
+  .view-options-popup {
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+</style>
